@@ -1,0 +1,130 @@
+Database application	Software that helps business users interact with database systems.
+Database administrator (DBA)	Secures the database system against unauthorized users and enforces procedures for user access and system availability.
+Authorization	Limiting each user's access to specific tables, columns, or rows.
+Query processor	Interprets queries, creates and optimizes a plan, and returns results to the application.
+Query optimization	Picking the most efficient instructions to run a query.
+Storage manager	Translates query processor instructions into low-level file-system commands and uses indexes to find data fast.
+Transaction manager	Makes transactions execute properly, prevents conflicts between concurrent transactions, and restores consistency after a failure.
+Catalog	A directory of metadata about tables, columns, indexes, and other database objects. Also called the data dictionary.
+Log	A file that records every insert, update, and delete, used to recover the database.
+API	Lets a general-purpose language like Python or Java run SQL statements.
+Business rules	Rules based on business policy and specific to one particular database.
+Table	Has a name, a fixed sequence of columns, and a varying set of rows. Also called a relation or file.
+Row	An unnamed sequence of values, one per column. Also called a tuple or record.
+Column	Has a name and a data type. Also called an attribute or field.
+Cell	A single column of a single row.
+Empty table	A table with columns but no rows.
+Tuple	An ordered collection of elements in parentheses, so (a, b, c) and (c, b, a) are different.
+Data type	A named set of values from which column values are drawn.
+Data independence	The principle that changing how data is physically stored never changes query results.
+DDL	SQL sublanguage that defines database structure: CREATE, ALTER, DROP.
+DQL	SQL sublanguage that retrieves data: SELECT.
+DML	SQL sublanguage that changes stored data: INSERT, UPDATE, DELETE.
+DCL	SQL sublanguage that controls user access: GRANT, REVOKE.
+DTL	SQL sublanguage that manages transactions: COMMIT, ROLLBACK.
+Literal	An explicit string, numeric, or binary value written in a statement, like 'Text', 123, or x'0fa2'.
+Keyword	A word with special meaning in SQL, like SELECT, FROM, or WHERE.
+Identifier	The name of a database object, such as a table or column.
+VARCHAR(N)	Data type for text values from 0 to N characters long.
+DECIMAL(M, D)	Data type for numbers with M total digits, D of them after the decimal point.
+INT	4-byte integer type; signed range is about -2.1 billion to 2.1 billion.
+TINYINT	1-byte integer type: -128 to 127 signed, 0 to 255 unsigned.
+SMALLINT	2-byte integer type: -32,768 to 32,767 signed, 0 to 65,535 unsigned.
+BIGINT	8-byte integer type: -2^63 to 2^63 - 1 signed.
+Modulo (%)	Operator that returns the integer remainder of a division; 5 % 2 = 1.
+CREATE TABLE	Makes a new table by naming the table and its columns with their data types.
+DROP TABLE	Deletes a table along with all of its rows.
+ALTER TABLE	Adds, deletes, or modifies columns (or constraints) on an existing table.
+INSERT	Adds new rows to a table.
+UPDATE	Modifies existing rows using a SET clause; with no WHERE, every row changes.
+DELETE	Removes rows from a table; with no WHERE, every row is removed.
+TRUNCATE	Deletes all rows from a table but keeps the table itself.
+MERGE	Selects data from a source table and inserts it into a target table.
+Primary key	Column or group of columns that uniquely identifies each row; values must be unique and not NULL.
+Composite primary key	A primary key made of more than one column.
+Simple primary key	A primary key made of a single column.
+Auto-increment column	Numeric column that automatically gets the next incrementing value when a row is inserted.
+Foreign key	Column or columns that refer to a primary key; data types must match but names can differ.
+Referential integrity	Every foreign key value must match an existing primary key value, or be NULL.
+RESTRICT	Referential integrity action that rejects the violating insert, update, or delete.
+SET NULL	Referential integrity action that sets invalid foreign keys to NULL.
+SET DEFAULT	Referential integrity action that sets invalid foreign keys to the foreign key's default value.
+CASCADE	Referential integrity action that propagates primary key changes (and deletes) to the matching foreign keys.
+Constraint	A rule that governs allowable values; the database rejects statements that break it.
+CHECK constraint	Requires every value to pass a condition, such as Salary > 0.
+UNIQUE constraint	No two rows may share the same value in the column.
+Column constraint	A constraint written right after a column's name and data type; it governs only that column.
+Table constraint	A constraint written as its own clause in CREATE TABLE; it can govern several columns.
+BETWEEN	Inclusive range test: value BETWEEN min AND max means value >= min AND value <= max.
+LIKE	Matches text against a pattern using the wildcards % (any number of characters) and _ (exactly one character).
+IN	Tests whether a value matches any value in a list, like State IN ('PA', 'NJ').
+ORDER BY	Sorts the result rows, ascending by default; add DESC for descending.
+Aggregate function	Processes values from a set of rows and returns one summary value, like COUNT, MIN, MAX, SUM, or AVG.
+GROUP BY	Puts rows with the same values into groups so aggregate functions compute once per group.
+HAVING	Filters group results; comes after GROUP BY and before ORDER BY.
+WHERE	Filters individual rows before any grouping happens.
+Alias	A temporary name for a column or table, usually introduced with AS.
+Join	A SELECT that combines a left table and a right table into one result by comparing columns.
+INNER JOIN	Returns only the rows that match in both tables.
+LEFT JOIN	Returns all left table rows plus only the matching right table rows.
+RIGHT JOIN	Returns all right table rows plus only the matching left table rows.
+FULL JOIN	Returns all rows from both tables, with NULLs wherever there is no match.
+Outer join	Any join that keeps unmatched rows: LEFT, RIGHT, or FULL.
+Equijoin	A join that compares columns with the = operator.
+Non-equijoin	A join that compares columns with an operator other than =, like < or >.
+Self-join	A join of a table to itself, such as matching employees to their managers.
+Cross-join	Pairs every row of one table with every row of the other; it has no ON clause.
+UNION	Combines the results of two SELECT statements into one table.
+Subquery	A query inside another SQL query. Also called a nested query or inner query.
+View	A table defined by a SELECT query over one or more base tables.
+Materialized view	A view whose data is stored at all times, so it must be refreshed when its base tables change.
+WITH CHECK OPTION	Makes the database reject inserts and updates through a view that don't satisfy the view's WHERE clause.
+Analysis	Design phase that captures requirements as entities, relationships, and attributes, independent of any database system.
+Logical design	Design phase that converts the ER model into tables, columns, and keys for a specific database system.
+Physical design	Design phase that adds indexes and specifies how tables are organized on storage media.
+Entity	A person, place, product, concept, or activity. Drawn as a rectangle in an ER diagram.
+Relationship	A statement about two entities, like Employee-Manages-Department.
+Attribute	A descriptive property of an entity.
+Reflexive relationship	A relationship that relates an entity to itself.
+ER diagram	A schematic picture of entities, relationships, and attributes.
+Cardinality	The maxima and minima of relationships and attributes.
+Relationship maximum	The greatest number of instances of one entity that can relate to a single instance of another.
+Relationship minimum	The least number of instances of one entity that can relate to a single instance of another.
+Crow's foot notation	Shows cardinality with a circle (zero), a short line (one), and three short lines (many).
+Strong entity	An entity with its own identifying attribute.
+Weak entity	An entity with no identifying attribute of its own; it depends on an identifying relationship to another entity.
+Subtype entity	A subset of a supertype entity, like Manager within Employee.
+IsA relationship	The identifying relationship between a subtype entity and its supertype.
+Partition (ER)	A group of mutually exclusive subtype entities of one supertype.
+Intangible entity	An entity documented in the data model but not tracked with data in the database.
+Entity instance	One individual thing, like the employee Sam Snead.
+Artificial key	A single-column primary key the designer creates when no suitable key exists, usually an auto-generated integer.
+Functional dependence	Column A depends on column B when each B value relates to at most one A value.
+Redundancy	The repetition of related values in a table.
+Normal forms	Rules for designing tables with less redundancy.
+Candidate key	A simple or composite column that is unique and minimal.
+Non-key column	A column that is not contained in any candidate key.
+Trivial dependency	When A's columns are a subset of B's columns, so A always depends on B.
+First normal form (1NF)	Every cell holds one value, the table has a primary key, and non-key columns depend on it.
+Second normal form (2NF)	Every non-key column depends on the whole primary key, not just part of a composite key.
+Third normal form (3NF)	Whenever a non-key column A depends on column B, B is unique.
+Boyce-Codd normal form (BCNF)	Whenever any column A depends on column B, B is unique. The gold standard.
+Normalization	Eliminating redundancy by decomposing a table into two or more tables in a higher normal form.
+Denormalization	Intentionally introducing redundancy by merging tables.
+Heap table	Table structure with no row order imposed; fastest for inserts and bulk loads.
+Sorted table	Table structure where a sort column determines the physical row order.
+Hash table	Table structure where a hash function assigns rows to buckets.
+Bucket	A block or group of blocks containing rows, used by hash tables and hash indexes.
+Table cluster	Interleaves rows of two or more tables in the same storage area. Also called a multi-table.
+Table scan	Reads table blocks directly, without using an index.
+Index scan	Reads index blocks sequentially to locate the needed table blocks.
+Hit ratio	The percentage of table rows a query selects. Also called filter factor or selectivity.
+Binary search	Repeatedly splits a sorted index in two until it finds the entry with the search value.
+Dense index	An index with an entry for every table row.
+Sparse index	An index with an entry for every table block.
+Bitmap index	An index that is a grid of bits (1s and 0s); good for columns with few distinct values.
+Logical index	An index that stores primary key values instead of physical block pointers.
+Function index	An index on the result of a function applied to a column, like UPPER(Name).
+Tablespace	A database object that maps one or more tables to a single file.
+Partition (table)	A subset of a table's data: a horizontal partition splits rows, a vertical partition splits columns.
+Storage engine	Translates query processor instructions into low-level storage commands. MySQL's default is InnoDB.

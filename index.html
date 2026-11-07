@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>D426 Study</title>
+<meta name="description" content="WGU D426 Data Management Foundations: Learn mode, flashcards, practice test, and cram sheet.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F7F5F0; --surface: #FFFFFF; --ink: #1E2124; --muted: #5D6570; --line: #E3DFD6;
+  --accent: #0F766E; --accent-ink: #FFFFFF; --accent-soft: #D9EFEB;
+  --good: #23784A; --good-soft: #DEF3E5; --bad: #B4410F; --bad-soft: #FBE8DD;
+  --mid: #B7791F; --mid-soft: #FBF0D9;
+  --focus: #2563EB; --radius: 14px;
+  --font: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121417; --surface: #1B1E23; --ink: #ECEDEE; --muted: #A3A9B2; --line: #2D3239;
+    --accent: #3CC7B1; --accent-ink: #0B1F1C; --accent-soft: #15393A;
+    --good: #63D493; --good-soft: #163425; --bad: #F39A66; --bad-soft: #3B2519;
+    --mid: #E8B45A; --mid-soft: #3A2E17; --focus: #7AA7FF;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 18px/1.55 var(--font); }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 8px; }
+.wrap { max-width: 760px; margin: 0 auto; padding: 0 16px 64px; }
+
+/* header */
+header { position: sticky; top: 0; z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
+.bar { max-width: 760px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.brand { font-weight: 700; font-size: 17px; margin-right: auto; white-space: nowrap; }
+.brand small { color: var(--muted); font-weight: 400; }
+.pill { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 14px; font-size: 15px; white-space: nowrap; }
+.pill.on { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.streak { font-size: 15px; color: var(--muted); white-space: nowrap; }
+.streak b { color: var(--ink); }
+nav.tabs { max-width: 760px; margin: 0 auto; padding: 0 16px 10px; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+nav.tabs button { border: 0; background: transparent; padding: 8px 14px; border-radius: 10px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+nav.tabs button[aria-selected="true"] { background: var(--surface); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); }
+
+/* topics */
+.topics { display: flex; gap: 8px; flex-wrap: wrap; margin: 18px 0 6px; }
+.chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 5px 12px; font-size: 15px; white-space: nowrap; }
+@media (max-width: 560px) {
+  .topics { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 6px; scrollbar-width: thin; }
+  .chip { flex: none; }
+  .brand small { display: none; }
+}
+.focusline { margin-top: 16px; }
+.chip[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--ink); font-weight: 700; }
+.hint { color: var(--muted); font-size: 15px; }
+
+/* cards & layout */
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; margin-top: 16px; }
+h1, h2, h3 { line-height: 1.25; margin: 0 0 8px; }
+h1 { font-size: 26px; } h2 { font-size: 22px; } h3 { font-size: 18px; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.spread { justify-content: space-between; }
+.btn { border: 0; background: var(--accent); color: var(--accent-ink); padding: 12px 20px; border-radius: 12px; font-weight: 700; min-height: 48px; }
+.btn.ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); font-weight: 400; }
+.btn.small { padding: 6px 12px; min-height: 36px; font-size: 15px; }
+kbd { font: 13px/1 ui-monospace, SFMono-Regular, Menlo, monospace; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 6px; padding: 2px 6px; background: var(--bg); color: var(--muted); }
+
+/* progress */
+.prog { height: 12px; border-radius: 999px; background: var(--line); overflow: hidden; display: flex; }
+.prog span { display: block; height: 100%; transition: width .4s ease; }
+.prog .m { background: var(--good); } .prog .f { background: var(--mid); }
+.legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 14px; color: var(--muted); margin-top: 8px; }
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: 0; }
+
+/* question */
+.label { text-transform: uppercase; letter-spacing: .06em; font-size: 13px; color: var(--muted); font-weight: 700; }
+.prompt { font-size: 24px; line-height: 1.4; margin: 6px 0 20px; }
+.opts { display: grid; gap: 10px; }
+.opt { display: flex; gap: 12px; align-items: flex-start; text-align: left; width: 100%; border: 1px solid var(--line); background: var(--surface); border-radius: 12px; padding: 14px 16px; min-height: 56px; }
+.opt:hover:not(:disabled) { border-color: var(--accent); }
+.opt .k { flex: none; width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; font-size: 14px; font-weight: 700; background: var(--bg); color: var(--muted); border: 1px solid var(--line); }
+.opt.right { background: var(--good-soft); border-color: var(--good); }
+.opt.wrong { background: var(--bad-soft); border-color: var(--bad); }
+.opt:disabled { cursor: default; }
+.opt:disabled:not(.right):not(.wrong) { opacity: .55; }
+input.answer { width: 100%; padding: 14px 16px; border-radius: 12px; border: 2px solid var(--line); background: var(--bg); font-size: 20px; }
+input.answer:focus { border-color: var(--accent); outline: none; }
+.fb { margin-top: 16px; padding: 14px 16px; border-radius: 12px; }
+.fb.good { background: var(--good-soft); } .fb.bad { background: var(--bad-soft); }
+.fb strong { display: block; font-size: 19px; }
+.fb .why { color: var(--muted); margin-top: 4px; }
+.actions { margin-top: 18px; }
+
+/* flashcards */
+.flip { perspective: 1200px; margin-top: 16px; }
+.flip-inner { position: relative; min-height: 260px; transition: transform .45s ease; transform-style: preserve-3d; }
+.flip.flipped .flip-inner { transform: rotateY(180deg); }
+.face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: grid; place-items: center; text-align: center; padding: 28px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); font-size: 24px; cursor: pointer; }
+.face.back { transform: rotateY(180deg); font-size: 21px; }
+.face .tag { position: absolute; top: 14px; left: 18px; }
+
+/* cram */
+ol.top { padding-left: 0; list-style: none; counter-reset: n; display: grid; gap: 10px; margin: 0; }
+ol.top li { counter-increment: n; display: grid; grid-template-columns: 36px 1fr; gap: 10px; align-items: start; }
+ol.top li::before { content: counter(n); width: 30px; height: 30px; border-radius: 9px; background: var(--accent-soft); display: grid; place-items: center; font-weight: 700; font-size: 15px; }
+.pair { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
+.pair:first-child { border-top: 0; }
+@media (max-width: 560px) { .pair { grid-template-columns: 1fr; gap: 2px; } .prompt { font-size: 21px; } .face { font-size: 21px; } }
+
+/* summary list */
+.slist { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 6px; }
+.slist li { display: flex; justify-content: space-between; gap: 12px; padding: 8px 12px; border-radius: 10px; background: var(--bg); }
+.badge { font-size: 13px; font-weight: 700; padding: 2px 10px; border-radius: 999px; white-space: nowrap; align-self: center; }
+.badge.m { background: var(--good-soft); color: var(--good); } .badge.l { background: var(--mid-soft); color: var(--mid); } .badge.x { background: var(--bad-soft); color: var(--bad); }
+
+/* dialogs */
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: grid; place-items: center; padding: 16px; z-index: 20; }
+.overlay .card { max-width: 460px; width: 100%; margin: 0; }
+.pop { animation: pop .35s ease; }
+@keyframes pop { 0% { transform: scale(.96); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+details.opts-panel summary { cursor: pointer; color: var(--muted); font-size: 15px; }
+.settings { display: grid; gap: 12px; margin-top: 12px; }
+.settings label { display: flex; justify-content: space-between; gap: 12px; align-items: center; font-size: 16px; }
+.settings select { padding: 6px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+footer { color: var(--muted); font-size: 14px; margin-top: 40px; }
+footer a { color: inherit; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <div class="brand">D426 Study <small>Data Management Foundations</small></div>
+    <span class="streak" id="streak" aria-live="polite"></span>
+    <button class="pill" id="timerBtn" title="Focus sprint timer"></button>
+  </div>
+  <nav class="tabs" role="tablist" aria-label="Study modes">
+    <button role="tab" data-tab="learn">Learn</button>
+    <button role="tab" data-tab="flash">Flashcards</button>
+    <button role="tab" data-tab="test">Practice test</button>
+    <button role="tab" data-tab="cram">Cram sheet</button>
+    <button role="tab" data-tab="help">How to use</button>
+  </nav>
+</header>
+<main class="wrap" id="main"></main>
+<div class="sr" aria-live="assertive" id="say"></div>
+<script src="data/cards.js"></script>
+<script>
+(function () {
+"use strict";
+const D = window.D426;
+const main = document.getElementById("main");
+if (!D) { main.innerHTML = '<div class="card">Card data did not load. Make sure <code>data/cards.js</code> sits next to this page.</div>'; return; }
+
+/* ---------- storage (never required) ---------- */
+const store = {
+  get(k, d) { try { const v = localStorage.getItem("d426:" + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem("d426:" + k, JSON.stringify(v)); } catch (e) {} }
+};
+
+/* ---------- helpers ---------- */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const say = t => { const el = document.getElementById("say"); el.textContent = ""; setTimeout(() => { el.textContent = t; }, 30); };
+const topicName = Object.fromEntries(D.topics.map(t => [t.id, t.name]));
+const terms = D.terms.map(c => Object.assign({ id: c.t }, c));
+const byId = Object.fromEntries(terms.map(c => [c.id, c]));
+const PRAISE = ["Nice.", "Got it.", "Yes!", "Locked in.", "Clean.", "That's it.", "Easy.", "Right on."];
+
+/* ---------- state ---------- */
+const S = {
+  tab: store.get("tab", "learn"),
+  topics: store.get("topics", []),
+  settings: Object.assign({ round: 7, prompt: "def", typed: true, auto: true, front: "term" }, store.get("settings", {})),
+  mastery: store.get("mastery", {}),
+  streak: 0,
+  best: store.get("best", 0)
+};
+const save = () => { store.set("settings", S.settings); store.set("mastery", S.mastery); store.set("topics", S.topics); store.set("tab", S.tab); };
+const scoped = arr => S.topics.length ? arr.filter(x => S.topics.includes(x.topic)) : arr;
+const lvl = id => S.mastery[id] || 0;
+let L = null, F = null, T = null;
+
+/* ---------- streak ---------- */
+function bump(ok) {
+  S.streak = ok ? S.streak + 1 : 0;
+  if (S.streak > S.best) { S.best = S.streak; store.set("best", S.best); }
+  drawStreak();
+}
+function drawStreak() {
+  document.getElementById("streak").innerHTML = S.streak >= 2 ? `<b>${S.streak}</b> in a row` : (S.best ? `Best streak <b>${S.best}</b>` : "");
+}
+
+/* ---------- focus timer ---------- */
+const TM = { mins: store.get("sprint", 15), end: null, iv: null };
+const timerBtn = document.getElementById("timerBtn");
+function drawTimer() {
+  if (!TM.end) { timerBtn.textContent = `Start ${TM.mins}-min focus`; timerBtn.classList.remove("on"); document.title = "D426 Study"; return; }
+  const left = Math.max(0, TM.end - Date.now());
+  const m = Math.floor(left / 60000), s = Math.floor(left / 1000) % 60;
+  const txt = `${m}:${String(s).padStart(2, "0")}`;
+  timerBtn.textContent = `${txt} left · stop`;
+  timerBtn.classList.add("on");
+  document.title = `${txt} · D426 Study`;
+  if (left <= 0) { stopTimer(); breakTime(); }
+}
+function stopTimer() { clearInterval(TM.iv); TM.end = null; drawTimer(); }
+timerBtn.addEventListener("click", () => {
+  if (TM.end) { stopTimer(); return; }
+  modal(`<h2>Focus sprint</h2><p class="hint">Pick a length. Work until the timer ends, then take a real break.</p>
+    <div class="row" style="margin-top:12px">${[10, 15, 25].map(m => `<button class="btn ${m === TM.mins ? "" : "ghost"}" data-min="${m}">${m} min</button>`).join("")}</div>`,
+    box => box.querySelectorAll("[data-min]").forEach(b => b.onclick = () => {
+      TM.mins = +b.dataset.min; store.set("sprint", TM.mins);
+      TM.end = Date.now() + TM.mins * 60000; clearInterval(TM.iv); TM.iv = setInterval(drawTimer, 1000); drawTimer(); closeModal();
+    }));
+});
+function breakTime() {
+  modal(`<h2>Sprint done. Break time.</h2>
+    <p>You focused for ${TM.mins} minutes. Take 5: stand up, drink water, look at something far away.</p>
+    <div class="row actions"><button class="btn" id="again">Start another sprint</button><button class="btn ghost" id="later">Close</button></div>`,
+    box => { box.querySelector("#again").onclick = () => { closeModal(); timerBtn.click(); }; box.querySelector("#later").onclick = closeModal; });
+}
+
+/* ---------- modal ---------- */
+let modalEl = null;
+function modal(html, wire) {
+  closeModal();
+  modalEl = document.createElement("div");
+  modalEl.className = "overlay";
+  modalEl.innerHTML = `<div class="card pop" role="dialog" aria-modal="true">${html}</div>`;
+  modalEl.addEventListener("click", e => { if (e.target === modalEl) closeModal(); });
+  document.body.appendChild(modalEl);
+  if (wire) wire(modalEl);
+  const f = modalEl.querySelector("button"); if (f) f.focus();
+}
+function closeModal() { if (modalEl) { modalEl.remove(); modalEl = null; } }
+
+/* ---------- tabs & topic chips ---------- */
+document.querySelectorAll("nav.tabs button").forEach(b => b.addEventListener("click", () => { S.tab = b.dataset.tab; save(); render(); }));
+function chips() {
+  const all = !S.topics.length;
+  return `<div class="topics" role="group" aria-label="Topics">
+    <button class="chip" aria-pressed="${all}" data-topic="">All topics</button>
+    ${D.topics.map(t => `<button class="chip" aria-pressed="${S.topics.includes(t.id)}" data-topic="${t.id}">${esc(t.name)}</button>`).join("")}
+  </div><div class="hint">Tip: pick one topic at a time. Small chunks stick better.</div>`;
+}
+function focusLine() {
+  const names = S.topics.length ? S.topics.map(t => topicName[t]).join(", ") : "All topics";
+  return `<div class="row spread focusline"><span class="hint">Studying: <b style="color:var(--ink)">${esc(names)}</b></span><button class="btn ghost small" id="endsess">End session</button></div>`;
+}
+function wireEnd(reset) { const b = main.querySelector("#endsess"); if (b) b.onclick = () => { reset(); render(); }; }
+function wireChips() {
+  main.querySelectorAll("[data-topic]").forEach(b => b.onclick = () => {
+    const id = b.dataset.topic;
+    if (!id) S.topics = [];
+    else S.topics = S.topics.includes(id) ? S.topics.filter(x => x !== id) : S.topics.concat(id);
+    L = F = T = null; save(); render();
+  });
+}
+
+/* ---------- mastery bar ---------- */
+function masteryBar(pool) {
+  const n = pool.length || 1;
+  const m = pool.filter(c => lvl(c.id) >= 2).length, f = pool.filter(c => lvl(c.id) === 1).length;
+  return `<div class="prog" role="img" aria-label="${m} mastered, ${f} familiar, ${pool.length - m - f} not started"><span class="m" style="width:${m / n * 100}%"></span><span class="f" style="width:${f / n * 100}%"></span></div>
+  <div class="legend"><span><i class="dot" style="background:var(--good)"></i>Mastered ${m}</span><span><i class="dot" style="background:var(--mid)"></i>Familiar ${f}</span><span><i class="dot" style="background:var(--line)"></i>New ${pool.length - m - f}</span></div>`;
+}
+
+/* =========================================================
+   LEARN  (Quizlet-style: rounds, MC first, then typed)
+   ========================================================= */
+const typedOn = () => S.settings.typed && S.settings.prompt === "def";
+function startRound() {
+  const pool = scoped(terms).filter(c => lvl(c.id) < 2);
+  if (!pool.length) { L = { finished: true }; render(); return; }
+  const inProg = shuffle(pool.filter(c => lvl(c.id) === 1));
+  const fresh = shuffle(pool.filter(c => lvl(c.id) === 0));
+  const cards = inProg.concat(fresh).slice(0, S.settings.round);
+  L = { cards, queue: shuffle(cards), asked: 0, len: cards.length, retry: {}, results: {}, cur: null, round: (L && L.round ? L.round : 0) + 1 };
+  nextQ();
+}
+function options(card) {
+  const same = shuffle(terms.filter(c => c.topic === card.topic && c.id !== card.id));
+  const other = shuffle(terms.filter(c => c.topic !== card.topic));
+  const wrong = same.concat(other).slice(0, 3);
+  return shuffle([card].concat(wrong));
+}
+function nextQ() {
+  if (!L.queue.length) { L.summary = true; L.cur = null; render(); return; }
+  const card = L.queue.shift();
+  const mode = lvl(card.id) >= 1 && typedOn() ? "type" : "mc";
+  L.cur = { card, mode, opts: mode === "mc" ? options(card) : null, done: false, prev: lvl(card.id) };
+  L.asked++;
+  render();
+}
+function norm(s) { return String(s).toLowerCase().replace(/[^a-z0-9%_]/g, ""); }
+function dist(a, b) {
+  const m = a.length, n = b.length; if (!m) return n; if (!n) return m;
+  let p = Array.from({ length: n + 1 }, (_, j) => j);
+  for (let i = 1; i <= m; i++) { const c = [i]; for (let j = 1; j <= n; j++) c[j] = Math.min(p[j] + 1, c[j - 1] + 1, p[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)); p = c; }
+  return p[n];
+}
+function accepted(card) {
+  const out = [card.t, card.t.replace(/\s*\(.*?\)\s*/g, " ")];
+  return out.concat(card.alts || []).map(norm).filter(Boolean);
+}
+function grade(card, given) {
+  const g = norm(given); if (!g) return { ok: false };
+  for (const a of accepted(card)) {
+    if (a === g) return { ok: true, exact: true };
+    const tol = a.length <= 4 ? 0 : a.length <= 9 ? 1 : 2;
+    if (dist(a, g) <= tol) return { ok: true, exact: false };
+  }
+  return { ok: false };
+}
+function answer(ok, given) {
+  const c = L.cur; if (c.done) return;
+  c.done = true; c.ok = ok; c.given = given;
+  const id = c.card.id;
+  if (ok) { S.mastery[id] = Math.min(2, c.prev + 1); }
+  else { S.mastery[id] = 0; if (!L.retry[id]) { L.retry[id] = true; L.queue.push(c.card); L.len++; c.requeued = true; } }
+  L.results[id] = lvl(id) >= 2 ? "m" : ok ? "l" : "x";
+  bump(ok); save(); render();
+  say(ok ? "Correct" : "Incorrect. The answer is " + (S.settings.prompt === "def" ? c.card.t : c.card.d));
+  if (ok && S.settings.auto) { const ref = c; setTimeout(() => { if (L && L.cur === ref && S.tab === "learn") nextQ(); }, 1100); }
+}
+function override() {
+  const c = L.cur, id = c.card.id;
+  S.mastery[id] = Math.min(2, c.prev + 1);
+  if (c.requeued) { L.queue = L.queue.filter(x => x.id !== id); L.len--; L.retry[id] = false; }
+  c.ok = true; c.overridden = true;
+  L.results[id] = lvl(id) >= 2 ? "m" : "l";
+  bump(true); save(); render();
+}
+function renderLearn() {
+  const pool = scoped(terms);
+  let h = (!L || L.finished ? chips() : focusLine()) + `<div class="card">${masteryBar(pool)}</div>`;
+  if (!L) {
+    const left = pool.filter(c => lvl(c.id) < 2).length;
+    h += `<div class="card">
+      <h1>Learn</h1>
+      <p>Short rounds of ${S.settings.round}. Multiple choice first; once you know a card, you type the answer. Miss one and it comes back later in the round.</p>
+      <p class="hint">${left} of ${pool.length} terms left to master in this selection.</p>
+      <div class="row actions"><button class="btn" id="go">${left ? "Start round" : "All mastered: see results"}</button><span class="hint"><kbd>Enter</kbd> to start</span></div>
+      <details class="opts-panel" style="margin-top:18px"><summary>Options</summary>
+        <div class="settings">
+          <label>Cards per round <select id="s-round">${[5, 7, 10].map(n => `<option ${n === S.settings.round ? "selected" : ""}>${n}</option>`).join("")}</select></label>
+          <label>Show me the <select id="s-prompt"><option value="def" ${S.settings.prompt === "def" ? "selected" : ""}>definition, I answer the term</option><option value="term" ${S.settings.prompt === "term" ? "selected" : ""}>term, I answer the definition</option></select></label>
+          <label>Typed answers after the first correct <input type="checkbox" id="s-typed" ${S.settings.typed ? "checked" : ""}></label>
+          <label>Auto-advance when correct <input type="checkbox" id="s-auto" ${S.settings.auto ? "checked" : ""}></label>
+          <div class="row"><button class="btn ghost small" id="s-reset">Reset Learn progress</button></div>
+          <p class="hint" style="margin:0">Typed answers only apply when you're shown the definition.</p>
+        </div>
+      </details></div>`;
+  } else if (L.finished) {
+    h += `<div class="card pop"><h1>Everything here is mastered.</h1><p>${pool.length} terms in this selection. Lock it in with the practice test, or reset and run it again tomorrow morning.</p>
+      <div class="row actions"><button class="btn" id="to-test">Take a practice test</button><button class="btn ghost" id="reset-sel">Reset this selection</button></div></div>`;
+  } else if (L.summary) {
+    const ids = Object.keys(L.results);
+    const nm = ids.filter(i => L.results[i] === "m").length;
+    h += `<div class="card pop"><div class="label">Round ${L.round} complete</div>
+      <h1>${nm ? `${nm} newly mastered.` : "Progress made."} Keep going.</h1>
+      <ul class="slist">${ids.map(i => `<li><span>${esc(i)}</span><span class="badge ${L.results[i]}">${{ m: "Mastered", l: "Familiar", x: "Still learning" }[L.results[i]]}</span></li>`).join("")}</ul>
+      <div class="row actions"><button class="btn" id="next-round">Next round</button><button class="btn ghost" id="stop">Take a break</button><span class="hint"><kbd>Enter</kbd> next round</span></div></div>`;
+  } else {
+    const c = L.cur, card = c.card, showDef = S.settings.prompt === "def";
+    const promptTxt = showDef ? card.d : card.t;
+    const ans = x => showDef ? x.t : x.d;
+    h += `<div class="card"><div class="row spread"><span class="label">${showDef ? "Definition" : "Term"} · ${esc(topicName[card.topic])}</span><span class="hint">${Math.min(L.asked, L.len)} / ${L.len}</span></div>
+      <div class="prog" style="height:6px;margin:10px 0 14px"><span class="m" style="width:${(L.asked - (c.done ? 0 : 1)) / L.len * 100}%;background:var(--accent)"></span></div>
+      <div class="prompt">${esc(promptTxt)}</div>`;
+    if (c.mode === "mc") {
+      h += `<div class="label" style="margin-bottom:8px">Choose the ${showDef ? "term" : "definition"}</div><div class="opts">` +
+        c.opts.map((o, i) => {
+          let cls = "";
+          if (c.done) { if (o.id === card.id) cls = "right"; else if (o.id === c.given) cls = "wrong"; }
+          return `<button class="opt ${cls}" data-opt="${i}" ${c.done ? "disabled" : ""}><span class="k">${i + 1}</span><span>${esc(ans(o))}</span></button>`;
+        }).join("") + `</div>`;
+      if (!c.done) h += `<div class="row actions"><span class="hint">Press <kbd>1</kbd>–<kbd>4</kbd></span><button class="btn ghost small" id="idk" style="margin-left:auto">Don't know</button></div>`;
+    } else {
+      h += `<div class="label" style="margin-bottom:8px">Type the term</div>
+        <input class="answer" id="typed" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Your answer" ${c.done ? `disabled value="${esc(c.given || "")}"` : ""}>`;
+      if (!c.done) h += `<div class="row actions"><button class="btn" id="submit">Answer</button><button class="btn ghost" id="idk">Don't know</button><span class="hint"><kbd>Enter</kbd> to answer</span></div>`;
+    }
+    if (c.done) {
+      if (c.ok) {
+        const mastered = lvl(card.id) >= 2;
+        const fuzzy = c.mode === "type" && c.close;
+        h += `<div class="fb good pop"><strong>${c.overridden ? "Counted as correct." : mastered ? "Mastered!" : pick(PRAISE)}</strong>${fuzzy ? `<div class="why">Close enough. Exact term: <b>${esc(card.t)}</b></div>` : ""}</div>`;
+      } else {
+        h += `<div class="fb bad pop"><strong>Not quite. It's coming back later this round.</strong><div>Answer: <b>${esc(ans(card))}</b></div>${c.mode === "type" && c.given ? `<div class="why">You wrote: ${esc(c.given)}</div>` : ""}</div>`;
+      }
+      h += `<div class="row actions"><button class="btn" id="cont">Continue</button>${!c.ok && c.mode === "type" && c.given ? `<button class="btn ghost" id="override">I was right</button>` : ""}<span class="hint"><kbd>Enter</kbd> continue</span></div>`;
+    }
+    h += `</div>`;
+  }
+  main.innerHTML = h; wireChips(); wireEnd(() => { L = null; });
+  const $ = id => main.querySelector("#" + id);
+  if ($("go")) $("go").onclick = () => { startRound(); };
+  if ($("s-round")) {
+    $("s-round").onchange = e => { S.settings.round = +e.target.value; save(); };
+    $("s-prompt").onchange = e => { S.settings.prompt = e.target.value; save(); render(); };
+    $("s-typed").onchange = e => { S.settings.typed = e.target.checked; save(); };
+    $("s-auto").onchange = e => { S.settings.auto = e.target.checked; save(); };
+    $("s-reset").onclick = () => { if (confirm("Reset all Learn progress?")) { S.mastery = {}; save(); render(); } };
+  }
+  if ($("to-test")) $("to-test").onclick = () => { S.tab = "test"; L = null; save(); render(); };
+  if ($("reset-sel")) $("reset-sel").onclick = () => { scoped(terms).forEach(c => delete S.mastery[c.id]); L = null; save(); render(); };
+  if ($("next-round")) { $("next-round").onclick = () => startRound(); $("next-round").focus(); }
+  if ($("stop")) $("stop").onclick = () => { L = null; render(); };
+  main.querySelectorAll("[data-opt]").forEach(b => b.onclick = () => { const o = L.cur.opts[+b.dataset.opt]; answer(o.id === L.cur.card.id, o.id); });
+  if ($("idk")) $("idk").onclick = () => answer(false, "");
+  if ($("submit")) $("submit").onclick = submitTyped;
+  if ($("cont")) { $("cont").onclick = nextQ; $("cont").focus(); }
+  if ($("override")) $("override").onclick = override;
+  if ($("typed") && !L.cur.done) $("typed").focus();
+}
+function submitTyped() {
+  const v = main.querySelector("#typed").value;
+  if (!v.trim()) return;
+  const r = grade(L.cur.card, v);
+  L.cur.close = r.ok && !r.exact;
+  answer(r.ok, v);
+}
+
+/* =========================================================
+   FLASHCARDS  (flip, sort into Know / Still learning)
+   ========================================================= */
+const newFlash = ids => ({ ids: ids || shuffle(scoped(terms).map(c => c.id)), i: 0, flipped: false, know: [], learning: [] });
+function startFlash(ids) { F = newFlash(ids); render(); }
+function flashMark(knows) {
+  const id = F.ids[F.i];
+  (knows ? F.know : F.learning).push(id);
+  if (knows && lvl(id) < 1) { S.mastery[id] = 1; save(); }
+  F.i++; F.flipped = false; render();
+}
+function renderFlash() {
+  if (!F) F = newFlash();
+  let h = chips();
+  if (F.i >= F.ids.length) {
+    h += `<div class="card pop"><h1>Deck done.</h1><p><b>${F.know.length}</b> know it · <b>${F.learning.length}</b> still learning</p>
+      <div class="row actions">${F.learning.length ? `<button class="btn" id="redo">Review the ${F.learning.length} I'm still learning</button>` : ""}<button class="btn ${F.learning.length ? "ghost" : ""}" id="restart">Shuffle and restart</button></div></div>`;
+  } else {
+    const c = byId[F.ids[F.i]], frontTerm = S.settings.front === "term";
+    h += `<div class="row spread" style="margin-top:16px"><span class="hint">${F.i + 1} / ${F.ids.length} · know ${F.know.length} · learning ${F.learning.length}</span>
+      <button class="btn ghost small" id="side">Front: ${frontTerm ? "term" : "definition"}</button></div>
+      <div class="flip ${F.flipped ? "flipped" : ""}" id="flip" role="button" tabindex="0" aria-label="Flip card">
+        <div class="flip-inner"><div class="face front"><span class="label tag">${esc(topicName[c.topic])}</span>${esc(frontTerm ? c.t : c.d)}</div>
+        <div class="face back"><span class="label tag">${frontTerm ? "Definition" : "Term"}</span>${esc(frontTerm ? c.d : c.t)}</div></div>
+      </div>
+      <div class="row actions" style="justify-content:center">
+        <button class="btn ghost" id="learning">Still learning <kbd>1</kbd></button>
+        <button class="btn" id="know">Know it <kbd>2</kbd></button>
+      </div>
+      <p class="hint" style="text-align:center"><kbd>Space</kbd> flip · <kbd>←</kbd> back · <kbd>→</kbd> skip</p>`;
+  }
+  main.innerHTML = h; wireChips();
+  const $ = id => main.querySelector("#" + id);
+  if ($("flip")) { $("flip").onclick = () => { F.flipped = !F.flipped; $("flip").classList.toggle("flipped", F.flipped); }; }
+  if ($("know")) $("know").onclick = () => flashMark(true);
+  if ($("learning")) $("learning").onclick = () => flashMark(false);
+  if ($("side")) $("side").onclick = () => { S.settings.front = S.settings.front === "term" ? "def" : "term"; F.flipped = false; save(); render(); };
+  if ($("redo")) $("redo").onclick = () => startFlash(shuffle(F.learning));
+  if ($("restart")) $("restart").onclick = () => startFlash();
+}
+
+/* =========================================================
+   PRACTICE TEST  (multiple choice, instant feedback)
+   ========================================================= */
+function startTest(n, qs) {
+  const pool = qs || shuffle(scoped(D.questions));
+  const list = pool.slice(0, n || pool.length).map(q => {
+    const order = shuffle([0, 1, 2, 3]);
+    return { q, order, a: order.indexOf(q.a) };
+  });
+  T = { list, i: 0, picked: null, right: 0, missed: [] };
+  render();
+}
+function renderTest() {
+  let h = !T ? chips() : focusLine();
+  const pool = scoped(D.questions);
+  if (!T) {
+    h += `<div class="card"><h1>Practice test</h1><p>Exam-style multiple choice with the answer explained right away. ${pool.length} questions in this selection.</p>
+      <div class="row actions">${[10, 20].filter(n => n < pool.length).map(n => `<button class="btn ${n === 10 ? "" : "ghost"}" data-n="${n}">${n} questions</button>`).join("")}<button class="btn ${pool.length <= 10 ? "" : "ghost"}" data-n="0">All ${pool.length}</button></div></div>`;
+  } else if (T.i >= T.list.length) {
+    const pct = Math.round(T.right / T.list.length * 100);
+    h += `<div class="card pop"><div class="label">Results</div><h1>${T.right} / ${T.list.length} (${pct}%)</h1>
+      <p>${pct >= 85 ? "Strong. You're ready for these topics." : pct >= 65 ? "Solid base. Review the misses below, then retry them." : "Good data. Go back to Learn on the topics you missed, then retry."}</p>
+      ${T.missed.length ? `<h3 style="margin-top:16px">Review these</h3><ul class="slist">${T.missed.map(m => `<li style="display:block"><div>${esc(m.q.q)}</div><div class="hint">Answer: <b style="color:var(--ink)">${esc(m.q.o[m.q.a])}</b> · ${esc(m.q.e)}</div></li>`).join("")}</ul>` : ""}
+      <div class="row actions">${T.missed.length ? `<button class="btn" id="retry">Retry the ${T.missed.length} I missed</button>` : ""}<button class="btn ${T.missed.length ? "ghost" : ""}" id="newtest">New test</button></div></div>`;
+  } else {
+    const it = T.list[T.i], q = it.q, done = T.picked !== null;
+    h += `<div class="card"><div class="row spread"><span class="label">${esc(topicName[q.topic])}</span><span class="hint">${T.i + 1} / ${T.list.length} · ${T.right} right</span></div>
+      <div class="prog" style="height:6px;margin:10px 0 14px"><span class="m" style="width:${T.i / T.list.length * 100}%;background:var(--accent)"></span></div>
+      <div class="prompt">${esc(q.q)}</div><div class="opts">` +
+      it.order.map((oi, i) => {
+        let cls = ""; if (done) { if (i === it.a) cls = "right"; else if (i === T.picked) cls = "wrong"; }
+        return `<button class="opt ${cls}" data-pick="${i}" ${done ? "disabled" : ""}><span class="k">${i + 1}</span><span>${esc(q.o[oi])}</span></button>`;
+      }).join("") + `</div>`;
+    if (done) {
+      const ok = T.picked === it.a;
+      h += `<div class="fb ${ok ? "good" : "bad"} pop"><strong>${ok ? pick(PRAISE) : "Not this time."}</strong><div class="why">${esc(q.e)}</div></div>
+        <div class="row actions"><button class="btn" id="tnext">${T.i + 1 < T.list.length ? "Next question" : "See results"}</button><span class="hint"><kbd>Enter</kbd></span></div>`;
+    } else h += `<p class="hint" style="margin-top:14px">Press <kbd>1</kbd>–<kbd>4</kbd></p>`;
+    h += `</div>`;
+  }
+  main.innerHTML = h; wireChips(); wireEnd(() => { T = null; });
+  const $ = id => main.querySelector("#" + id);
+  main.querySelectorAll("[data-n]").forEach(b => b.onclick = () => startTest(+b.dataset.n));
+  main.querySelectorAll("[data-pick]").forEach(b => b.onclick = () => testPick(+b.dataset.pick));
+  if ($("tnext")) { $("tnext").onclick = () => { T.i++; T.picked = null; render(); }; $("tnext").focus(); }
+  if ($("retry")) $("retry").onclick = () => startTest(0, shuffle(T.missed.map(m => m.q)));
+  if ($("newtest")) $("newtest").onclick = () => { T = null; render(); };
+}
+function testPick(i) {
+  if (!T || T.picked !== null) return;
+  const it = T.list[T.i]; T.picked = i;
+  const ok = i === it.a;
+  if (ok) T.right++; else T.missed.push(it);
+  bump(ok); render(); say(ok ? "Correct" : "Incorrect");
+}
+
+/* =========================================================
+   CRAM SHEET & HELP
+   ========================================================= */
+function renderCram() {
+  main.innerHTML = `<div class="card"><h1>Cram sheet</h1><p class="hint">Read this once right before the exam. Ten facts, then the pairs people mix up.</p>
+    <ol class="top" style="margin-top:14px">${D.top10.map(([k, v]) => `<li><div><b>${esc(k)}</b><div>${esc(v)}</div></div></li>`).join("")}</ol></div>
+    <div class="card"><h2>Don't mix these up</h2>${D.pairs.map(([k, v]) => `<div class="pair"><b>${esc(k)}</b><span>${esc(v)}</span></div>`).join("")}</div>`;
+}
+function renderHelp() {
+  main.innerHTML = `<div class="card"><h1>How to use this</h1>
+    <ol>
+      <li><b>Start a focus sprint</b> (top right). 15 minutes is a good default.</li>
+      <li><b>Pick one topic</b> with the chips, then run <b>Learn</b> until that topic's bar is green.</li>
+      <li><b>Take the practice test</b> on that topic. Retry what you miss.</li>
+      <li>Break when the timer ends. Then the next topic.</li>
+      <li>Right before the exam: <b>Cram sheet</b>.</li>
+    </ol>
+    <p class="hint">Your progress saves in this browser automatically.</p></div>
+    <div class="card"><h2>Keyboard shortcuts</h2>
+    <div class="pair"><span><kbd>1</kbd>–<kbd>4</kbd></span><span>Pick an answer</span></div>
+    <div class="pair"><span><kbd>Enter</kbd></span><span>Submit, continue, next round</span></div>
+    <div class="pair"><span><kbd>Space</kbd></span><span>Flip a flashcard</span></div>
+    <div class="pair"><span><kbd>1</kbd> / <kbd>2</kbd></span><span>Flashcards: still learning / know it</span></div>
+    <div class="pair"><span><kbd>←</kbd> <kbd>→</kbd></span><span>Flashcards: back / skip</span></div>
+    <div class="pair"><span><kbd>Esc</kbd></span><span>Close a pop-up</span></div></div>
+    <footer>Personal study notes for WGU D426, written in my own words. Not affiliated with WGU or zyBooks. <a href="https://github.com/unkwnCokonut/wgu-d426-study-guide">Source on GitHub</a></footer>`;
+}
+
+/* ---------- render ---------- */
+function render() {
+  document.querySelectorAll("nav.tabs button").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === S.tab));
+  ({ learn: renderLearn, flash: renderFlash, test: renderTest, cram: renderCram, help: renderHelp }[S.tab] || renderLearn)();
+}
+
+/* ---------- keyboard ---------- */
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") { closeModal(); return; }
+  if (modalEl || e.metaKey || e.ctrlKey || e.altKey) return;
+  const inInput = e.target.tagName === "INPUT" || e.target.tagName === "SELECT";
+  const num = /^[1-4]$/.test(e.key) ? +e.key - 1 : -1;
+  if (S.tab === "learn") {
+    if (!L) { if (e.key === "Enter" && !inInput && e.target.tagName !== "BUTTON" && e.target.tagName !== "SUMMARY") { e.preventDefault(); startRound(); } return; }
+    if (L.summary) { if (e.key === "Enter" && e.target.tagName !== "BUTTON") { e.preventDefault(); startRound(); } return; }
+    const c = L.cur; if (!c) return;
+    if (!c.done && c.mode === "mc" && num >= 0 && !inInput) { e.preventDefault(); const o = c.opts[num]; answer(o.id === c.card.id, o.id); }
+    else if (!c.done && c.mode === "type" && e.key === "Enter" && inInput) { e.preventDefault(); submitTyped(); }
+    else if (c.done && e.key === "Enter" && e.target.tagName !== "BUTTON") { e.preventDefault(); nextQ(); }
+  } else if (S.tab === "flash" && F && F.i < F.ids.length && !inInput) {
+    if (e.key === " ") { e.preventDefault(); F.flipped = !F.flipped; const el = main.querySelector("#flip"); if (el) el.classList.toggle("flipped", F.flipped); }
+    else if (e.key === "1") flashMark(false);
+    else if (e.key === "2") flashMark(true);
+    else if (e.key === "ArrowRight") { F.i = Math.min(F.ids.length, F.i + 1); F.flipped = false; render(); }
+    else if (e.key === "ArrowLeft") { F.i = Math.max(0, F.i - 1); F.flipped = false; render(); }
+  } else if (S.tab === "test" && T && T.i < T.list.length && !inInput) {
+    if (T.picked === null && num >= 0) { e.preventDefault(); testPick(num); }
+    else if (T.picked !== null && e.key === "Enter" && e.target.tagName !== "BUTTON") { e.preventDefault(); T.i++; T.picked = null; render(); }
+  }
+});
+
+drawTimer(); drawStreak(); render();
+})();
+</script>
+</body>
+</html>

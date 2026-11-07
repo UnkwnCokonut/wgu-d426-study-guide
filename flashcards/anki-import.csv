@@ -1,0 +1,130 @@
+Database application,Software that helps business users interact with database systems.,D426::DB_basics
+Database administrator (DBA),Secures the database system against unauthorized users and enforces procedures for user access and system availability.,D426::DB_basics
+Authorization,"Limiting each user's access to specific tables, columns, or rows.",D426::DB_basics
+Query processor,"Interprets queries, creates and optimizes a plan, and returns results to the application.",D426::DB_basics
+Query optimization,Picking the most efficient instructions to run a query.,D426::DB_basics
+Storage manager,Translates query processor instructions into low-level file-system commands and uses indexes to find data fast.,D426::DB_basics
+Transaction manager,"Makes transactions execute properly, prevents conflicts between concurrent transactions, and restores consistency after a failure.",D426::DB_basics
+Catalog,"A directory of metadata about tables, columns, indexes, and other database objects. Also called the data dictionary.",D426::DB_basics
+Log,"A file that records every insert, update, and delete, used to recover the database.",D426::DB_basics
+API,Lets a general-purpose language like Python or Java run SQL statements.,D426::DB_basics
+Business rules,Rules based on business policy and specific to one particular database.,D426::DB_basics
+Table,"Has a name, a fixed sequence of columns, and a varying set of rows. Also called a relation or file.",D426::Relational_model
+Row,"An unnamed sequence of values, one per column. Also called a tuple or record.",D426::Relational_model
+Column,Has a name and a data type. Also called an attribute or field.,D426::Relational_model
+Cell,A single column of a single row.,D426::Relational_model
+Empty table,A table with columns but no rows.,D426::Relational_model
+Tuple,"An ordered collection of elements in parentheses, so (a, b, c) and (c, b, a) are different.",D426::Relational_model
+Data type,A named set of values from which column values are drawn.,D426::Relational_model
+Data independence,The principle that changing how data is physically stored never changes query results.,D426::Relational_model
+DDL,"SQL sublanguage that defines database structure: CREATE, ALTER, DROP.",D426::SQL_data_types
+DQL,SQL sublanguage that retrieves data: SELECT.,D426::SQL_data_types
+DML,"SQL sublanguage that changes stored data: INSERT, UPDATE, DELETE.",D426::SQL_data_types
+DCL,"SQL sublanguage that controls user access: GRANT, REVOKE.",D426::SQL_data_types
+DTL,"SQL sublanguage that manages transactions: COMMIT, ROLLBACK.",D426::SQL_data_types
+Literal,"An explicit string, numeric, or binary value written in a statement, like 'Text', 123, or x'0fa2'.",D426::SQL_data_types
+Keyword,"A word with special meaning in SQL, like SELECT, FROM, or WHERE.",D426::SQL_data_types
+Identifier,"The name of a database object, such as a table or column.",D426::SQL_data_types
+VARCHAR(N),Data type for text values from 0 to N characters long.,D426::SQL_data_types
+"DECIMAL(M, D)","Data type for numbers with M total digits, D of them after the decimal point.",D426::SQL_data_types
+INT,4-byte integer type; signed range is about -2.1 billion to 2.1 billion.,D426::SQL_data_types
+TINYINT,"1-byte integer type: -128 to 127 signed, 0 to 255 unsigned.",D426::SQL_data_types
+SMALLINT,"2-byte integer type: -32,768 to 32,767 signed, 0 to 65,535 unsigned.",D426::SQL_data_types
+BIGINT,8-byte integer type: -2^63 to 2^63 - 1 signed.,D426::SQL_data_types
+Modulo (%),Operator that returns the integer remainder of a division; 5 % 2 = 1.,D426::SQL_data_types
+CREATE TABLE,Makes a new table by naming the table and its columns with their data types.,D426::Core_statements
+DROP TABLE,Deletes a table along with all of its rows.,D426::Core_statements
+ALTER TABLE,"Adds, deletes, or modifies columns (or constraints) on an existing table.",D426::Core_statements
+INSERT,Adds new rows to a table.,D426::Core_statements
+UPDATE,"Modifies existing rows using a SET clause; with no WHERE, every row changes.",D426::Core_statements
+DELETE,"Removes rows from a table; with no WHERE, every row is removed.",D426::Core_statements
+TRUNCATE,Deletes all rows from a table but keeps the table itself.,D426::Core_statements
+MERGE,Selects data from a source table and inserts it into a target table.,D426::Core_statements
+Primary key,Column or group of columns that uniquely identifies each row; values must be unique and not NULL.,D426::Keys_constraints
+Composite primary key,A primary key made of more than one column.,D426::Keys_constraints
+Simple primary key,A primary key made of a single column.,D426::Keys_constraints
+Auto-increment column,Numeric column that automatically gets the next incrementing value when a row is inserted.,D426::Keys_constraints
+Foreign key,Column or columns that refer to a primary key; data types must match but names can differ.,D426::Keys_constraints
+Referential integrity,"Every foreign key value must match an existing primary key value, or be NULL.",D426::Keys_constraints
+RESTRICT,"Referential integrity action that rejects the violating insert, update, or delete.",D426::Keys_constraints
+SET NULL,Referential integrity action that sets invalid foreign keys to NULL.,D426::Keys_constraints
+SET DEFAULT,Referential integrity action that sets invalid foreign keys to the foreign key's default value.,D426::Keys_constraints
+CASCADE,Referential integrity action that propagates primary key changes (and deletes) to the matching foreign keys.,D426::Keys_constraints
+Constraint,A rule that governs allowable values; the database rejects statements that break it.,D426::Keys_constraints
+CHECK constraint,"Requires every value to pass a condition, such as Salary > 0.",D426::Keys_constraints
+UNIQUE constraint,No two rows may share the same value in the column.,D426::Keys_constraints
+Column constraint,A constraint written right after a column's name and data type; it governs only that column.,D426::Keys_constraints
+Table constraint,A constraint written as its own clause in CREATE TABLE; it can govern several columns.,D426::Keys_constraints
+BETWEEN,Inclusive range test: value BETWEEN min AND max means value >= min AND value <= max.,D426::Writing_queries
+LIKE,Matches text against a pattern using the wildcards % (any number of characters) and _ (exactly one character).,D426::Writing_queries
+IN,"Tests whether a value matches any value in a list, like State IN ('PA', 'NJ').",D426::Writing_queries
+ORDER BY,"Sorts the result rows, ascending by default; add DESC for descending.",D426::Writing_queries
+Aggregate function,"Processes values from a set of rows and returns one summary value, like COUNT, MIN, MAX, SUM, or AVG.",D426::Writing_queries
+GROUP BY,Puts rows with the same values into groups so aggregate functions compute once per group.,D426::Writing_queries
+HAVING,Filters group results; comes after GROUP BY and before ORDER BY.,D426::Writing_queries
+WHERE,Filters individual rows before any grouping happens.,D426::Writing_queries
+Alias,"A temporary name for a column or table, usually introduced with AS.",D426::Writing_queries
+Join,A SELECT that combines a left table and a right table into one result by comparing columns.,D426::Joins_views
+INNER JOIN,Returns only the rows that match in both tables.,D426::Joins_views
+LEFT JOIN,Returns all left table rows plus only the matching right table rows.,D426::Joins_views
+RIGHT JOIN,Returns all right table rows plus only the matching left table rows.,D426::Joins_views
+FULL JOIN,"Returns all rows from both tables, with NULLs wherever there is no match.",D426::Joins_views
+Outer join,"Any join that keeps unmatched rows: LEFT, RIGHT, or FULL.",D426::Joins_views
+Equijoin,A join that compares columns with the = operator.,D426::Joins_views
+Non-equijoin,"A join that compares columns with an operator other than =, like < or >.",D426::Joins_views
+Self-join,"A join of a table to itself, such as matching employees to their managers.",D426::Joins_views
+Cross-join,Pairs every row of one table with every row of the other; it has no ON clause.,D426::Joins_views
+UNION,Combines the results of two SELECT statements into one table.,D426::Joins_views
+Subquery,A query inside another SQL query. Also called a nested query or inner query.,D426::Joins_views
+View,A table defined by a SELECT query over one or more base tables.,D426::Joins_views
+Materialized view,"A view whose data is stored at all times, so it must be refreshed when its base tables change.",D426::Joins_views
+WITH CHECK OPTION,Makes the database reject inserts and updates through a view that don't satisfy the view's WHERE clause.,D426::Joins_views
+Analysis,"Design phase that captures requirements as entities, relationships, and attributes, independent of any database system.",D426::ER_modeling
+Logical design,"Design phase that converts the ER model into tables, columns, and keys for a specific database system.",D426::ER_modeling
+Physical design,Design phase that adds indexes and specifies how tables are organized on storage media.,D426::ER_modeling
+Entity,"A person, place, product, concept, or activity. Drawn as a rectangle in an ER diagram.",D426::ER_modeling
+Relationship,"A statement about two entities, like Employee-Manages-Department.",D426::ER_modeling
+Attribute,A descriptive property of an entity.,D426::ER_modeling
+Reflexive relationship,A relationship that relates an entity to itself.,D426::ER_modeling
+ER diagram,"A schematic picture of entities, relationships, and attributes.",D426::ER_modeling
+Cardinality,The maxima and minima of relationships and attributes.,D426::ER_modeling
+Relationship maximum,The greatest number of instances of one entity that can relate to a single instance of another.,D426::ER_modeling
+Relationship minimum,The least number of instances of one entity that can relate to a single instance of another.,D426::ER_modeling
+Crow's foot notation,"Shows cardinality with a circle (zero), a short line (one), and three short lines (many).",D426::ER_modeling
+Strong entity,An entity with its own identifying attribute.,D426::ER_modeling
+Weak entity,An entity with no identifying attribute of its own; it depends on an identifying relationship to another entity.,D426::ER_modeling
+Subtype entity,"A subset of a supertype entity, like Manager within Employee.",D426::ER_modeling
+IsA relationship,The identifying relationship between a subtype entity and its supertype.,D426::ER_modeling
+Partition (ER),A group of mutually exclusive subtype entities of one supertype.,D426::ER_modeling
+Intangible entity,An entity documented in the data model but not tracked with data in the database.,D426::ER_modeling
+Entity instance,"One individual thing, like the employee Sam Snead.",D426::ER_modeling
+Artificial key,"A single-column primary key the designer creates when no suitable key exists, usually an auto-generated integer.",D426::Normalization
+Functional dependence,Column A depends on column B when each B value relates to at most one A value.,D426::Normalization
+Redundancy,The repetition of related values in a table.,D426::Normalization
+Normal forms,Rules for designing tables with less redundancy.,D426::Normalization
+Candidate key,A simple or composite column that is unique and minimal.,D426::Normalization
+Non-key column,A column that is not contained in any candidate key.,D426::Normalization
+Trivial dependency,"When A's columns are a subset of B's columns, so A always depends on B.",D426::Normalization
+First normal form (1NF),"Every cell holds one value, the table has a primary key, and non-key columns depend on it.",D426::Normalization
+Second normal form (2NF),"Every non-key column depends on the whole primary key, not just part of a composite key.",D426::Normalization
+Third normal form (3NF),"Whenever a non-key column A depends on column B, B is unique.",D426::Normalization
+Boyce-Codd normal form (BCNF),"Whenever any column A depends on column B, B is unique. The gold standard.",D426::Normalization
+Normalization,Eliminating redundancy by decomposing a table into two or more tables in a higher normal form.,D426::Normalization
+Denormalization,Intentionally introducing redundancy by merging tables.,D426::Normalization
+Heap table,Table structure with no row order imposed; fastest for inserts and bulk loads.,D426::Physical_design
+Sorted table,Table structure where a sort column determines the physical row order.,D426::Physical_design
+Hash table,Table structure where a hash function assigns rows to buckets.,D426::Physical_design
+Bucket,"A block or group of blocks containing rows, used by hash tables and hash indexes.",D426::Physical_design
+Table cluster,Interleaves rows of two or more tables in the same storage area. Also called a multi-table.,D426::Physical_design
+Table scan,"Reads table blocks directly, without using an index.",D426::Physical_design
+Index scan,Reads index blocks sequentially to locate the needed table blocks.,D426::Physical_design
+Hit ratio,The percentage of table rows a query selects. Also called filter factor or selectivity.,D426::Physical_design
+Binary search,Repeatedly splits a sorted index in two until it finds the entry with the search value.,D426::Physical_design
+Dense index,An index with an entry for every table row.,D426::Physical_design
+Sparse index,An index with an entry for every table block.,D426::Physical_design
+Bitmap index,An index that is a grid of bits (1s and 0s); good for columns with few distinct values.,D426::Physical_design
+Logical index,An index that stores primary key values instead of physical block pointers.,D426::Physical_design
+Function index,"An index on the result of a function applied to a column, like UPPER(Name).",D426::Physical_design
+Tablespace,A database object that maps one or more tables to a single file.,D426::Physical_design
+Partition (table),"A subset of a table's data: a horizontal partition splits rows, a vertical partition splits columns.",D426::Physical_design
+Storage engine,Translates query processor instructions into low-level storage commands. MySQL's default is InnoDB.,D426::Physical_design
