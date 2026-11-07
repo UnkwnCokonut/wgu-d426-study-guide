@@ -116,4 +116,11 @@ for path in sorted((ROOT / "guide").glob("[0-9][0-9]-*.md")):
     encoding="utf-8",
 )
 
-print(f'{len(data["terms"])} terms, {len(data["questions"])} questions, {len(guide)} guide modules -> built')
+# 6. Cache-bust: stamp a content hash on the data scripts so browsers never mix old data with a new page
+import hashlib
+
+ver = hashlib.sha1(b"".join((ROOT / "data" / f).read_bytes() for f in ("cards.js", "guide.js"))).hexdigest()[:8]
+page = ROOT / "index.html"
+page.write_text(re.sub(r'src="data/(cards|guide)\.js(\?v=\w+)?"', rf'src="data/\1.js?v={ver}"', page.read_text(encoding="utf-8")), encoding="utf-8")
+
+print(f'{len(data["terms"])} terms, {len(data["questions"])} questions, {len(guide)} guide modules -> built (v={ver})')
