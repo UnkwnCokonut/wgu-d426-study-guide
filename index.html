@@ -117,6 +117,50 @@ ol.top li::before { content: counter(n); width: 30px; height: 30px; border-radiu
 .badge { font-size: 13px; font-weight: 700; padding: 2px 10px; border-radius: 999px; white-space: nowrap; align-self: center; }
 .badge.m { background: var(--good-soft); color: var(--good); } .badge.l { background: var(--mid-soft); color: var(--mid); } .badge.x { background: var(--bad-soft); color: var(--bad); }
 
+/* start page */
+.tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+.tile { text-align: left; border: 1px solid var(--line); background: var(--bg); border-radius: 14px; padding: 16px 18px; min-height: 96px; display: grid; align-content: start; gap: 4px; }
+.tile:hover { border-color: var(--accent); }
+.tile b { font-size: 24px; }
+.tile span { color: var(--muted); font-size: 16px; }
+@media (max-width: 560px) { .tiles { grid-template-columns: 1fr; } .tile { min-height: 0; } }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; text-align: center; }
+.stats div { background: var(--bg); border-radius: 12px; padding: 10px; }
+.stats b { display: block; font-size: 24px; }
+.stats span { font-size: 14px; color: var(--muted); }
+.plan { width: 100%; border-collapse: collapse; margin-top: 10px; }
+.plan td { padding: 10px 8px; border-top: 1px solid var(--line); vertical-align: middle; }
+.plan td:first-child { width: 64px; color: var(--muted); white-space: nowrap; }
+
+/* guide */
+a { color: var(--accent); }
+.mods { display: grid; gap: 10px; margin-top: 16px; }
+a.mod { display: grid; grid-template-columns: 36px 1fr auto; gap: 12px; align-items: center; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: inherit; text-decoration: none; }
+a.mod:hover { border-color: var(--accent); }
+.mod .num { width: 32px; height: 32px; border-radius: 9px; background: var(--accent-soft); display: grid; place-items: center; font-weight: 700; font-size: 15px; }
+.mod.done .num { background: var(--good-soft); color: var(--good); }
+.mod .hint { display: block; }
+.doc h1 { font-size: 27px; margin-bottom: 4px; }
+.doc h2 { font-size: 21px; margin: 30px 0 10px; }
+.doc h3 { margin: 22px 0 8px; }
+.doc table { display: block; overflow-x: auto; border-collapse: collapse; font-size: 16px; margin: 12px 0; }
+.doc th, .doc td { text-align: left; padding: 8px 12px 8px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.doc th { font-size: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.doc pre { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; overflow-x: auto; font-size: 14px; line-height: 1.5; }
+.doc code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .88em; }
+.doc :not(pre) > code { background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 1px 5px; }
+.doc li { margin: 4px 0; }
+.callout { border-left: 4px solid; border-radius: 10px; padding: 12px 16px; margin: 16px 0; }
+.callout.tip { background: var(--accent-soft); border-color: var(--accent); }
+.callout.warning { background: var(--mid-soft); border-color: var(--mid); }
+.callout > :first-child { margin-top: 0; } .callout > :last-child { margin-bottom: 0; }
+details.check { border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; margin: 10px 0; background: var(--bg); }
+details.check summary { cursor: pointer; font-weight: 700; }
+details.check .ans { margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--line); }
+details.check .ans > :first-child { margin-top: 0; } details.check .ans > :last-child { margin-bottom: 0; }
+.mermaid { display: flex; justify-content: center; margin: 16px 0; overflow-x: auto; }
+.brand a { color: inherit; text-decoration: none; }
+
 /* dialogs */
 .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: grid; place-items: center; padding: 16px; z-index: 20; }
 .overlay .card { max-width: 460px; width: 100%; margin: 0; }
@@ -135,21 +179,23 @@ footer a { color: inherit; }
 <body>
 <header>
   <div class="bar">
-    <div class="brand">D426 Study <small>Data Management Foundations</small></div>
+    <div class="brand"><a href="#home">D426 Study</a> <small>Data Management Foundations</small></div>
     <span class="streak" id="streak" aria-live="polite"></span>
     <button class="pill" id="timerBtn" title="Focus sprint timer"></button>
   </div>
   <nav class="tabs" role="tablist" aria-label="Study modes">
+    <button role="tab" data-tab="home">Start</button>
+    <button role="tab" data-tab="guide">Guide</button>
     <button role="tab" data-tab="learn">Learn</button>
     <button role="tab" data-tab="flash">Flashcards</button>
     <button role="tab" data-tab="test">Practice test</button>
     <button role="tab" data-tab="cram">Cram sheet</button>
-    <button role="tab" data-tab="help">How to use</button>
   </nav>
 </header>
 <main class="wrap" id="main"></main>
 <div class="sr" aria-live="assertive" id="say"></div>
 <script src="data/cards.js"></script>
+<script src="data/guide.js"></script>
 <script>
 (function () {
 "use strict";
@@ -174,8 +220,13 @@ const byId = Object.fromEntries(terms.map(c => [c.id, c]));
 const PRAISE = ["Nice.", "Got it.", "Yes!", "Locked in.", "Clean.", "That's it.", "Easy.", "Right on."];
 
 /* ---------- state ---------- */
+const G = window.D426_GUIDE || [];
+const TABS = ["home", "guide", "learn", "flash", "test", "cram"];
 const S = {
-  tab: store.get("tab", "learn"),
+  tab: TABS.includes(store.get("tab", "home")) ? store.get("tab", "home") : "home",
+  mod: null,
+  done: store.get("done", {}),
+  showPlan: false,
   topics: store.get("topics", []),
   settings: Object.assign({ round: 7, prompt: "def", typed: true, auto: true, front: "term" }, store.get("settings", {})),
   mastery: store.get("mastery", {}),
@@ -211,14 +262,15 @@ function drawTimer() {
   if (left <= 0) { stopTimer(); breakTime(); }
 }
 function stopTimer() { clearInterval(TM.iv); TM.end = null; drawTimer(); }
+function startSprint(mins) {
+  TM.mins = mins; store.set("sprint", mins);
+  TM.end = Date.now() + mins * 60000; clearInterval(TM.iv); TM.iv = setInterval(drawTimer, 1000); drawTimer();
+}
 timerBtn.addEventListener("click", () => {
   if (TM.end) { stopTimer(); return; }
   modal(`<h2>Focus sprint</h2><p class="hint">Pick a length. Work until the timer ends, then take a real break.</p>
     <div class="row" style="margin-top:12px">${[10, 15, 25].map(m => `<button class="btn ${m === TM.mins ? "" : "ghost"}" data-min="${m}">${m} min</button>`).join("")}</div>`,
-    box => box.querySelectorAll("[data-min]").forEach(b => b.onclick = () => {
-      TM.mins = +b.dataset.min; store.set("sprint", TM.mins);
-      TM.end = Date.now() + TM.mins * 60000; clearInterval(TM.iv); TM.iv = setInterval(drawTimer, 1000); drawTimer(); closeModal();
-    }));
+    box => box.querySelectorAll("[data-min]").forEach(b => b.onclick = () => { startSprint(+b.dataset.min); closeModal(); }));
 });
 function breakTime() {
   modal(`<h2>Sprint done. Break time.</h2>
@@ -242,7 +294,22 @@ function modal(html, wire) {
 function closeModal() { if (modalEl) { modalEl.remove(); modalEl = null; } }
 
 /* ---------- tabs & topic chips ---------- */
-document.querySelectorAll("nav.tabs button").forEach(b => b.addEventListener("click", () => { S.tab = b.dataset.tab; save(); render(); }));
+document.querySelectorAll("nav.tabs button").forEach(b => b.addEventListener("click", () => go(b.dataset.tab, b.dataset.tab === "guide" ? "" : undefined)));
+
+/* ---------- routing: every view has its own link (#learn, #guide/05-keys-and-constraints) ---------- */
+function go(tab, sub) {
+  const h = "#" + tab + (sub ? "/" + sub : "");
+  if (location.hash !== h) location.hash = h; else route();
+}
+function route() {
+  const [tab, sub] = decodeURIComponent(location.hash.replace(/^#/, "")).split("/");
+  if (TABS.includes(tab)) {
+    S.tab = tab;
+    if (tab === "guide") S.mod = G.some(m => m.id === sub) ? sub : null;
+  }
+  save(); render(); window.scrollTo(0, 0);
+}
+window.addEventListener("hashchange", route);
 function chips() {
   const all = !S.topics.length;
   return `<div class="topics" role="group" aria-label="Topics">
@@ -410,7 +477,7 @@ function renderLearn() {
     $("s-auto").onchange = e => { S.settings.auto = e.target.checked; save(); };
     $("s-reset").onclick = () => { if (confirm("Reset all Learn progress?")) { S.mastery = {}; save(); render(); } };
   }
-  if ($("to-test")) $("to-test").onclick = () => { S.tab = "test"; L = null; save(); render(); };
+  if ($("to-test")) $("to-test").onclick = () => { L = null; go("test"); };
   if ($("reset-sel")) $("reset-sel").onclick = () => { scoped(terms).forEach(c => delete S.mastery[c.id]); L = null; save(); render(); };
   if ($("next-round")) { $("next-round").onclick = () => startRound(); $("next-round").focus(); }
   if ($("stop")) $("stop").onclick = () => { L = null; render(); };
@@ -534,30 +601,108 @@ function renderCram() {
     <ol class="top" style="margin-top:14px">${D.top10.map(([k, v]) => `<li><div><b>${esc(k)}</b><div>${esc(v)}</div></div></li>`).join("")}</ol></div>
     <div class="card"><h2>Don't mix these up</h2>${D.pairs.map(([k, v]) => `<div class="pair"><b>${esc(k)}</b><span>${esc(v)}</span></div>`).join("")}</div>`;
 }
-function renderHelp() {
-  main.innerHTML = `<div class="card"><h1>How to use this</h1>
-    <ol>
-      <li><b>Start a focus sprint</b> (top right). 15 minutes is a good default.</li>
-      <li><b>Pick one topic</b> with the chips, then run <b>Learn</b> until that topic's bar is green.</li>
-      <li><b>Take the practice test</b> on that topic. Retry what you miss.</li>
-      <li>Break when the timer ends. Then the next topic.</li>
-      <li>Right before the exam: <b>Cram sheet</b>.</li>
-    </ol>
-    <p class="hint">Your progress saves in this browser automatically.</p></div>
-    <div class="card"><h2>Keyboard shortcuts</h2>
+/* =========================================================
+   START PAGE  (pick by time available)
+   ========================================================= */
+const PLAN = [
+  { min: 15, what: "Learn: Writing queries + Joins & views", topics: ["queries", "joins"], to: "learn" },
+  { min: 5, what: "Break: stand up, water" },
+  { min: 15, what: "Learn: Keys & constraints + Normalization", topics: ["keys", "logical"], to: "learn" },
+  { min: 5, what: "Break" },
+  { min: 15, what: "Learn: ER modeling + Physical design", topics: ["design", "physical"], to: "learn" },
+  { min: 5, what: "Break" },
+  { min: 20, what: "Practice test, every question. Retry the misses", topics: [], to: "test" },
+  { min: 10, what: "Cram sheet. Then sleep.", to: "cram" }
+];
+const nextModule = () => G.find(m => !S.done[m.id]) || G[0];
+function renderHome() {
+  const m = terms.filter(c => lvl(c.id) >= 2).length;
+  const doneCount = G.filter(x => S.done[x.id]).length;
+  const nm = nextModule();
+  main.innerHTML = `<div class="card"><h1>What do you have time for?</h1><p class="hint" style="margin:0">Pick one. You're allowed to stop after it.</p>
+    <div class="tiles">
+      <button class="tile" data-go="3"><b>3 min</b><span>Read the cram sheet</span></button>
+      <button class="tile" data-go="15"><b>15 min</b><span>Focus sprint + Learn one topic</span></button>
+      <button class="tile" data-go="30"><b>30 min</b><span>Next guide module${nm ? `: ${esc(nm.title)}` : ""}, then practice it</span></button>
+      <button class="tile" data-go="90"><b>90 min</b><span>The night-before plan</span></button>
+    </div>
+    ${S.showPlan ? `<table class="plan">${PLAN.map((p, i) => `<tr><td>${p.min} min</td><td>${esc(p.what)}</td><td style="text-align:right">${p.to ? `<button class="btn small" data-plan="${i}">Go</button>` : ""}</td></tr>`).join("")}</table>` : ""}
+    </div>
+    <div class="card"><h2>Your progress</h2>${masteryBar(terms)}
+      <div class="stats"><div><b>${m}/${terms.length}</b><span>terms mastered</span></div><div><b>${doneCount}/${G.length}</b><span>guide modules</span></div><div><b>${S.best}</b><span>best streak</span></div></div>
+      <p class="hint" style="margin:12px 0 0">Progress saves in this browser automatically.</p></div>
+    <details class="card"><summary><b>Keyboard shortcuts</b></summary>
     <div class="pair"><span><kbd>1</kbd>–<kbd>4</kbd></span><span>Pick an answer</span></div>
     <div class="pair"><span><kbd>Enter</kbd></span><span>Submit, continue, next round</span></div>
     <div class="pair"><span><kbd>Space</kbd></span><span>Flip a flashcard</span></div>
     <div class="pair"><span><kbd>1</kbd> / <kbd>2</kbd></span><span>Flashcards: still learning / know it</span></div>
     <div class="pair"><span><kbd>←</kbd> <kbd>→</kbd></span><span>Flashcards: back / skip</span></div>
-    <div class="pair"><span><kbd>Esc</kbd></span><span>Close a pop-up</span></div></div>
-    <footer>Personal study notes for WGU D426, written in my own words. Not affiliated with WGU or zyBooks. <a href="https://github.com/unkwnCokonut/wgu-d426-study-guide">Source on GitHub</a></footer>`;
+    <div class="pair"><span><kbd>Esc</kbd></span><span>Close a pop-up</span></div></details>
+    <footer>Personal study notes for WGU D426, written in my own words. Not affiliated with WGU or zyBooks. <a href="https://github.com/UnkwnCokonut/wgu-d426-study-guide">Source on GitHub</a></footer>`;
+  main.querySelectorAll("[data-go]").forEach(b => b.onclick = () => {
+    const t = b.dataset.go;
+    if (t === "3") go("cram");
+    else if (t === "15") { startSprint(15); L = null; go("learn"); }
+    else if (t === "30") go("guide", nextModule().id);
+    else { S.showPlan = !S.showPlan; render(); }
+  });
+  main.querySelectorAll("[data-plan]").forEach(b => b.onclick = () => {
+    const p = PLAN[+b.dataset.plan];
+    if (p.topics) { S.topics = p.topics; L = F = T = null; save(); }
+    if (p.to !== "cram") startSprint(p.min);
+    go(p.to);
+  });
+}
+
+/* =========================================================
+   GUIDE  (modules rendered from guide/*.md by tools/build.py)
+   ========================================================= */
+let mermaidP = null;
+function drawDiagrams() {
+  const blocks = main.querySelectorAll("pre > code.language-mermaid");
+  if (!blocks.length) return;
+  if (!mermaidP) mermaidP = import("https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs").then(mod => {
+    const mm = mod.default;
+    mm.initialize({ startOnLoad: false, theme: matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "neutral", fontFamily: "inherit" });
+    return mm;
+  });
+  mermaidP.then(mm => {
+    blocks.forEach(code => { const d = document.createElement("div"); d.className = "mermaid"; d.textContent = code.textContent; code.parentElement.replaceWith(d); });
+    return mm.run({ nodes: main.querySelectorAll(".mermaid") });
+  }).catch(() => { /* offline: the diagram source stays visible as text */ });
+}
+function renderGuide() {
+  if (!G.length) { main.innerHTML = `<div class="card">Guide data did not load. Run <code>python3 tools/build.py</code>.</div>`; return; }
+  const short = t => String(t).replace("minutes", "min");
+  if (!S.mod) {
+    const doneCount = G.filter(x => S.done[x.id]).length, nm = nextModule();
+    main.innerHTML = `<div class="card"><h1>Study guide</h1><p style="margin:0">Ten short modules. Same shape every time: <b>TL;DR → details → exam traps → quick check</b>.</p>
+      <div class="prog" style="margin-top:14px"><span class="m" style="width:${doneCount / G.length * 100}%"></span></div>
+      <p class="hint" style="margin:8px 0 0">${doneCount} of ${G.length} done</p></div>
+      <div class="mods">${G.map(x => {
+        const pool = terms.filter(c => c.topic === x.topic), mm = pool.filter(c => lvl(c.id) >= 2).length;
+        const tag = S.done[x.id] ? `<span class="badge m">Done</span>` : x === nm ? `<span class="badge l">Next up</span>` : "";
+        return `<a class="mod ${S.done[x.id] ? "done" : ""}" href="#guide/${x.id}"><span class="num">${S.done[x.id] ? "✓" : x.n}</span><span><b>${esc(x.title)}</b><span class="hint">${short(x.time)} · ${mm}/${pool.length} terms mastered</span></span>${tag}</a>`;
+      }).join("")}</div>`;
+    return;
+  }
+  const i = G.findIndex(x => x.id === S.mod), x = G[i], prev = G[i - 1], next = G[i + 1];
+  main.innerHTML = `<div class="row spread" style="margin-top:16px"><a class="btn ghost small" href="#guide" style="text-decoration:none">← All modules</a><span class="hint">Module ${x.n} of ${G.length} · ${short(x.time)}</span></div>
+    <article class="card doc"><h1>${esc(x.title)}</h1>${x.html}</article>
+    <div class="card"><div class="row">
+      <button class="btn ${S.done[x.id] ? "ghost" : ""}" id="mdone">${S.done[x.id] ? "✓ Done (undo)" : "Mark done"}</button>
+      <button class="btn ${S.done[x.id] ? "" : "ghost"}" id="mpractice">Practice ${esc(topicName[x.topic])} in Learn →</button>
+    </div></div>
+    <div class="row spread" style="margin-top:16px">${prev ? `<a href="#guide/${prev.id}">← ${esc(prev.title)}</a>` : "<span></span>"}${next ? `<a href="#guide/${next.id}">${esc(next.title)} →</a>` : `<a href="#cram">Cram sheet →</a>`}</div>`;
+  main.querySelector("#mdone").onclick = () => { S.done[x.id] = !S.done[x.id]; if (!S.done[x.id]) delete S.done[x.id]; store.set("done", S.done); render(); };
+  main.querySelector("#mpractice").onclick = () => { S.topics = [x.topic]; L = F = T = null; save(); go("learn"); };
+  drawDiagrams();
 }
 
 /* ---------- render ---------- */
 function render() {
   document.querySelectorAll("nav.tabs button").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === S.tab));
-  ({ learn: renderLearn, flash: renderFlash, test: renderTest, cram: renderCram, help: renderHelp }[S.tab] || renderLearn)();
+  ({ home: renderHome, guide: renderGuide, learn: renderLearn, flash: renderFlash, test: renderTest, cram: renderCram }[S.tab] || renderHome)();
 }
 
 /* ---------- keyboard ---------- */
@@ -585,7 +730,8 @@ document.addEventListener("keydown", e => {
   }
 });
 
-drawTimer(); drawStreak(); render();
+drawTimer(); drawStreak();
+if (location.hash.length > 1) route(); else render();
 })();
 </script>
 </body>

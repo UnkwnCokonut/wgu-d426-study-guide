@@ -8,7 +8,7 @@ Ten short modules. Each one takes 3 to 6 minutes and has the same shape, so your
 4. **Quick check**: 3 questions; click to reveal the answers
 
 > [!TIP]
-> Don't read these in order in one sitting. Pick one, read it, then run **Learn** on that topic in the [study app](https://unkwncokonut.github.io/wgu-d426-study-guide/). Then take a break.
+> Don't read these in order in one sitting. Pick one, read it, then run **Learn** on that topic in the [study website](https://unkwncokonut.github.io/wgu-d426-study-guide/#guide). Then take a break.
 
 | # | Module | Time | App topic |
 | --- | --- | --- | --- |

@@ -2,9 +2,9 @@
 
 Everything I used to study for **WGU D426: Data Management – Foundations**, built for short, focused bursts.
 
-### [Open the study app →](https://unkwncokonut.github.io/wgu-d426-study-guide/)
+### [Open the website →](https://unkwncokonut.github.io/wgu-d426-study-guide/)
 
-Learn mode, flashcards, a practice test, and a cram sheet. Works on your phone. Progress saves automatically.
+An interactive study site: a "what do you have time for?" start page, the full guide with reveal-the-answer checks, Quizlet-style Learn mode, flashcards, a practice test, and a cram sheet. Works on your phone. Progress saves automatically.
 
 ---
 
@@ -13,7 +13,7 @@ Learn mode, flashcards, a practice test, and a cram sheet. Works on your phone. 
 | Time | Do this |
 | --- | --- |
 | **3 min** | Read the [cram sheet](guide/00-cram-sheet.md) |
-| **15 min** | Start a 15-min focus sprint in the [app](https://unkwncokonut.github.io/wgu-d426-study-guide/), pick **one** topic, run **Learn** |
+| **15 min** | Start a 15-min focus sprint on the [website](https://unkwncokonut.github.io/wgu-d426-study-guide/), pick **one** topic, run **Learn** |
 | **30 min** | One [guide module](guide/README.md) → Learn on that topic → practice test on that topic |
 | **90 min** | The night-before plan below |
 
@@ -21,8 +21,8 @@ Learn mode, flashcards, a practice test, and a cram sheet. Works on your phone. 
 
 | | What | Where |
 | --- | --- | --- |
-| **App** | Learn · Flashcards · Practice test · Cram sheet | [`index.html`](index.html) ([live](https://unkwncokonut.github.io/wgu-d426-study-guide/)) |
-| **Guide** | 10 short modules, 3 to 6 minutes each | [`guide/`](guide/README.md) |
+| **Website** | Start · Guide · Learn · Flashcards · Practice test · Cram sheet | [`index.html`](index.html) ([live](https://unkwncokonut.github.io/wgu-d426-study-guide/)) |
+| **Guide** | 10 short modules, 3 to 6 minutes each (in the site, or read here) | [`guide/`](guide/README.md) |
 | **Cards** | 148 terms + 55 practice questions | [`data/cards.json`](data/cards.json) |
 | **Exports** | Quizlet, Anki, and spreadsheet versions | [`flashcards/`](flashcards/) |
 
@@ -72,11 +72,11 @@ The green bar fills as you master cards. Pick one topic chip to keep the bar sma
 
 Download the repo and double-click `index.html`. No install, no server.
 
-## Edit or add cards
+## Edit cards or the guide
 
-1. Edit [`data/cards.json`](data/cards.json).
-2. Run `python3 tools/build.py`.
-3. That regenerates `data/cards.js` (used by the app) and everything in `flashcards/`.
+1. Edit [`data/cards.json`](data/cards.json) or any file in [`guide/`](guide/).
+2. Once: `pip install markdown`. Then run `python3 tools/build.py`.
+3. That regenerates `data/cards.js` and `data/guide.js` (used by the website) and everything in `flashcards/`.
 
 ---
 
