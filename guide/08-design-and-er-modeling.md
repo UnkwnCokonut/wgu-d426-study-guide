@@ -12,15 +12,15 @@
 ## Phases and steps
 
 ```mermaid
-flowchart LR
-  subgraph A["Analysis (ER model, no specific DB)"]
-    a1["1 Discover entities,<br/>relationships, attributes"] --> a2["2 Cardinality"] --> a3["3 Strong / weak"] --> a4["4 Supertype / subtype"]
+flowchart TD
+  subgraph A["Analysis: ER model, no specific DB"]
+    a1["1 Discover entities,<br/>relationships, attributes"] --> a2["2 Determine cardinality"] --> a3["3 Strong vs weak entities"] --> a4["4 Supertype / subtype"]
   end
-  subgraph L["Logical design (tables, keys)"]
+  subgraph L["Logical design: tables + keys"]
     l5["5 Implement entities"] --> l6["6 Implement relationships"] --> l7["7 Implement attributes"] --> l8["8 Apply normal form"]
   end
   a4 --> l5
-  L --> P["Physical design<br/>indexes, storage"]
+  l8 --> P["Physical design<br/>indexes, storage"]
 ```
 
 - **Analysis** is also called conceptual design, ER modeling, or requirements definition.

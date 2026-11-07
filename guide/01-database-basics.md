@@ -11,11 +11,11 @@
 ## How a query moves through the system
 
 ```mermaid
-flowchart LR
+flowchart TD
   A["Application<br/>sends SQL, gets results"] --> Q["Query processor<br/>interprets + optimizes"]
-  Q --> S["Storage manager<br/>low-level file I/O, uses indexes"]
+  Q --> S["Storage manager<br/>file I/O, uses indexes"]
   S --> D[("Database files<br/>tables + indexes")]
-  T["Transaction manager<br/>prevents conflicts, restores after failure"] -.oversees.-> Q
+  T["Transaction manager<br/>prevents conflicts,<br/>restores after failure"] -.oversees.-> Q
   T -.oversees.-> S
 ```
 

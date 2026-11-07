@@ -159,6 +159,7 @@ details.check summary { cursor: pointer; font-weight: 700; }
 details.check .ans { margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--line); }
 details.check .ans > :first-child { margin-top: 0; } details.check .ans > :last-child { margin-bottom: 0; }
 .mermaid { display: flex; justify-content: center; margin: 16px 0; overflow-x: auto; }
+.mermaid .label { text-transform: none; letter-spacing: normal; font-size: inherit; font-weight: 400; color: inherit; }
 .brand a { color: inherit; text-decoration: none; }
 
 /* dialogs */
@@ -663,7 +664,8 @@ function drawDiagrams() {
   if (!blocks.length) return;
   if (!mermaidP) mermaidP = import("https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs").then(mod => {
     const mm = mod.default;
-    mm.initialize({ startOnLoad: false, theme: matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "neutral", fontFamily: "inherit" });
+    mm.initialize({ startOnLoad: false, theme: matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "neutral",
+      themeVariables: { fontFamily: "Atkinson Hyperlegible, system-ui, sans-serif", fontSize: "16px" } });
     return mm;
   });
   mermaidP.then(mm => {
