@@ -31,6 +31,9 @@
 | Strong vs weak entity | Own identifying attribute · depends on an identifying relationship |
 | `%` vs `_` in LIKE | Any number of characters · exactly one |
 | Heap vs sorted vs hash table | Fast inserts · fast ranges · fast exact matches |
+| Unary vs binary vs ternary | One entity type · two · three |
+| Cardinality vs modality | Maximum (one or many) · minimum (zero or one) |
+| Select vs project (algebra) | Picks rows · picks columns |
 
 ## Before you walk in
 
@@ -41,5 +44,6 @@
 - [ ] State 1NF, 2NF, 3NF, BCNF in one line each
 - [ ] Name the 4 referential integrity actions
 - [ ] Read crow's foot: circle, line, crow's foot
+- [ ] Name a relationship by asking "one or many?" from both sides
 
 [← All modules](README.md)

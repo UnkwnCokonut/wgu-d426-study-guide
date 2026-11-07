@@ -7,6 +7,7 @@
 > - Three phases: **Analysis → Logical design → Physical design**.
 > - Eight steps: four in analysis, four in logical design. The last analysis step is **supertype/subtype**.
 > - Crow's foot: **circle = 0, line = 1, crow's foot = many**.
+> - Name a relationship by asking "one or many?" **from both sides**.
 
 ## Phases and steps
 
@@ -49,10 +50,34 @@ flowchart LR
 | Short line | One |
 | Three lines | Many |
 
+## Naming the relationship (exam favorite)
+
+The question's wording can trick you. **Ask it from both sides**, out loud:
+
+1. "Can one A have many B?"
+2. "Can one B have many A?"
+
+| Both answers | Relationship | Example |
+| --- | --- | --- |
+| Yes and yes | **Many-to-many (M:M)** | Employees ↔ projects, students ↔ classes, doctors ↔ patients |
+| Yes and no | **One-to-many / many-to-one** | Many employees → one office building |
+| No and no | **One-to-one (1:1)** | Employee ↔ desk, when desks are never shared |
+
+"Employee works on project" *sounds* one-to-one. It isn't: projects have many employees, and employees can be on many projects.
+
+**Degree** = how many entity types are involved:
+
+- **Unary:** one entity type related to itself (Employee supervises Employee).
+- **Binary:** two entity types. The usual case.
+- **Ternary:** three entity types.
+
+**Modality** is another name for the relationship **minimum** (optional vs required). Cardinality usually means the maximum.
+
 ## Strong, weak, super, sub
 
 - **Strong entity:** has its own identifying attribute.
-- **Weak entity:** doesn't; depends on an **identifying relationship** (an order line item depends on its order).
+- **Weak entity:** doesn't; depends on an **identifying relationship** to an **identifying entity** (an order line item depends on its order).
+- On the diagram, a **diamond** sits next to the identifying entity. Its cardinality there is always **1(1)**.
 - **Subtype:** a subset of a **supertype** (Manager in Employee). Drawn inside it, linked by an **IsA** relationship.
 - **Partition:** a group of **mutually exclusive** subtypes (Car, Truck, Motorcycle in Vehicle).
 
@@ -76,6 +101,11 @@ flowchart LR
 <details><summary>3. Relationship type becomes what in logical design?</summary>
 
 **A foreign key.**
+</details>
+
+<details><summary>4. Students take many classes; classes have many students. Relationship?</summary>
+
+**Many-to-many.**
 </details>
 
 [← Back](07-joins-subqueries-views.md) · [Next: Normalization →](09-normalization.md)

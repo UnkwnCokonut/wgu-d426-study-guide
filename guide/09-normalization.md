@@ -15,7 +15,7 @@
 | Entity | Table with a primary key |
 | One-to-many | Foreign key on the **many** side |
 | One-to-one | Foreign key on one side (usually the table with fewer rows) |
-| Many-to-many | **New table**: two foreign keys = composite primary key |
+| Many-to-many | **New table** (an **associative entity**): two foreign keys = composite primary key |
 | Plural attribute | New table with a foreign key back |
 | Required attribute | NOT NULL |
 | Unique attribute | UNIQUE |

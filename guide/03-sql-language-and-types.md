@@ -25,6 +25,7 @@
 | **Literal** (explicit value) | `'String'`, `"String"`, `123`, `x'0fa2'` |
 | **Keyword** (special meaning) | `SELECT`, `FROM`, `WHERE` |
 | **Identifier** (object name) | `City`, `Name`, `Population` |
+| **Expression** (evaluates to one value) | `Population > 1000000 OR Name = 'Tokyo'` |
 | **Comment** (ignored) | `-- one line`, `/* many lines */` |
 
 ## Data types
@@ -34,6 +35,7 @@
 | INT / INTEGER | Whole numbers, 4 bytes | 34, -739448 |
 | DECIMAL(M, D) | M digits total, D after the point | DECIMAL(5, 2) → 999.99 max |
 | VARCHAR(N) | Text, 0 to N characters | 'Seattle' |
+| CHAR(N) | Text, fixed length N | 'PA' in CHAR(2) |
 | DATE | Year, month, day | '2026-11-08' |
 
 | Integer | Bytes | Signed | Unsigned |
@@ -52,7 +54,7 @@
 
 > [!WARNING]
 > **Exam traps**
-> - SELECT is **DQL**, not DML.
+> - SELECT is **DQL**, not DML. (Some study sheets lump it into DML; the five-sublanguage model doesn't.)
 > - DECIMAL(5, 2) is **5 total** digits, not 5 before the decimal.
 > - Real MySQL treats `^` as XOR, but answer with the course table.
 

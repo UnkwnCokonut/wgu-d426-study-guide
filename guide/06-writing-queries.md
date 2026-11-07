@@ -44,6 +44,10 @@ Mnemonic: **S**weaty **F**eet **W**ill **G**ive **H**orrible **O**dors.
 | LOWER(s) | `LOWER('MySQL')` → 'mysql' |
 | TRIM(s) | `TRIM('  test  ')` → 'test' |
 | HOUR / MINUTE / SECOND | `HOUR('22:11:45')` → 22 |
+| UPPER(s) | `UPPER('sql')` → 'SQL' |
+| CONCAT(s1, s2, ...) | `CONCAT('Data', 'base')` → 'Database' |
+| SUBSTRING(s, pos, len) | `SUBSTRING('Database', 1, 4)` → 'Data' |
+| REPLACE(s, from, to) | `REPLACE('cats and dogs', 'and', 'or')` → 'cats or dogs' |
 
 ## Aggregates
 

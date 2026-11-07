@@ -160,6 +160,32 @@ window.D426 = {
    "d": "The principle that changing how data is physically stored never changes query results."
   },
   {
+   "topic": "relational",
+   "t": "Select operation",
+   "d": "Relational algebra operation that picks rows matching a condition, like a WHERE clause.",
+   "alts": [
+    "select"
+   ]
+  },
+  {
+   "topic": "relational",
+   "t": "Project operation",
+   "d": "Relational algebra operation that picks columns, like SELECT Col1, Col2 FROM Table.",
+   "alts": [
+    "project",
+    "projection"
+   ]
+  },
+  {
+   "topic": "relational",
+   "t": "Product operation",
+   "d": "Relational algebra operation that combines every row of one table with every row of another (Table1 × Table2).",
+   "alts": [
+    "product",
+    "cartesian product"
+   ]
+  },
+  {
    "topic": "sql",
    "t": "DDL",
    "alts": [
@@ -261,6 +287,19 @@ window.D426 = {
     "%"
    ],
    "d": "Operator that returns the integer remainder of a division; 5 % 2 = 1."
+  },
+  {
+   "topic": "sql",
+   "t": "CHAR(N)",
+   "d": "Data type for fixed-length text of exactly N characters.",
+   "alts": [
+    "char"
+   ]
+  },
+  {
+   "topic": "sql",
+   "t": "Expression",
+   "d": "Literals, identifiers, and operators that evaluate to a single value, like Population > 1000000."
   },
   {
    "topic": "statements",
@@ -434,6 +473,39 @@ window.D426 = {
    "topic": "queries",
    "t": "Alias",
    "d": "A temporary name for a column or table, usually introduced with AS."
+  },
+  {
+   "topic": "queries",
+   "t": "CONCAT",
+   "d": "String function that joins its arguments end to end: CONCAT('Data', 'base') returns 'Database'.",
+   "alts": [
+    "concat()"
+   ]
+  },
+  {
+   "topic": "queries",
+   "t": "SUBSTRING",
+   "d": "String function that returns part of a string from a start position and length: SUBSTRING('Database', 1, 4) returns 'Data'.",
+   "alts": [
+    "substring()",
+    "substr"
+   ]
+  },
+  {
+   "topic": "queries",
+   "t": "REPLACE",
+   "d": "String function that swaps every occurrence of one piece of text for another.",
+   "alts": [
+    "replace()"
+   ]
+  },
+  {
+   "topic": "queries",
+   "t": "UPPER",
+   "d": "String function that returns the string in uppercase.",
+   "alts": [
+    "upper()"
+   ]
   },
   {
    "topic": "joins",
@@ -658,6 +730,71 @@ window.D426 = {
    "d": "One individual thing, like the employee Sam Snead."
   },
   {
+   "topic": "design",
+   "t": "Modality",
+   "d": "Another name for relationship minimum: zero means optional, one means required."
+  },
+  {
+   "topic": "design",
+   "t": "Many-to-many relationship",
+   "d": "Each instance on either side can relate to many on the other, like employees and projects or students and classes.",
+   "alts": [
+    "m:m",
+    "many to many",
+    "m:n"
+   ]
+  },
+  {
+   "topic": "design",
+   "t": "Many-to-one relationship",
+   "d": "Many instances on one side relate to a single instance on the other, like many employees assigned to one office building.",
+   "alts": [
+    "m:1",
+    "many to one",
+    "one-to-many",
+    "one to many",
+    "1:m"
+   ]
+  },
+  {
+   "topic": "design",
+   "t": "One-to-one relationship",
+   "d": "Each instance relates to at most one on the other side, like each employee assigned exactly one unshared desk.",
+   "alts": [
+    "1:1",
+    "one to one"
+   ]
+  },
+  {
+   "topic": "design",
+   "t": "Unary relationship",
+   "d": "A relationship that involves only one entity type, relating it to itself (reflexive).",
+   "alts": [
+    "unary"
+   ]
+  },
+  {
+   "topic": "design",
+   "t": "Binary relationship",
+   "d": "A relationship between two entity types. The most common kind.",
+   "alts": [
+    "binary"
+   ]
+  },
+  {
+   "topic": "design",
+   "t": "Ternary relationship",
+   "d": "A relationship among three entity types.",
+   "alts": [
+    "ternary"
+   ]
+  },
+  {
+   "topic": "design",
+   "t": "Identifying entity",
+   "d": "The entity a weak entity depends on. Its cardinality on the identifying relationship is always 1(1), drawn as a diamond next to it."
+  },
+  {
    "topic": "logical",
    "t": "Artificial key",
    "alts": [
@@ -744,6 +881,16 @@ window.D426 = {
    "topic": "logical",
    "t": "Denormalization",
    "d": "Intentionally introducing redundancy by merging tables."
+  },
+  {
+   "topic": "logical",
+   "t": "Associative entity",
+   "d": "An entity built from the identifiers of the two entities in a many-to-many relationship; it becomes the junction table.",
+   "alts": [
+    "junction table",
+    "bridge table",
+    "associative table"
+   ]
   },
   {
    "topic": "physical",
@@ -848,78 +995,6 @@ window.D426 = {
  ],
  "questions": [
   {
-   "topic": "sql",
-   "q": "Which SQL sublanguage includes CREATE, ALTER, and DROP?",
-   "o": [
-    "DML",
-    "DDL",
-    "DQL",
-    "DCL"
-   ],
-   "a": 1,
-   "e": "Data Definition Language defines structure. DML (INSERT, UPDATE, DELETE) changes the data itself."
-  },
-  {
-   "topic": "sql",
-   "q": "Data Control Language (DCL) is used to:",
-   "o": [
-    "Retrieve data",
-    "Manage transactions",
-    "Control database user access",
-    "Define table structure"
-   ],
-   "a": 2,
-   "e": "DCL controls access (GRANT, REVOKE). DTL manages transactions; DQL retrieves; DDL defines structure."
-  },
-  {
-   "topic": "queries",
-   "q": "What is the correct order of clauses in a SELECT statement?",
-   "o": [
-    "SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY",
-    "SELECT, FROM, GROUP BY, WHERE, ORDER BY, HAVING",
-    "SELECT, WHERE, FROM, HAVING, GROUP BY, ORDER BY",
-    "FROM, SELECT, WHERE, ORDER BY, GROUP BY, HAVING"
-   ],
-   "a": 0,
-   "e": "Mnemonic: Sweaty Feet Will Give Horrible Odors."
-  },
-  {
-   "topic": "queries",
-   "q": "What does the HAVING clause do?",
-   "o": [
-    "Filters individual rows before grouping",
-    "Filters group results after GROUP BY",
-    "Sorts the result set",
-    "Joins two tables"
-   ],
-   "a": 1,
-   "e": "HAVING filters groups. WHERE filters rows before grouping."
-  },
-  {
-   "topic": "statements",
-   "q": "What happens if you run UPDATE with no WHERE clause?",
-   "o": [
-    "Nothing is updated",
-    "Only the first row is updated",
-    "An error is returned",
-    "Every row in the table is updated"
-   ],
-   "a": 3,
-   "e": "Omitting WHERE in UPDATE or DELETE affects all rows."
-  },
-  {
-   "topic": "statements",
-   "q": "How does DROP TABLE differ from TRUNCATE?",
-   "o": [
-    "DROP deletes the table and its rows; TRUNCATE deletes all rows but keeps the table",
-    "DROP deletes some rows; TRUNCATE deletes the table",
-    "They are identical",
-    "TRUNCATE requires a WHERE clause"
-   ],
-   "a": 0,
-   "e": "TRUNCATE is nearly identical to DELETE with no WHERE. DROP removes the structure too."
-  },
-  {
    "topic": "basics",
    "q": "Which component translates query processor instructions into low-level file-system commands?",
    "o": [
@@ -1016,6 +1091,42 @@ window.D426 = {
    "e": "A table with no rows is valid; it's called an empty table."
   },
   {
+   "topic": "relational",
+   "q": "Which relational algebra operation selects columns?",
+   "o": [
+    "Select",
+    "Project",
+    "Product",
+    "Union"
+   ],
+   "a": 1,
+   "e": "Project picks columns; select picks rows; product pairs every row."
+  },
+  {
+   "topic": "sql",
+   "q": "Which SQL sublanguage includes CREATE, ALTER, and DROP?",
+   "o": [
+    "DML",
+    "DDL",
+    "DQL",
+    "DCL"
+   ],
+   "a": 1,
+   "e": "Data Definition Language defines structure. DML (INSERT, UPDATE, DELETE) changes the data itself."
+  },
+  {
+   "topic": "sql",
+   "q": "Data Control Language (DCL) is used to:",
+   "o": [
+    "Retrieve data",
+    "Manage transactions",
+    "Control database user access",
+    "Define table structure"
+   ],
+   "a": 2,
+   "e": "DCL controls access (GRANT, REVOKE). DTL manages transactions; DQL retrieves; DDL defines structure."
+  },
+  {
    "topic": "sql",
    "q": "DECIMAL(5, 2) stores:",
    "o": [
@@ -1040,28 +1151,40 @@ window.D426 = {
    "e": "TINYINT 1, SMALLINT 2, MEDIUMINT 3, INT 4, BIGINT 8."
   },
   {
-   "topic": "queries",
-   "q": "Which value matches LIKE 'L_t'?",
+   "topic": "sql",
+   "q": "In the five-sublanguage model, SELECT belongs to:",
    "o": [
-    "Lt",
-    "Loot",
-    "Lift",
-    "Lot"
+    "DML",
+    "DDL",
+    "DQL",
+    "DCL"
    ],
-   "a": 3,
-   "e": "_ matches exactly one character."
+   "a": 2,
+   "e": "Some sheets lump SELECT with DML; the five-sublanguage model puts it in DQL."
   },
   {
-   "topic": "queries",
-   "q": "value BETWEEN 10 AND 20 is equivalent to:",
+   "topic": "statements",
+   "q": "What happens if you run UPDATE with no WHERE clause?",
    "o": [
-    "value > 10 AND value < 20",
-    "value >= 10 AND value <= 20",
-    "value >= 10 OR value <= 20",
-    "value IN (10, 20)"
+    "Nothing is updated",
+    "Only the first row is updated",
+    "An error is returned",
+    "Every row in the table is updated"
    ],
-   "a": 1,
-   "e": "BETWEEN includes both endpoints."
+   "a": 3,
+   "e": "Omitting WHERE in UPDATE or DELETE affects all rows."
+  },
+  {
+   "topic": "statements",
+   "q": "How does DROP TABLE differ from TRUNCATE?",
+   "o": [
+    "DROP deletes the table and its rows; TRUNCATE deletes all rows but keeps the table",
+    "DROP deletes some rows; TRUNCATE deletes the table",
+    "They are identical",
+    "TRUNCATE requires a WHERE clause"
+   ],
+   "a": 0,
+   "e": "TRUNCATE is nearly identical to DELETE with no WHERE. DROP removes the structure too."
   },
   {
    "topic": "keys",
@@ -1098,6 +1221,66 @@ window.D426 = {
    ],
    "a": 0,
    "e": "RESTRICT simply refuses the statement."
+  },
+  {
+   "topic": "queries",
+   "q": "What is the correct order of clauses in a SELECT statement?",
+   "o": [
+    "SELECT, FROM, WHERE, GROUP BY, HAVING, ORDER BY",
+    "SELECT, FROM, GROUP BY, WHERE, ORDER BY, HAVING",
+    "SELECT, WHERE, FROM, HAVING, GROUP BY, ORDER BY",
+    "FROM, SELECT, WHERE, ORDER BY, GROUP BY, HAVING"
+   ],
+   "a": 0,
+   "e": "Mnemonic: Sweaty Feet Will Give Horrible Odors."
+  },
+  {
+   "topic": "queries",
+   "q": "What does the HAVING clause do?",
+   "o": [
+    "Filters individual rows before grouping",
+    "Filters group results after GROUP BY",
+    "Sorts the result set",
+    "Joins two tables"
+   ],
+   "a": 1,
+   "e": "HAVING filters groups. WHERE filters rows before grouping."
+  },
+  {
+   "topic": "queries",
+   "q": "Which value matches LIKE 'L_t'?",
+   "o": [
+    "Lt",
+    "Loot",
+    "Lift",
+    "Lot"
+   ],
+   "a": 3,
+   "e": "_ matches exactly one character."
+  },
+  {
+   "topic": "queries",
+   "q": "value BETWEEN 10 AND 20 is equivalent to:",
+   "o": [
+    "value > 10 AND value < 20",
+    "value >= 10 AND value <= 20",
+    "value >= 10 OR value <= 20",
+    "value IN (10, 20)"
+   ],
+   "a": 1,
+   "e": "BETWEEN includes both endpoints."
+  },
+  {
+   "topic": "queries",
+   "q": "What does SUBSTRING('Database', 1, 4) return?",
+   "o": [
+    "'base'",
+    "'Data'",
+    "'Datab'",
+    "'atab'"
+   ],
+   "a": 1,
+   "e": "Start at position 1, take 4 characters."
   },
   {
    "topic": "joins",
@@ -1256,6 +1439,78 @@ window.D426 = {
    "e": "Car, Truck, Motorcycle partition Vehicle."
   },
   {
+   "topic": "design",
+   "q": "Employees can work on many projects, and each project has many employees. What is the relationship?",
+   "o": [
+    "One-to-one",
+    "Many-to-one",
+    "Many-to-many",
+    "One-to-many from project to employee only"
+   ],
+   "a": 2,
+   "e": "Read it from both sides: many on each side means many-to-many."
+  },
+  {
+   "topic": "design",
+   "q": "Many employees are assigned to one office building, and each employee has only one building. Employee to building is:",
+   "o": [
+    "Many-to-one",
+    "One-to-one",
+    "Many-to-many",
+    "Unary"
+   ],
+   "a": 0,
+   "e": "Many employees, one building each: many-to-one."
+  },
+  {
+   "topic": "design",
+   "q": "Each employee is assigned exactly one desk, and desks are never shared. The relationship is:",
+   "o": [
+    "Many-to-many",
+    "One-to-one",
+    "Many-to-one",
+    "Ternary"
+   ],
+   "a": 1,
+   "e": "One-to-one needs a rule that blocks sharing on both sides."
+  },
+  {
+   "topic": "design",
+   "q": "A relationship where Employee supervises Employee is:",
+   "o": [
+    "Binary",
+    "Ternary",
+    "Unary",
+    "Associative"
+   ],
+   "a": 2,
+   "e": "One entity type related to itself: unary (reflexive)."
+  },
+  {
+   "topic": "design",
+   "q": "Relationship minimum is also called:",
+   "o": [
+    "Cardinality maximum",
+    "Modality",
+    "Degree",
+    "Selectivity"
+   ],
+   "a": 1,
+   "e": "Modality = minimum (optional vs required)."
+  },
+  {
+   "topic": "design",
+   "q": "In an ER diagram, where does the diamond for a weak entity's identifying relationship go?",
+   "o": [
+    "Next to the weak entity",
+    "Next to the identifying entity",
+    "On every relationship",
+    "Inside the attribute list"
+   ],
+   "a": 1,
+   "e": "It sits by the identifying entity, whose cardinality is always 1(1)."
+  },
+  {
    "topic": "logical",
    "q": "Good primary keys should be:",
    "o": [
@@ -1326,6 +1581,18 @@ window.D426 = {
    ],
    "a": 1,
    "e": "The two foreign keys form a composite primary key."
+  },
+  {
+   "topic": "logical",
+   "q": "An associative entity is used to implement:",
+   "o": [
+    "A one-to-one relationship",
+    "A many-to-many relationship",
+    "A weak entity",
+    "A supertype"
+   ],
+   "a": 1,
+   "e": "It holds the identifiers of both sides and becomes the junction table."
   },
   {
    "topic": "physical",
@@ -1478,6 +1745,14 @@ window.D426 = {
   [
    "Heap vs sorted vs hash",
    "Fast inserts · fast ranges · fast exact matches"
+  ],
+  [
+   "Unary vs binary vs ternary",
+   "One entity type · two · three"
+  ],
+  [
+   "Cardinality vs modality",
+   "Maximum (one or many) · minimum (zero or one)"
   ]
  ]
 };

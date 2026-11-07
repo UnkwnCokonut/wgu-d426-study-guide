@@ -17,6 +17,9 @@ Empty table	A table with columns but no rows.
 Tuple	An ordered collection of elements in parentheses, so (a, b, c) and (c, b, a) are different.
 Data type	A named set of values from which column values are drawn.
 Data independence	The principle that changing how data is physically stored never changes query results.
+Select operation	Relational algebra operation that picks rows matching a condition, like a WHERE clause.
+Project operation	Relational algebra operation that picks columns, like SELECT Col1, Col2 FROM Table.
+Product operation	Relational algebra operation that combines every row of one table with every row of another (Table1 × Table2).
 DDL	SQL sublanguage that defines database structure: CREATE, ALTER, DROP.
 DQL	SQL sublanguage that retrieves data: SELECT.
 DML	SQL sublanguage that changes stored data: INSERT, UPDATE, DELETE.
@@ -32,6 +35,8 @@ TINYINT	1-byte integer type: -128 to 127 signed, 0 to 255 unsigned.
 SMALLINT	2-byte integer type: -32,768 to 32,767 signed, 0 to 65,535 unsigned.
 BIGINT	8-byte integer type: -2^63 to 2^63 - 1 signed.
 Modulo (%)	Operator that returns the integer remainder of a division; 5 % 2 = 1.
+CHAR(N)	Data type for fixed-length text of exactly N characters.
+Expression	Literals, identifiers, and operators that evaluate to a single value, like Population > 1000000.
 CREATE TABLE	Makes a new table by naming the table and its columns with their data types.
 DROP TABLE	Deletes a table along with all of its rows.
 ALTER TABLE	Adds, deletes, or modifies columns (or constraints) on an existing table.
@@ -64,6 +69,10 @@ GROUP BY	Puts rows with the same values into groups so aggregate functions compu
 HAVING	Filters group results; comes after GROUP BY and before ORDER BY.
 WHERE	Filters individual rows before any grouping happens.
 Alias	A temporary name for a column or table, usually introduced with AS.
+CONCAT	String function that joins its arguments end to end: CONCAT('Data', 'base') returns 'Database'.
+SUBSTRING	String function that returns part of a string from a start position and length: SUBSTRING('Database', 1, 4) returns 'Data'.
+REPLACE	String function that swaps every occurrence of one piece of text for another.
+UPPER	String function that returns the string in uppercase.
 Join	A SELECT that combines a left table and a right table into one result by comparing columns.
 INNER JOIN	Returns only the rows that match in both tables.
 LEFT JOIN	Returns all left table rows plus only the matching right table rows.
@@ -98,6 +107,14 @@ IsA relationship	The identifying relationship between a subtype entity and its s
 Partition (ER)	A group of mutually exclusive subtype entities of one supertype.
 Intangible entity	An entity documented in the data model but not tracked with data in the database.
 Entity instance	One individual thing, like the employee Sam Snead.
+Modality	Another name for relationship minimum: zero means optional, one means required.
+Many-to-many relationship	Each instance on either side can relate to many on the other, like employees and projects or students and classes.
+Many-to-one relationship	Many instances on one side relate to a single instance on the other, like many employees assigned to one office building.
+One-to-one relationship	Each instance relates to at most one on the other side, like each employee assigned exactly one unshared desk.
+Unary relationship	A relationship that involves only one entity type, relating it to itself (reflexive).
+Binary relationship	A relationship between two entity types. The most common kind.
+Ternary relationship	A relationship among three entity types.
+Identifying entity	The entity a weak entity depends on. Its cardinality on the identifying relationship is always 1(1), drawn as a diamond next to it.
 Artificial key	A single-column primary key the designer creates when no suitable key exists, usually an auto-generated integer.
 Functional dependence	Column A depends on column B when each B value relates to at most one A value.
 Redundancy	The repetition of related values in a table.
@@ -111,6 +128,7 @@ Third normal form (3NF)	Whenever a non-key column A depends on column B, B is un
 Boyce-Codd normal form (BCNF)	Whenever any column A depends on column B, B is unique. The gold standard.
 Normalization	Eliminating redundancy by decomposing a table into two or more tables in a higher normal form.
 Denormalization	Intentionally introducing redundancy by merging tables.
+Associative entity	An entity built from the identifiers of the two entities in a many-to-many relationship; it becomes the junction table.
 Heap table	Table structure with no row order imposed; fastest for inserts and bulk loads.
 Sorted table	Table structure where a sort column determines the physical row order.
 Hash table	Table structure where a hash function assigns rows to buckets.

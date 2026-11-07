@@ -23,7 +23,7 @@ Learn mode, flashcards, a practice test, and a cram sheet. Works on your phone. 
 | --- | --- | --- |
 | **App** | Learn · Flashcards · Practice test · Cram sheet | [`index.html`](index.html) ([live](https://unkwncokonut.github.io/wgu-d426-study-guide/)) |
 | **Guide** | 10 short modules, 3 to 6 minutes each | [`guide/`](guide/README.md) |
-| **Cards** | 130 terms + 45 practice questions | [`data/cards.json`](data/cards.json) |
+| **Cards** | 148 terms + 55 practice questions | [`data/cards.json`](data/cards.json) |
 | **Exports** | Quizlet, Anki, and spreadsheet versions | [`flashcards/`](flashcards/) |
 
 ## How Learn mode works
@@ -59,14 +59,14 @@ The green bar fills as you master cards. Pick one topic chip to keep the bar sma
 | | 5 | Break |
 | 3 | 15 | Learn: **ER modeling** + **Physical design** |
 | | 5 | Break |
-| 4 | 20 | Practice test, all 45. Retry the misses |
+| 4 | 20 | Practice test, all 55. Retry the misses |
 | 5 | 10 | [Cram sheet](guide/00-cram-sheet.md). Then sleep. |
 
 ## Use the cards somewhere else
 
 - **Quizlet:** Create a set → *Import* → paste [`flashcards/quizlet-import.txt`](flashcards/quizlet-import.txt). Keep "Between term and definition" set to **Tab**.
 - **Anki:** *File → Import* → [`flashcards/anki-import.csv`](flashcards/anki-import.csv). Topics come in as tags.
-- **Spreadsheet:** [`flashcards/practice-questions.csv`](flashcards/practice-questions.csv) has all 45 questions with answers.
+- **Spreadsheet:** [`flashcards/practice-questions.csv`](flashcards/practice-questions.csv) has all 55 questions with answers.
 
 ## Run it offline
 

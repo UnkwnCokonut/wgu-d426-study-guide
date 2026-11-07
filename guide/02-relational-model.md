@@ -25,6 +25,16 @@
 | Tuple | Row | Record |
 | Attribute | Column | Field |
 
+## Relational algebra, the three to know
+
+| Operation | Does | SQL feel |
+| --- | --- | --- |
+| **Select** | Picks **rows** | `WHERE` |
+| **Project** | Picks **columns** | `SELECT Col1, Col2` |
+| **Product** | Every row × every row (Table1 × Table2) | `CROSS JOIN` |
+
+Trick: **P**roject = **P**illars (columns stand up).
+
 ## Two kinds of rules
 
 - **Relational (structural) rules** apply to every relational database: unique primary key, unique column names, no duplicate rows.
