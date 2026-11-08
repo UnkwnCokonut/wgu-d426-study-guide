@@ -14,7 +14,7 @@
   --accent: #0F766E; --accent-ink: #FFFFFF; --accent-soft: #D9EFEB;
   --good: #23784A; --good-soft: #DEF3E5; --bad: #B4410F; --bad-soft: #FBE8DD;
   --mid: #B7791F; --mid-soft: #FBF0D9;
-  --focus: #2563EB; --radius: 14px;
+  --focus: #2563EB; --radius: 14px; --red: #C62828;
   --font: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 @media (prefers-color-scheme: dark) {
@@ -22,7 +22,7 @@
     --bg: #121417; --surface: #1B1E23; --ink: #ECEDEE; --muted: #A3A9B2; --line: #2D3239;
     --accent: #3CC7B1; --accent-ink: #0B1F1C; --accent-soft: #15393A;
     --good: #63D493; --good-soft: #163425; --bad: #F39A66; --bad-soft: #3B2519;
-    --mid: #E8B45A; --mid-soft: #3A2E17; --focus: #7AA7FF;
+    --mid: #E8B45A; --mid-soft: #3A2E17; --focus: #7AA7FF; --red: #FF6B5B;
   }
 }
 * { box-sizing: border-box; }
@@ -162,6 +162,67 @@ details.check .ans > :first-child { margin-top: 0; } details.check .ans > :last-
 .mermaid .label { text-transform: none; letter-spacing: normal; font-size: inherit; font-weight: 400; color: inherit; }
 .brand a { color: inherit; text-decoration: none; }
 
+/* competencies tab (red text doc) */
+.redtext .red { color: var(--red); font-weight: 700; font-size: 21px; line-height: 1.35; margin: 18px 0 4px; }
+.redtext ul { margin: 0; padding-left: 24px; }
+.split { display: flex; height: 40px; border-radius: 10px; overflow: hidden; margin: 16px 0 6px; border: 1px solid var(--line); }
+.split span { display: grid; place-items: center; font-weight: 700; font-size: 15px; color: var(--ink); border-right: 2px solid var(--surface); }
+.split span:last-child { border-right: 0; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 10px; }
+.tag { font-size: 14px; border: 1px solid var(--line); background: var(--bg); border-radius: 999px; padding: 3px 10px; }
+.tag:hover { border-color: var(--accent); }
+.ctitle { color: var(--red); }
+
+/* study buddy */
+.fab { position: fixed; right: 16px; bottom: 16px; z-index: 15; border: 0; border-radius: 999px; padding: 12px 22px; min-height: 52px; background: var(--ink); color: var(--bg); font-weight: 700; box-shadow: 0 6px 20px rgba(0,0,0,.22); }
+body.has-mini .fab { bottom: 84px; }
+body { padding-bottom: 72px; }
+body.has-mini { padding-bottom: 140px; }
+.drawer { position: fixed; z-index: 30; top: 0; right: 0; bottom: 0; width: min(440px, 100%); display: flex; flex-direction: column; background: var(--surface); border-left: 1px solid var(--line); box-shadow: -12px 0 32px rgba(0,0,0,.18); }
+.drawer[hidden] { display: none; }
+@media (max-width: 560px) { .drawer { top: 6vh; border-left: 0; border-top: 1px solid var(--line); border-radius: 18px 18px 0 0; } }
+.dh { display: flex; align-items: center; gap: 8px; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+.msgs { flex: 1; overflow-y: auto; padding: 14px; display: grid; gap: 12px; align-content: start; }
+.msg { max-width: 94%; border-radius: 14px; padding: 10px 14px; font-size: 17px; line-height: 1.5; overflow-wrap: anywhere; }
+.msg.me { justify-self: end; background: var(--accent); color: var(--accent-ink); }
+.msg.bot { justify-self: start; background: var(--bg); border: 1px solid var(--line); }
+.msg p { margin: 0 0 8px; } .msg p:last-child { margin-bottom: 0; }
+.msg ul, .msg ol { margin: 4px 0 8px; padding-left: 22px; }
+.msg pre { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; overflow-x: auto; font-size: 14px; }
+.msg code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .88em; }
+.msg .acts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.msg .opt { min-height: 44px; padding: 10px 12px; font-size: 16px; }
+.msg .note { font-size: 14px; color: var(--muted); margin-top: 6px; }
+.composer { display: flex; gap: 8px; padding: 10px 12px; border-top: 1px solid var(--line); }
+.composer textarea { flex: 1; resize: none; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); padding: 11px 12px; min-height: 48px; max-height: 140px; }
+.sugg { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.dots::after { content: "…"; display: inline-block; animation: blink 1s steps(2) infinite; }
+@keyframes blink { 50% { opacity: .2; } }
+.settings input[type=password], .settings input[type=text] { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); }
+
+/* podcast */
+.eps { display: grid; gap: 8px; margin-top: 10px; }
+.ep { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); }
+.ep.on { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.ep .hint { display: block; }
+.make { display: grid; gap: 8px; padding: 12px 0; border-top: 1px solid var(--line); }
+.make:first-of-type { border-top: 0; }
+.make select, .make textarea { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); }
+.make textarea { min-height: 120px; resize: vertical; }
+.transport { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 12px; }
+.transport .play { min-width: 120px; }
+.transport select { padding: 8px 10px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); min-height: 44px; }
+#pchap { width: 100%; }
+.transport select, .make select, .settings select { max-width: 100%; }
+.tx { max-height: 46vh; overflow-y: auto; margin-top: 14px; border-top: 1px solid var(--line); padding-top: 8px; }
+.tx p { margin: 0; padding: 6px 8px; border-radius: 8px; cursor: pointer; font-size: 16px; }
+.tx p .spk { color: var(--muted); font-weight: 700; margin-right: 6px; }
+.tx p.cur { background: var(--accent-soft); }
+.tx h4 { margin: 14px 8px 4px; font-size: 14px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+.mini { position: fixed; left: 0; right: 0; bottom: 0; z-index: 14; display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--surface); border-top: 1px solid var(--line); box-shadow: 0 -6px 18px rgba(0,0,0,.08); }
+.mini[hidden] { display: none; }
+.mini-t { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 16px; }
+
 /* competencies */
 .chip.comp { font-weight: 700; }
 .topics.sub { margin-top: 2px; }
@@ -176,7 +237,7 @@ details.check .ans > :first-child { margin-top: 0; } details.check .ans > :last-
 .cres:first-of-type { border-top: 0; }
 
 /* dialogs */
-.overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: grid; place-items: center; padding: 16px; z-index: 20; }
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: grid; place-items: center; padding: 16px; z-index: 40; }
 .overlay .card { max-width: 460px; width: 100%; margin: 0; }
 .pop { animation: pop .35s ease; }
 @keyframes pop { 0% { transform: scale(.96); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
@@ -199,17 +260,44 @@ footer a { color: inherit; }
   </div>
   <nav class="tabs" role="tablist" aria-label="Study modes">
     <button role="tab" data-tab="home">Start</button>
+    <button role="tab" data-tab="competencies">Competencies</button>
     <button role="tab" data-tab="guide">Guide</button>
     <button role="tab" data-tab="learn">Learn</button>
     <button role="tab" data-tab="flash">Flashcards</button>
     <button role="tab" data-tab="test">Practice test</button>
+    <button role="tab" data-tab="podcast">Podcast</button>
     <button role="tab" data-tab="cram">Cram sheet</button>
   </nav>
 </header>
 <main class="wrap" id="main"></main>
 <div class="sr" aria-live="assertive" id="say"></div>
-<script src="data/cards.js?v=295413a7"></script>
-<script src="data/guide.js?v=295413a7"></script>
+
+<!-- mini player: shows on other tabs while a podcast plays -->
+<div class="mini" id="mini" hidden>
+  <button class="btn small" id="miniPlay">Pause</button>
+  <span class="mini-t" id="miniTitle"></span>
+  <a class="btn ghost small" href="#podcast" style="text-decoration:none">Open</a>
+</div>
+
+<!-- Study Buddy -->
+<button class="fab" id="askFab" aria-haspopup="dialog" aria-controls="askPanel">Ask</button>
+<div class="drawer" id="askPanel" role="dialog" aria-modal="false" aria-labelledby="askTitle" hidden>
+  <div class="dh">
+    <b id="askTitle">Study Buddy</b>
+    <span class="badge" id="askMode"></span>
+    <button class="btn ghost small" id="askSettings" style="margin-left:auto">Settings</button>
+    <button class="btn ghost small" id="askClose" aria-label="Close Study Buddy">Close</button>
+  </div>
+  <div class="msgs" id="askMsgs" aria-live="polite"></div>
+  <form class="composer" id="askForm">
+    <textarea id="askInput" rows="1" placeholder="Ask about any D426 topic or question" aria-label="Ask Study Buddy"></textarea>
+    <button class="btn" type="submit">Send</button>
+  </form>
+</div>
+
+<script src="data/cards.js?v=0a0c90b5"></script>
+<script src="data/guide.js?v=0a0c90b5"></script>
+<script src="data/podcast.js?v=0a0c90b5"></script>
 <script>
 (function () {
 "use strict";
@@ -241,7 +329,7 @@ const PRAISE = ["Nice.", "Got it.", "Yes!", "Locked in.", "Clean.", "That's it."
 
 /* ---------- state ---------- */
 const G = window.D426_GUIDE || [];
-const TABS = ["home", "guide", "learn", "flash", "test", "cram"];
+const TABS = ["home", "competencies", "guide", "learn", "flash", "test", "podcast", "cram"];
 const S = {
   tab: TABS.includes(store.get("tab", "home")) ? store.get("tab", "home") : "home",
   mod: null,
@@ -326,7 +414,9 @@ function route() {
   if (TABS.includes(tab)) {
     S.tab = tab;
     if (tab === "guide") S.mod = G.some(m => m.id === sub) ? sub : null;
-    else if (tab === "test" && sub === "sim") {
+    else if (tab === "podcast" && sub) {  // #podcast/c3 picks that episode
+      history.replaceState(null, "", "#podcast"); pickEpisode(sub);
+    } else if (tab === "test" && sub === "sim") {
       history.replaceState(null, "", "#test"); save(); startSim(); window.scrollTo(0, 0); return;
     } else if (sub && (compById[sub] || topicName[sub])) {  // #learn/c3, #flash/joins
       S.topics = compById[sub] ? compById[sub].topics.slice() : [sub]; L = F = T = null;
@@ -516,7 +606,7 @@ function renderLearn() {
       } else {
         h += `<div class="fb bad pop"><strong>Not quite. It's coming back later this round.</strong><div>Answer: <b>${esc(ans(card))}</b></div>${c.mode === "type" && c.given ? `<div class="why">You wrote: ${esc(c.given)}</div>` : ""}</div>`;
       }
-      h += `<div class="row actions"><button class="btn" id="cont">Continue</button>${!c.ok && c.mode === "type" && c.given ? `<button class="btn ghost" id="override">I was right</button>` : ""}<span class="hint"><kbd>Enter</kbd> continue</span></div>`;
+      h += `<div class="row actions"><button class="btn" id="cont">Continue</button>${!c.ok && c.mode === "type" && c.given ? `<button class="btn ghost" id="override">I was right</button>` : ""}<button class="btn ghost" id="lexplain">Explain</button><span class="hint"><kbd>Enter</kbd> continue</span></div>`;
     }
     h += `</div>`;
   }
@@ -538,6 +628,7 @@ function renderLearn() {
   if ($("idk")) $("idk").onclick = () => answer(false, "");
   if ($("submit")) $("submit").onclick = submitTyped;
   if ($("cont")) { $("cont").onclick = nextQ; $("cont").focus(); }
+  if ($("lexplain")) $("lexplain").onclick = () => askExplainTerm(L.cur.card);
   if ($("override")) $("override").onclick = override;
   if ($("typed") && !L.cur.done) $("typed").focus();
 }
@@ -578,7 +669,7 @@ function renderFlash() {
         <button class="btn ghost" id="learning">Still learning <kbd>1</kbd></button>
         <button class="btn" id="know">Know it <kbd>2</kbd></button>
       </div>
-      <p class="hint" style="text-align:center"><kbd>Space</kbd> flip · <kbd>←</kbd> back · <kbd>→</kbd> skip</p>`;
+      <p class="hint" style="text-align:center"><kbd>Space</kbd> flip · <kbd>←</kbd> back · <kbd>→</kbd> skip · <button class="btn ghost small" id="fexplain">Explain this card</button></p>`;
   }
   main.innerHTML = h; wireChips();
   const $ = id => main.querySelector("#" + id);
@@ -588,6 +679,7 @@ function renderFlash() {
   if ($("side")) $("side").onclick = () => { S.settings.front = S.settings.front === "term" ? "def" : "term"; F.flipped = false; save(); render(); };
   if ($("redo")) $("redo").onclick = () => startFlash(shuffle(F.learning));
   if ($("restart")) $("restart").onclick = () => startFlash();
+  if ($("fexplain")) $("fexplain").onclick = () => askExplainTerm(byId[F.ids[F.i]]);
 }
 
 /* =========================================================
@@ -640,6 +732,15 @@ function renderTest() {
       <div class="row actions">${[10, 20].filter(n => n < pool.length).map(n => `<button class="btn ${n === 10 ? "" : "ghost"}" data-n="${n}">${n} questions</button>`).join("")}<button class="btn ${pool.length <= 10 ? "" : "ghost"}" data-n="0">All ${pool.length}</button></div></div>`;
   } else if (T.i >= T.list.length) {
     const pct = Math.round(T.right / T.list.length * 100);
+    if (!T.saved) {  // remember results for the Competencies tab and the podcast's "missed questions" episode
+      T.saved = true;
+      store.set("missed", T.missed.map(m => m.q.q));
+      if (T.sim) {
+        const by = {};
+        comps.forEach(c => { const it = T.list.filter(x => compOfTopic[x.q.topic] === c.id); by[c.id] = [it.filter(x => x.ok).length, it.length]; });
+        store.set("sims", [{ at: Date.now(), right: T.right, n: T.list.length, by }].concat(store.get("sims", [])).slice(0, 10));
+      }
+    }
     h += `<div class="card pop"><div class="label">${T.sim ? "Exam simulation results" : "Results"}</div><h1>${T.right} / ${T.list.length} (${pct}%)</h1>
       <p>${pct >= 85 ? "Strong. You're ready for these topics." : pct >= 65 ? "Solid base. Review the misses below, then retry them." : "Good data. Go back to Learn on the weakest competency, then retry."}</p>
       ${compResults()}
@@ -657,7 +758,7 @@ function renderTest() {
     if (done) {
       const ok = T.picked === it.a;
       h += `<div class="fb ${ok ? "good" : "bad"} pop"><strong>${ok ? pick(PRAISE) : "Not this time."}</strong><div class="why">${esc(q.e)}</div></div>
-        <div class="row actions"><button class="btn" id="tnext">${T.i + 1 < T.list.length ? "Next question" : "See results"}</button><span class="hint"><kbd>Enter</kbd></span></div>`;
+        <div class="row actions"><button class="btn" id="tnext">${T.i + 1 < T.list.length ? "Next question" : "See results"}</button><button class="btn ghost" id="texplain">Explain this</button><span class="hint"><kbd>Enter</kbd></span></div>`;
     } else h += `<p class="hint" style="margin-top:14px">Press <kbd>1</kbd>–<kbd>4</kbd></p>`;
     h += `</div>`;
   }
@@ -669,6 +770,7 @@ function renderTest() {
   if ($("retry")) $("retry").onclick = () => startTest(0, shuffle(T.missed.map(m => m.q)));
   if ($("newtest")) $("newtest").onclick = () => { T = null; render(); };
   if ($("sim")) $("sim").onclick = startSim;
+  if ($("texplain")) $("texplain").onclick = () => { const it = T.list[T.i]; askExplainQuestion(it.q, it.order[T.picked]); };
   if ($("learnweak")) $("learnweak").onclick = e => { S.topics = compById[e.currentTarget.dataset.c].topics.slice(); L = F = T = null; save(); go("learn"); };
 }
 function testPick(i) {
@@ -716,8 +818,9 @@ function renderHome() {
     </div>
     ${S.showPlan ? `<table class="plan">${PLAN.map((p, i) => `<tr><td>${p.min} min</td><td>${esc(p.what)}</td><td style="text-align:right">${p.to ? `<button class="btn small" data-plan="${i}">Go</button>` : ""}</td></tr>`).join("")}</table>
       <p class="hint" style="margin:10px 0 0">Right before the exam: the 3-minute cram sheet.</p>` : ""}
+    <p class="hint" style="margin:14px 0 0">Rather listen? Try the <a href="#podcast">Podcast</a>. Stuck on something? Tap <b>Ask</b>.</p>
     </div>
-    <div class="card"><h2>Exam blueprint</h2><p class="hint" style="margin:0">Three competencies. Tap one to study it.</p>
+    <div class="card"><div class="row spread"><h2 style="margin:0">Exam blueprint</h2><a href="#competencies">Full page →</a></div><p class="hint" style="margin:4px 0 0">Three competencies. Tap one to study it.</p>
       ${comps.map(c => {
         const pool = compPool(c), mm = pool.filter(t => lvl(t.id) >= 2).length;
         return `<button class="bp ${c === byWeight[0] ? "top" : ""}" data-bp="${c.id}"><span class="bpw">${c.weight}%</span><span class="bpb">
@@ -794,6 +897,8 @@ function renderGuide() {
     <div class="card"><div class="row">
       <button class="btn ${S.done[x.id] ? "ghost" : ""}" id="mdone">${S.done[x.id] ? "✓ Done (undo)" : "Mark done"}</button>
       <button class="btn ${S.done[x.id] ? "" : "ghost"}" id="mpractice">Practice ${esc(topicName[x.topic])} in Learn →</button>
+      <button class="btn ghost" data-listen="mod:${x.id}">Listen</button>
+      <button class="btn ghost" data-ask="Explain ${esc(x.title)} like I'm tired. Just the big ideas.">Ask about this</button>
     </div></div>
     <div class="row spread" style="margin-top:16px">${prev ? `<a href="#guide/${prev.id}">← ${esc(prev.title)}</a>` : "<span></span>"}${next ? `<a href="#guide/${next.id}">${esc(next.title)} →</a>` : `<a href="#cram">Cram sheet →</a>`}</div>`;
   main.querySelector("#mdone").onclick = () => { S.done[x.id] = !S.done[x.id]; if (!S.done[x.id]) delete S.done[x.id]; store.set("done", S.done); render(); };
@@ -801,17 +906,714 @@ function renderGuide() {
   drawDiagrams();
 }
 
+/* =========================================================
+   COMPETENCIES  (the red-text exam blueprint, with everything to study it)
+   ========================================================= */
+const SPLIT_BG = { c1: "var(--mid-soft)", c2: "var(--accent-soft)", c3: "var(--bad-soft)" };
+function renderComps() {
+  const sims = store.get("sims", []), last = sims[0];
+  main.innerHTML = `<div class="card redtext">
+      <div class="label">Exam blueprint</div><h1>D426 Objective Assessment</h1>
+      <p class="hint" style="margin:0">The assessment is split into three competencies. This site follows the same split.</p>
+      ${comps.map(c => `<p class="red">${esc(c.red)}</p><ul><li>${esc(c.redLessons)}</li></ul>`).join("")}
+      <div class="split" role="img" aria-label="Exam split: ${comps.map(c => `C${c.n} ${c.weight} percent`).join(", ")}">
+        ${comps.map(c => `<span style="width:${c.weight}%;background:${SPLIT_BG[c.id] || "var(--bg)"}">C${c.n} · ${c.weight}%</span>`).join("")}
+      </div>
+      <p class="hint" style="margin:0">Study order: biggest first. ${byWeight.map(c => `C${c.n}`).join(" → ")}.</p>
+    </div>
+    ${comps.map(c => {
+      const pool = compPool(c), mm = pool.filter(t => lvl(t.id) >= 2).length;
+      const mods = G.filter(m => compOfTopic[m.topic] === c.id);
+      const s = last && last.by && last.by[c.id];
+      return `<div class="card" id="comp-${c.id}">
+        <div class="row spread"><h2 class="ctitle" style="margin:0">Competency ${c.n} · ${c.weight}%</h2>${c === byWeight[0] ? `<span class="badge l">Biggest chunk</span>` : ""}</div>
+        <p style="margin:6px 0 0"><b>${esc(c.name)}</b></p><p class="hint" style="margin:0">${esc(c.lessons)}</p>
+        <div class="prog sm" style="margin-top:12px" role="img" aria-label="${mm} of ${pool.length} terms mastered"><span class="m" style="width:${mm / (pool.length || 1) * 100}%"></span></div>
+        <p class="hint" style="margin:6px 0 0">${mm}/${pool.length} terms mastered${s && s[1] ? ` · last simulation ${s[0]}/${s[1]} (${Math.round(s[0] / s[1] * 100)}%)` : " · no simulation yet"}</p>
+        <h3 style="margin-top:18px">What's in it</h3>
+        ${c.topics.map(t => `<div><b>${esc(topicName[t])}</b><div class="tags">${terms.filter(x => x.topic === t).slice(0, 8).map(x => `<button class="tag" data-ask="What is ${esc(x.t)}?">${esc(x.t)}</button>`).join("")}</div></div>`).join("")}
+        <p class="hint" style="margin:0 0 6px">Tap any term to have Study Buddy explain it.</p>
+        <h3>Guide modules</h3>
+        <div class="mods" style="margin-top:6px">${mods.map(m => `<a class="mod ${S.done[m.id] ? "done" : ""}" href="#guide/${m.id}"><span class="num">${S.done[m.id] ? "✓" : m.n}</span><span><b>${esc(m.title)}</b><span class="hint">${esc(String(m.time).replace("minutes", "min"))}</span></span></a>`).join("")}</div>
+        <div class="row actions">
+          <button class="btn" data-study="learn" data-c="${c.id}">Learn C${c.n}</button>
+          <button class="btn ghost" data-study="flash" data-c="${c.id}">Flashcards</button>
+          <button class="btn ghost" data-study="test" data-c="${c.id}">Practice C${c.n}</button>
+          <button class="btn ghost" data-listen="${c.id}">Listen</button>
+        </div></div>`;
+    }).join("")}
+    <div class="card"><h2>Ready to check yourself?</h2><p style="margin-top:0">The exam simulation pulls ${simAlloc(SIM_N).map(x => `${x.k} from C${x.c.n}`).join(", ")}, the same split as the real exam.</p>
+      <button class="btn" data-sim="1">Start exam simulation</button>
+      ${sims.length ? `<p class="hint" style="margin:12px 0 0">Past simulations: ${sims.slice(0, 5).map(x => `${Math.round(x.right / x.n * 100)}%`).join(" · ")}</p>` : ""}</div>`;
+  main.querySelectorAll("[data-study]").forEach(b => b.onclick = () => { S.topics = compById[b.dataset.c].topics.slice(); L = F = T = null; save(); go(b.dataset.study); });
+  main.querySelectorAll("[data-sim]").forEach(b => b.onclick = () => go("test", "sim"));
+}
+
+/* =========================================================
+   PODCAST  (two hosts: Alex explains, Sam asks and keeps it moving)
+   Ready-made episodes are MP3s rendered by tools/podcast.py with Piper.
+   Everything else is spoken live with the device's own voices.
+   ========================================================= */
+const HOST = { A: "Alex", B: "Sam" };
+const SPELL = new Set(["SQL", "DDL", "DML", "DQL", "DCL", "DTL", "DBA", "API", "ER", "ERD", "BCNF", "CSV", "ID", "MB", "TB", "OA", "WGU", "FK", "PK", "ON"]);
+const KEEP = new Set(["ON"]);
+/* turn display text into something a speech engine says well */
+function speakable(s) {
+  s = String(s).replace(/\s+/g, " ").trim();
+  s = s.replace(/TL;DR/gi, "The short version").replace(/\bD426\b/g, "D 4 26").replace(/\bzyBooks?\b/g, "zy book").replace(/\bI\/O\b/g, "input output");
+  s = s.replace(/\b([123])NF\b/g, (_, n) => ["first", "second", "third"][n - 1] + " normal form");
+  s = s.replace(/\bM:[MN]\b/g, "many to many").replace(/\bM:1\b/g, "many to one").replace(/\b1:M\b/g, "one to many").replace(/\b1:1\b/g, "one to one");
+  s = s.replace(/\b1\(1\)/g, "one, minimum one").replace(/\bM\(0\)/g, "many, minimum zero");
+  s = s.replace(/(\d+)\^(\d+)/g, "$1 to the power of $2").replace(/(\d+(?:\.\d+)?)\s?%/g, "$1 percent");
+  s = s.replace(/\(\*\)/g, " star").replace(/\s*>=\s*/g, " at least ").replace(/\s*<=\s*/g, " at most ").replace(/\s*(!=|<>)\s*/g, " not equal to ")
+    .replace(/\s+>\s+/g, " greater than ").replace(/\s+<\s+/g, " less than ").replace(/\s+=\s+/g, " equals ")
+    .replace(/(\d) - (\d)/g, "$1 minus $2").replace(/(^|[\s(])-(\d)/g, "$1minus $2");
+  s = s.replace(/\s*→\s*/g, ", then ").replace(/\s*·\s*/g, ", ").replace(/≠/g, " is not ").replace(/×/g, " times ").replace(/≈/g, "about ").replace(/[≥]/g, " at least ").replace(/[≤]/g, " at most ");
+  s = s.replace(/\s&\s/g, " and ").replace(/\bvs\.?(?=\s)/gi, "versus").replace(/\bEx:/g, "For example:").replace(/\be\.g\./g, "for example");
+  s = s.replace(/\b(\w+)_(\w+)\b/g, (m, a, b) => (a.length <= 2 || b.length <= 2) ? `${a} underscore ${b}` : `${a} ${b}`);
+  s = s.replace(/%/g, " percent sign ").replace(/\b_\b|'_'/g, " underscore ");
+  s = s.replace(/(\w)\s*\/\s*(\w)/g, "$1 or $2").replace(/[`*#]/g, "");
+  s = s.replace(/\b[A-Z][A-Z0-9]{1,}\b/g, w => SPELL.has(w) && !KEEP.has(w) ? w.split("").join(" ") : (/\d/.test(w) ? w : w.toLowerCase()));
+  s = s.replace(/\b(tiny|small|medium|big)int\b/g, "$1 int").replace(/\bvarchar\b/g, "var char");
+  return s.replace(/\s+/g, " ").trim();
+}
+const clean = t => String(t || "").replace(/\s+/g, " ").trim();
+const seg = (spk, text, pause = 450, extra) => Object.assign({ spk, text: clean(text), pause }, extra || {});
+const THINK = () => store.get("podThink", 3000);
+const LETTERS = "ABCD";
+
+function moduleSegs(m, think) {
+  const box = document.createElement("div"); box.innerHTML = m.html;
+  const out = [], c = compOf(m.topic), mod = m.id;
+  const push = (spk, text, pause) => { if (clean(text)) out.push(seg(spk, text, pause, { mod })); };
+  push("B", `Module ${m.n}: ${m.title}.`, 350);
+  push("A", `This one is part of Competency ${c.n}, ${c.name}, worth ${c.weight}% of the exam.`, 700);
+  let saidCode = false, saidCheck = false;
+  const ownText = li => [...li.childNodes].filter(n => !(n.nodeType === 1 && /^(UL|OL)$/.test(n.tagName))).map(n => n.textContent).join("");
+  const list = (el, spk) => [...el.children].forEach(li => {
+    push(spk, ownText(li), 350);
+    [...li.children].filter(x => /^(UL|OL)$/.test(x.tagName)).forEach(sub => list(sub, spk));
+  });
+  const table = el => {
+    const heads = [...el.querySelectorAll("thead th")].map(th => clean(th.textContent));
+    el.querySelectorAll("tbody tr").forEach(tr => {
+      const cells = [...tr.children].map(td => clean(td.textContent));
+      if (!cells.some(Boolean)) return;
+      push("A", cells.length === 2 ? `${cells[0]}: ${cells[1]}.` : `${cells[0]}. ` + cells.slice(1).map((v, i) => v ? `${heads[i + 1] || ""}: ${v}.` : "").join(" "), 350);
+    });
+  };
+  const callout = (el, intro, skip) => {
+    push("B", intro, 300);
+    [...el.children].forEach(ch => {
+      if (ch.tagName === "P" && skip.test(clean(ch.textContent))) return;
+      if (/^(UL|OL)$/.test(ch.tagName)) list(ch, "A"); else push("A", ch.textContent, 400);
+    });
+  };
+  for (const el of box.children) {
+    if (el.matches(".callout.tip")) callout(el, "Here's the short version.", /^TL;DR$/i);
+    else if (el.matches(".callout.warning")) callout(el, "Exam traps. Watch out for these.", /^Exam traps$/i);
+    else if (el.matches(".callout")) push("A", el.textContent, 400);
+    else if (el.tagName === "H2") { if (!/^Quick check$/i.test(clean(el.textContent))) push("B", `${el.textContent}.`, 300); }
+    else if (el.tagName === "H3") push("A", `${el.textContent}.`, 250);
+    else if (el.tagName === "P") push("A", el.textContent, 400);
+    else if (/^(UL|OL)$/.test(el.tagName)) list(el, "A");
+    else if (el.tagName === "TABLE") table(el);
+    else if (el.tagName === "PRE") {
+      if (!el.querySelector(".language-mermaid") && !saidCode) { push("A", "There's a SQL example for this on the website. Look at it when you're back at a screen.", 400); saidCode = true; }
+    } else if (el.matches("details.check")) {
+      if (!saidCheck) { push("B", "Quick check. Try to answer before Alex does.", 300); saidCheck = true; }
+      push("B", clean(el.querySelector("summary").textContent).replace(/^\d+\.\s*/, ""), think);
+      push("A", el.querySelector(".ans").textContent, 700);
+    }
+  }
+  push("B", `That's module ${m.n}.`, 1000);
+  return out;
+}
+function quizSegs(qs, think) {
+  const out = [];
+  qs.forEach((q, i) => {
+    out.push(seg("B", `Question ${i + 1}. ${q.q}`, 400));
+    out.push(seg("B", q.o.map((o, k) => `${LETTERS[k]}: ${o}.`).join(" "), think));
+    out.push(seg("A", `The answer is ${LETTERS[q.a]}: ${q.o[q.a]}.`, 300));
+    out.push(seg("A", q.e, 900));
+  });
+  return out;
+}
+function termSegs(list, think) {
+  return list.flatMap((t, i) => [seg("B", `Term ${i + 1}: ${t.t}.`, think), seg("A", t.d, 800)]);
+}
+function customSegs(text) {
+  const blocks = String(text).replace(/\r/g, "").split(/\n\s*\n/).map(b => b.trim()).filter(Boolean).slice(0, 200);
+  const out = []; let flip = false;
+  blocks.forEach(b => {
+    const lines = b.split("\n").map(l => l.trim()).filter(Boolean);
+    if (lines.length === 1 && (/^#/.test(lines[0]) || (lines[0].length <= 70 && !/[.!?:]$/.test(lines[0])))) { out.push(seg("B", lines[0].replace(/^#+\s*/, "") + ".", 400)); return; }
+    lines.forEach(l => {
+      const item = l.match(/^(?:[-*•]|\d+[.)])\s+(.*)/);
+      if (item) out.push(seg("A", item[1], 350));
+      else (l.match(/[^.!?]+[.!?]*\s*/g) || [l]).reduce((acc, s) => { if ((acc[acc.length - 1] || "").length + s.length > 260) acc.push(s); else acc[acc.length - 1] = (acc[acc.length - 1] || "") + s; return acc; }, [""]).forEach(p => out.push(seg(flip ? "B" : "A", p, 450)));
+    });
+    flip = !flip;
+  });
+  return out;
+}
+function epTitle(id) {
+  const [kind, arg] = id.split(":"), qc = id.match(/^quiz-(c\d)$/);
+  if (id === "blueprint") return "Exam blueprint";
+  if (id === "cram") return "Cram sheet, rapid fire";
+  if (compById[id]) return `Competency ${compById[id].n}: ${compById[id].name}`;
+  if (qc) return `Quiz show: Competency ${compById[qc[1]].n}`;
+  if (kind === "mod") { const m = G.find(x => x.id === arg); return m ? `Module ${m.n}: ${m.title}` : "Module"; }
+  if (kind === "quizr") return `Quiz show: ${arg === "all" ? "all competencies" : `Competency ${compById[arg].n}`}`;
+  if (kind === "terms") return `Terms to master: ${arg === "all" ? "all competencies" : `Competency ${compById[arg].n}`}`;
+  if (id === "missed") return "Your missed questions";
+  if (id === "custom") return "Your custom episode";
+  return id;
+}
+/* build an episode script; deterministic for the ready-made (pre-rendered) ids */
+function buildEpisode(id, opts) {
+  opts = opts || {};
+  const think = opts.think || THINK(), [kind, arg] = id.split(":");
+  const intro = [seg("B", "Welcome to the D426 study podcast. I'm Sam.", 300), seg("A", "And I'm Alex.", 500)];
+  const outro = text => [seg("B", text || "That's the episode. Short break, then keep going.", 300), seg("A", "You've got this.", 400)];
+  let segs = [];
+  if (id === "blueprint") {
+    segs = intro.concat([
+      seg("A", "This episode is the exam blueprint: what's on the D426 objective assessment, and where to spend your time.", 500),
+      seg("B", "The assessment is split into three competencies.", 400)
+    ], comps.flatMap(c => [
+      seg("A", `${c.red} From ${c.redLessons}.`, 400),
+      seg("B", `That covers ${c.topics.map(t => topicName[t]).join(", ")}.`, 600)
+    ]), [
+      seg("A", `Competency ${byWeight[0].n} is the biggest chunk at ${byWeight[0].weight}%, so it gets the most study time. Primary keys run through all of it: choosing them, candidate keys, normal forms, and how each kind of table gets its key.`, 500),
+      seg("B", `So the study order is biggest first: ${byWeight.map(c => `Competency ${c.n}`).join(", then ")}.`, 400),
+      seg("A", `When you're done, take the exam simulation on the website. It's ${SIM_N} questions split ${simAlloc(SIM_N).map(x => x.k).join(", ")}, the same proportions as the real exam.`, 500)
+    ], outro("That's the blueprint."));
+  } else if (compById[id]) {
+    const c = compById[id], mods = G.filter(m => compOfTopic[m.topic] === c.id);
+    segs = intro.concat([
+      seg("A", `This episode covers ${c.red}`, 400),
+      seg("B", `That's ${c.lessons}, in ${mods.length} modules: ${mods.map(m => m.title).join(", ")}.`, 700)
+    ], mods.flatMap(m => moduleSegs(m, think)), outro(`That's all of Competency ${c.n}.`));
+  } else if (kind === "mod") {
+    const m = G.find(x => x.id === arg);
+    segs = m ? moduleSegs(m, think) : [];
+  } else if (id === "cram") {
+    segs = intro.concat([seg("A", "Rapid fire cram sheet. Ten facts, then the pairs people mix up.", 500), seg("B", "First, the blueprint.", 300)],
+      comps.map(c => seg("A", c.red, 400)),
+      D.top10.flatMap(([k, v], i) => [seg("B", `Fact ${i + 1}: ${k}.`, 250), seg("A", v, 600)]),
+      [seg("B", "Now, don't mix these up.", 300)],
+      D.pairs.flatMap(([k, v]) => [seg("B", `${k}.`, 250), seg("A", v, 550)]), outro("That's the cram sheet. Go get it."));
+  } else if (/^quiz-c\d$/.test(id)) {
+    const c = compById[id.slice(5)], qs = D.questions.filter(q => compOfTopic[q.topic] === c.id);
+    segs = intro.concat([seg("A", `Quiz show: every practice question for Competency ${c.n}, ${c.name}. That's ${qs.length} questions.`, 400), seg("B", "I'll read the question and the choices, you answer in your head, then Alex explains.", 600)], quizSegs(qs, think), outro());
+  } else if (kind === "quizr") {
+    const pool = D.questions.filter(q => arg === "all" || compOfTopic[q.topic] === arg);
+    const qs = arg === "all" ? simAlloc(opts.n || 10).flatMap(x => shuffle(D.questions.filter(q => compOfTopic[q.topic] === x.c.id)).slice(0, x.k)) : shuffle(pool).slice(0, opts.n || 10);
+    segs = [seg("B", `${epTitle(id)}. ${qs.length} questions. Answer in your head before Alex does.`, 600)].concat(quizSegs(shuffle(qs), think), outro());
+  } else if (kind === "terms") {
+    const list = shuffle(terms.filter(t => (arg === "all" || compOfTopic[t.topic] === arg) && lvl(t.id) < 2)).slice(0, opts.n || 25);
+    segs = [seg("B", list.length ? `${list.length} terms you haven't mastered yet. Say the definition before Alex does.` : "You've mastered every term here. Nice.", 600)].concat(termSegs(list, think), list.length ? outro() : []);
+  } else if (id === "missed") {
+    const qs = store.get("missed", []).map(t => D.questions.find(q => q.q === t)).filter(Boolean);
+    segs = [seg("B", qs.length ? `The ${qs.length} questions you missed last time. Let's fix them.` : "No missed questions saved yet. Take a practice test first.", 600)].concat(quizSegs(qs, think), qs.length ? outro() : []);
+  } else if (id === "custom") {
+    segs = [seg("B", "Here's your custom episode.", 500)].concat(customSegs(opts.text || ""), [seg("B", "That's the end of your text.", 300)]);
+  }
+  return { id, title: epTitle(id), segs };
+}
+window.D426_speakable = speakable;
+window.D426_epTitle = epTitle;
+window.D426_buildScript = (id, think) => buildEpisode(id, { think: think || 3000 }).segs.map(s => Object.assign({ say: speakable(s.text) }, s));
+
+/* ---------- player ---------- */
+const PRE = () => (window.D426_PODCAST && window.D426_PODCAST.episodes) || {};
+const READY = ["blueprint", "c3", "c2", "c1", "cram", "quiz-c3", "quiz-c2", "quiz-c1"];
+const P = { ep: null, engine: null, idx: 0, playing: false, rate: store.get("podRate", 1), token: 0, timer: null };
+const audio = new Audio(); audio.preload = "none";
+const hasSpeech = "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+let VOICES = [];
+function loadVoices() { if (hasSpeech) VOICES = speechSynthesis.getVoices().filter(v => /^en([-_]|$)/i.test(v.lang)); }
+if (hasSpeech) { loadVoices(); speechSynthesis.addEventListener("voiceschanged", () => { loadVoices(); if (S.tab === "podcast" && !P.playing) render(); }); }
+const vScore = v => (/(natural|neural|premium|enhanced|online)/i.test(v.name) ? 10 : 0) + (/(samantha|ava|allison|aria|jenny|guy|daniel|google us english|google uk english)/i.test(v.name) ? 4 : 0) + (/en[-_]US/i.test(v.lang) ? 2 : 0);
+function voiceFor(spk) {
+  const want = store.get("voice" + spk, ""), sorted = VOICES.slice().sort((a, b) => vScore(b) - vScore(a));
+  return VOICES.find(v => v.name === want) || (spk === "A" ? sorted[0] : (sorted.find(v => v !== sorted[0]) || sorted[0])) || null;
+}
+const fmt = s => { s = Math.max(0, Math.round(s || 0)); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; };
+const estSecs = s => clean(s.text).split(" ").length / 2.6 + (s.pause || 400) / 1000;
+
+/* choose an episode: a ready-made MP3 when one exists (modules play as a slice of their competency's MP3) */
+function episodeFor(id, opts) {
+  const pre = PRE()[id];
+  if (pre) return { id, title: pre.title || epTitle(id), file: pre.file, segs: pre.segs, dur: pre.dur, start: 0, end: pre.dur };
+  const [kind, arg] = id.split(":");
+  if (kind === "mod") {
+    const m = G.find(x => x.id === arg), parent = m && PRE()[compOfTopic[m.topic]];
+    if (parent) {
+      const i0 = parent.segs.findIndex(s => s.mod === arg), i1 = parent.segs.map(s => s.mod).lastIndexOf(arg);
+      if (i0 >= 0) { const end = parent.segs[i1 + 1] ? parent.segs[i1 + 1].t : parent.dur; return { id, title: epTitle(id), file: parent.file, segs: parent.segs.slice(i0, i1 + 1), dur: end - parent.segs[i0].t, start: parent.segs[i0].t, end }; }
+    }
+  }
+  return buildEpisode(id, opts);
+}
+function pickEpisode(id, opts, autoplay) {
+  podStop();
+  P.ep = episodeFor(id, opts); P.idx = 0; P.engine = P.ep.file ? "mp3" : "speech";
+  if (P.engine === "mp3") {
+    audio.src = P.ep.file; audio.playbackRate = P.rate;
+    if ("mediaSession" in navigator && window.MediaMetadata) {
+      navigator.mediaSession.metadata = new MediaMetadata({ title: P.ep.title, artist: "D426 Study Podcast", album: "WGU D426" });
+      try {
+        navigator.mediaSession.setActionHandler("play", podPlay); navigator.mediaSession.setActionHandler("pause", podPause);
+        navigator.mediaSession.setActionHandler("seekbackward", () => { audio.currentTime = Math.max(P.ep.start, audio.currentTime - 15); });
+        navigator.mediaSession.setActionHandler("seekforward", () => { audio.currentTime = Math.min(P.ep.end, audio.currentTime + 15); });
+      } catch (e) {}
+    }
+  }
+  if (S.tab !== "podcast") go("podcast"); else render();
+  if (autoplay) podPlay();
+}
+function seekAudio(t) { if (audio.readyState >= 1) audio.currentTime = t; else audio.addEventListener("loadedmetadata", () => { audio.currentTime = t; }, { once: true }); }
+function podPlay() {
+  if (!P.ep || !P.ep.segs.length) return;
+  if (P.engine === "mp3") {
+    if (audio.readyState < 1 || audio.currentTime < P.ep.start || audio.currentTime >= P.ep.end - 0.3) seekAudio(P.ep.segs[P.idx] ? P.ep.segs[P.idx].t : P.ep.start);
+    audio.playbackRate = P.rate; audio.play().catch(() => {}); P.playing = true; podUI();
+  } else speechFrom(P.idx);
+}
+function podPause() {
+  P.playing = false; P.token++; clearTimeout(P.timer);
+  if (P.engine === "mp3") audio.pause(); else if (hasSpeech) speechSynthesis.cancel();
+  podUI();
+}
+function podStop() { podPause(); if (P.engine === "mp3") { audio.removeAttribute("src"); audio.load(); } }
+function podJump(i) {
+  if (!P.ep) return;
+  i = Math.max(0, Math.min(P.ep.segs.length - 1, i)); P.idx = i;
+  if (P.engine === "mp3") { seekAudio(P.ep.segs[i].t); if (!P.playing) podPlay(); else podUI(); }
+  else if (P.playing) speechFrom(i); else podUI();
+}
+function speechFrom(i) {
+  if (!hasSpeech) { say("This browser can't read aloud. Download the script instead."); return; }
+  const tok = ++P.token; clearTimeout(P.timer);
+  P.idx = i; P.playing = true; podUI();
+  const sameVoice = () => voiceFor("A") === voiceFor("B");
+  const step = () => {
+    if (tok !== P.token) return;
+    if (P.idx >= P.ep.segs.length) { P.playing = false; P.idx = 0; podUI(); return; }
+    const s = P.ep.segs[P.idx]; podUI();
+    const parts = (speakable(s.text).match(/[^.!?;:]+[.!?;:]*\s*/g) || [speakable(s.text)]).reduce((acc, p) => { if ((acc[acc.length - 1] + p).length > 200 && acc[acc.length - 1]) acc.push(p); else acc[acc.length - 1] += p; return acc; }, [""]).filter(x => x.trim());
+    let k = 0;
+    const next = () => {
+      if (tok !== P.token) return;
+      if (k >= parts.length) { P.timer = setTimeout(() => { if (tok === P.token) { P.idx++; step(); } }, (s.pause || 400) / P.rate); return; }
+      const u = new SpeechSynthesisUtterance(parts[k++]), v = voiceFor(s.spk);
+      if (v) { u.voice = v; u.lang = v.lang; } else u.lang = "en-US";
+      u.rate = P.rate; if (s.spk === "B" && sameVoice()) u.pitch = 0.75;
+      u.onend = next; u.onerror = e => { if (e.error !== "interrupted" && e.error !== "canceled") next(); };
+      speechSynthesis.speak(u);
+    };
+    next();
+  };
+  if (speechSynthesis.speaking || speechSynthesis.pending) { speechSynthesis.cancel(); setTimeout(step, 80); } else step();
+}
+audio.addEventListener("timeupdate", () => {
+  if (!P.ep || P.engine !== "mp3") return;
+  const t = audio.currentTime;
+  if (t >= P.ep.end - 0.05 && P.ep.end < audio.duration - 0.5) { audio.pause(); P.playing = false; P.idx = 0; podUI(); return; }
+  let i = P.idx;
+  while (i + 1 < P.ep.segs.length && P.ep.segs[i + 1].t <= t + 0.05) i++;
+  while (i > 0 && P.ep.segs[i].t > t + 0.05) i--;
+  if (i !== P.idx) { P.idx = i; podUI(); } else podTime();
+});
+audio.addEventListener("ended", () => { P.playing = false; P.idx = 0; podUI(); });
+audio.addEventListener("pause", () => { if (P.engine === "mp3" && P.playing && !audio.ended) { P.playing = false; podUI(); } });
+audio.addEventListener("play", () => { if (P.engine === "mp3") { P.playing = true; podUI(); } });
+
+function podTime() {
+  const el = document.getElementById("ptime"), bar = document.getElementById("pbar");
+  if (!P.ep || (!el && !bar)) return;
+  let cur, tot;
+  if (P.engine === "mp3") { cur = (audio.currentTime || P.ep.start) - P.ep.start; tot = P.ep.dur; }
+  else { const e = P.ep.segs.map(estSecs); cur = e.slice(0, P.idx).reduce((a, b) => a + b, 0) / P.rate; tot = e.reduce((a, b) => a + b, 0) / P.rate; }
+  if (el) el.textContent = `${fmt(cur)} / ${P.engine === "mp3" ? "" : "about "}${fmt(tot)}`;
+  if (bar) bar.style.width = `${Math.min(100, cur / (tot || 1) * 100)}%`;
+}
+/* update the player and mini-player in place (no full re-render while audio runs) */
+function podUI() {
+  const pb = document.getElementById("pplay");
+  if (pb) pb.textContent = P.playing ? "Pause" : "Play";
+  const tx = document.getElementById("tx");
+  if (tx && P.ep) {
+    const prev = tx.querySelector("p.cur"), cur = tx.querySelector(`p[data-i="${P.idx}"]`);
+    if (prev !== cur) { if (prev) prev.classList.remove("cur"); if (cur) { cur.classList.add("cur"); tx.scrollTop = cur.offsetTop - tx.offsetTop - 70; } }
+  }
+  podTime();
+  const mini = document.getElementById("mini"), show = !!(P.ep && P.playing && S.tab !== "podcast");
+  mini.hidden = !show; document.body.classList.toggle("has-mini", show);
+  if (show) { document.getElementById("miniTitle").textContent = P.ep.title; document.getElementById("miniPlay").textContent = P.playing ? "Pause" : "Play"; }
+}
+document.getElementById("miniPlay").onclick = () => { if (P.playing) podPause(); else podPlay(); };
+function scriptText(ep) { return `${ep.title}\nD426 Study Podcast\n\n` + ep.segs.map(s => `${HOST[s.spk]}: ${s.text}`).join("\n\n") + "\n"; }
+function downloadText(name, text) {
+  const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([text], { type: "text/plain" })); a.download = name;
+  document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+function scopeSelect(id) {
+  return `<select id="${id}" aria-label="Which competency"><option value="all">All competencies</option>${comps.map(c => `<option value="${c.id}">Competency ${c.n} (${c.weight}%)</option>`).join("")}</select>`;
+}
+function renderPodcast() {
+  const pre = PRE(), ep = P.ep, missed = store.get("missed", []).length;
+  const chapters = ep ? ep.segs.reduce((acc, s, i) => { if (s.mod && (!acc.length || acc[acc.length - 1].mod !== s.mod)) acc.push({ mod: s.mod, i }); return acc; }, []) : [];
+  const player = ep ? `<div class="card" id="player"><div class="label">Now playing · ${P.engine === "mp3" ? "MP3" : "your device's voice"}</div><h2 style="margin-top:4px">${esc(ep.title)}</h2>
+      <div class="prog sm"><span class="m" id="pbar" style="width:0%"></span></div>
+      <div class="row spread hint" style="margin-top:6px"><span id="ptime">0:00</span><span>${ep.segs.length} lines</span></div>
+      <div class="transport">
+        <button class="btn ghost" id="pprev" aria-label="Previous line">Back</button>
+        <button class="btn play" id="pplay">${P.playing ? "Pause" : "Play"}</button>
+        <button class="btn ghost" id="pnext" aria-label="Next line">Skip</button>
+        <select id="prate" aria-label="Speed">${[0.75, 1, 1.25, 1.5, 1.75, 2].map(r => `<option value="${r}" ${r === P.rate ? "selected" : ""}>${r}x</option>`).join("")}</select>
+        ${P.engine === "mp3" ? `<a class="btn ghost" href="${esc(ep.file)}" download style="text-decoration:none">Download MP3</a>` : ""}
+        <button class="btn ghost" id="pscript">Script</button>
+      </div>
+      ${chapters.length > 1 ? `<div class="transport"><select id="pchap" aria-label="Jump to module"><option value="">Jump to a module…</option>${chapters.map(c => { const m = G.find(x => x.id === c.mod); return `<option value="${c.i}">${m ? `Module ${m.n}: ${esc(m.title)}` : esc(c.mod)}</option>`; }).join("")}</select></div>` : ""}
+      ${P.engine === "speech" && !hasSpeech ? `<p class="fb bad">This browser can't read aloud. Use <b>Script</b> to download the text instead.</p>` : ""}
+      <div class="tx" id="tx">${ep.segs.map((s, i) => `${chapters.length > 1 && chapters.some(c => c.i === i) ? `<h4>${esc((G.find(x => x.id === s.mod) || {}).title || "")}</h4>` : ""}<p data-i="${i}" class="${i === P.idx ? "cur" : ""}"><span class="spk">${HOST[s.spk]}</span>${esc(s.text)}</p>`).join("")}</div>
+      <p class="hint" style="margin:8px 0 0">Tap any line to jump there.</p></div>` : "";
+  main.innerHTML = player + `<div class="card"><h1>Podcast</h1><p style="margin-top:0">Turn the course into audio. Two hosts: <b>Alex</b> explains, <b>Sam</b> asks the questions. Quiz parts pause so you can answer in your head.</p>
+      <h3>Ready-made episodes</h3><p class="hint" style="margin:0">MP3s. They keep playing with your screen off, and you can download them.</p>
+      <div class="eps">${READY.filter(id => pre[id]).map(id => `<div class="ep ${ep && ep.id === id ? "on" : ""}"><span><b>${esc(epTitle(id))}</b><span class="hint">${fmt(pre[id].dur)}${compById[id] ? ` · ${compById[id].weight}% of the exam` : ""}</span></span><button class="btn small" data-ep="${id}">${ep && ep.id === id ? "Playing" : "Play"}</button></div>`).join("") || `<p class="hint">Ready-made episodes haven't been rendered yet. Use "Make your own" below.</p>`}</div></div>
+    <div class="card"><h2>Make your own</h2><p class="hint" style="margin-top:0">These use your device's voice, so they work for anything, even offline.</p>
+      <div class="make"><b>One guide module</b><select id="mkmod" aria-label="Guide module">${G.map(m => `<option value="${m.id}">C${compOf(m.topic).n} · Module ${m.n}: ${esc(m.title)}</option>`).join("")}</select><button class="btn ghost" data-make="mod">Make episode</button></div>
+      <div class="make"><b>Quiz show</b> <span class="hint">10 random practice questions, read aloud with a pause to answer.</span>${scopeSelect("mkquiz")}<button class="btn ghost" data-make="quiz">Make quiz show</button></div>
+      <div class="make"><b>Terms I haven't mastered</b> <span class="hint">Up to 25 terms: Sam says the term, you answer, Alex gives the definition.</span>${scopeSelect("mkterms")}<button class="btn ghost" data-make="terms">Make episode</button></div>
+      <div class="make"><b>My missed questions</b> <span class="hint">${missed ? `${missed} from your last practice test.` : "Take a practice test first; your misses land here."}</span><button class="btn ghost" data-make="missed" ${missed ? "" : "disabled"}>Make episode</button></div>
+      <div class="make"><b>Paste your own text</b> <span class="hint">Notes, a study sheet, anything. Headings and bullets are kept.</span><textarea id="mktext" placeholder="Paste text here" maxlength="20000"></textarea><button class="btn ghost" data-make="custom">Convert to podcast</button></div>
+    </div>
+    <details class="card"><summary><b>Voices and pacing</b> <span class="hint">for "Make your own"</span></summary>
+      <div class="settings">
+        ${hasSpeech ? `<label>Alex's voice <select id="vA">${VOICES.map(v => `<option ${v === voiceFor("A") ? "selected" : ""}>${esc(v.name)}</option>`).join("")}</select></label>
+        <label>Sam's voice <select id="vB">${VOICES.map(v => `<option ${v === voiceFor("B") ? "selected" : ""}>${esc(v.name)}</option>`).join("")}</select></label>` : `<p class="hint">This browser has no built-in voices. Ready-made MP3s still work.</p>`}
+        <label>Thinking pause on quiz questions <select id="vThink">${[[0, "Off"], [3000, "3 seconds"], [5000, "5 seconds"], [8000, "8 seconds"]].map(([v, l]) => `<option value="${v}" ${v === THINK() ? "selected" : ""}>${l}</option>`).join("")}</select></label>
+        <p class="hint" style="margin:0">Voices with "Natural", "Neural", or "Enhanced" in the name sound best.</p>
+      </div></details>`;
+  const $ = id => main.querySelector("#" + id);
+  main.querySelectorAll("[data-ep]").forEach(b => b.onclick = () => { if (P.ep && P.ep.id === b.dataset.ep) { P.playing ? podPause() : podPlay(); } else pickEpisode(b.dataset.ep, null, true); });
+  main.querySelectorAll("[data-make]").forEach(b => b.onclick = () => {
+    const k = b.dataset.make;
+    if (k === "mod") pickEpisode("mod:" + $("mkmod").value, null, true);
+    else if (k === "quiz") pickEpisode("quizr:" + $("mkquiz").value, { n: 10 }, true);
+    else if (k === "terms") pickEpisode("terms:" + $("mkterms").value, { n: 25 }, true);
+    else if (k === "missed") pickEpisode("missed", null, true);
+    else if (k === "custom") { const t = $("mktext").value.trim(); if (!t) { $("mktext").focus(); return; } pickEpisode("custom", { text: t }, true); }
+  });
+  if ($("pplay")) {
+    $("pplay").onclick = () => P.playing ? podPause() : podPlay();
+    $("pprev").onclick = () => podJump(P.idx - 1);
+    $("pnext").onclick = () => podJump(P.idx + 1);
+    $("prate").onchange = e => { P.rate = +e.target.value; store.set("podRate", P.rate); if (P.engine === "mp3") audio.playbackRate = P.rate; else if (P.playing) speechFrom(P.idx); };
+    $("pscript").onclick = () => downloadText(`${P.ep.id.replace(/[^\w-]+/g, "-")}-script.txt`, scriptText(P.ep));
+    $("tx").onclick = e => { const p = e.target.closest("p[data-i]"); if (p) podJump(+p.dataset.i); };
+    if ($("pchap")) $("pchap").onchange = e => { if (e.target.value !== "") podJump(+e.target.value); };
+  }
+  if ($("vA")) { $("vA").onchange = e => store.set("voiceA", e.target.value); $("vB").onchange = e => store.set("voiceB", e.target.value); }
+  if ($("vThink")) $("vThink").onchange = e => store.set("podThink", +e.target.value);
+}
+
+/* =========================================================
+   STUDY BUDDY  (answers from the course notes; optional Claude mode with your own API key)
+   ========================================================= */
+const ASK = { open: false, msgs: [], hist: [], busy: false, index: null };
+const AI = {
+  key: store.get("aiKey", "") || (() => { try { return sessionStorage.getItem("d426:aiKey") || ""; } catch (e) { return ""; } })(),
+  model: store.get("aiModel", "claude-haiku-5-5"),
+  remember: !!store.get("aiKey", "")
+};
+const askPanel = document.getElementById("askPanel"), askMsgs = document.getElementById("askMsgs"), askInput = document.getElementById("askInput");
+const STOP = new Set("a an the of to in on for and or is are was be it its this that these those what which how why when do does did i me my you your with as by from at about explain define definition meaning mean means tell give show please can could would should difference differences between vs versus compare like whats im i'm just simply simple big ideas tired".split(" "));
+const stem = w => w.length > 4 ? w.replace(/(ies)$/, "y").replace(/(ing|ed|es|s)$/, "") : w;
+const toks = s => (String(s).toLowerCase().match(/[a-z0-9%]+/g) || []).filter(w => (w.length > 1 || /\d|%/.test(w)) && !STOP.has(w)).map(stem);
+const normPhrase = s => String(s).toLowerCase().replace(/[^a-z0-9%]+/g, " ").trim();
+const COMMON_SHORT = new Set(["in", "as", "on", "or", "is", "at", "by", "to", "of", "an", "all", "row", "key", "set", "use", "and", "not", "view", "join", "cell", "table", "column"]);
+function buildIndex() {
+  if (ASK.index) return ASK.index;
+  const sections = [];
+  G.forEach(m => {
+    const box = document.createElement("div"); box.innerHTML = m.html;
+    let cur = { mod: m, title: m.title, text: "" };
+    [...box.children].forEach(el => {
+      if (el.tagName === "H2") { if (cur.text) sections.push(cur); cur = { mod: m, title: clean(el.textContent), text: "" }; }
+      else if (!el.querySelector(".language-mermaid")) cur.text += " " + clean(el.textContent);
+    });
+    if (cur.text) sections.push(cur);
+  });
+  sections.forEach(s => { s.tok = toks(s.title + " " + s.text); });
+  terms.forEach(t => { t._nt = toks(t.t + " " + (t.alts || []).join(" ")); t._dt = toks(t.d); });
+  D.questions.forEach(q => { q._t = new Set(toks(q.q + " " + q.o.join(" "))); });
+  return (ASK.index = { sections });
+}
+function scoreTerm(raw, qn, qt, t) {
+  let best = 0;
+  for (const name of [t.t, t.t.replace(/\s*\(.*?\)\s*/g, " "), ...(t.alts || [])]) {
+    const nn = normPhrase(name); if (!nn) continue;
+    // short names that are also everyday words ("IN", "Log") only count when typed in the same case
+    const hit = COMMON_SHORT.has(nn) ? new RegExp(`(^|[^A-Za-z])${name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}([^A-Za-z]|$)`).test(raw) : ` ${qn} `.includes(` ${nn} `);
+    if (hit) best = Math.max(best, 100 + nn.length);
+  }
+  let s = 0; t._nt.forEach(w => { if (qt.has(w)) s += 10; }); t._dt.forEach(w => { if (qt.has(w)) s += 1.5; });
+  return Math.max(best, s);
+}
+function topTerms(raw, n) {
+  buildIndex();
+  const qn = normPhrase(raw), qt = new Set(toks(raw));
+  return terms.map(t => ({ t, s: scoreTerm(raw, qn, qt, t) })).filter(x => x.s >= 8).sort((a, b) => b.s - a.s).slice(0, n || 5);
+}
+function topSection(raw) {
+  const { sections } = buildIndex(), qt = new Set(toks(raw));
+  if (!qt.size) return null;
+  const best = sections.map(s => ({ s, v: s.tok.filter(w => qt.has(w)).length / Math.sqrt(s.tok.length + 20) + (toks(s.title).some(w => qt.has(w)) ? 0.6 : 0) })).sort((a, b) => b.v - a.v)[0];
+  return best && best.v >= 0.35 ? best.s : null;
+}
+function topQuestion(raw) {
+  buildIndex();
+  const qt = toks(raw); if (qt.length < 4) return null;
+  const best = D.questions.map(q => ({ q, r: qt.filter(w => q._t.has(w)).length / qt.length })).sort((a, b) => b.r - a.r)[0];
+  return best && best.r >= 0.6 ? best.q : null;
+}
+const snippet = (s, n) => { s = clean(s); return s.length > n ? s.slice(0, n).replace(/\s\S*$/, "") + "…" : s; };
+const termCard = t => { const c = compOf(t.topic); return `<p><b>${esc(t.t)}</b> <span class="note">· ${esc(topicName[t.topic])} · C${c.n}</span></p><p>${esc(t.d)}</p>`; };
+const modLink = m => `<a href="#guide/${m.id}">Module ${m.n}: ${esc(m.title)}</a>`;
+const moduleOfTopic = topic => G.find(m => m.topic === topic);
+function acts(list) { return `<div class="acts">${list.filter(Boolean).join("")}</div>`; }
+const actQuiz = scope => `<button class="btn ghost small" data-act="quiz" data-scope="${esc(scope)}">Quiz me on this</button>`;
+const actListen = () => `<button class="btn ghost small" data-act="listen">Listen</button>`;
+
+/* --- offline answers built from the cards, questions, and guide --- */
+function localAnswer(raw) {
+  const text = raw.trim(), low = text.toLowerCase();
+  // quiz me
+  if (/\b(quiz|test|drill)\s+me\b|^quiz\b|ask me a question/.test(low)) {
+    const c = comps.find(x => new RegExp(`\\b(c${x.n}|competency ${x.n})\\b`).test(low));
+    const tp = D.topics.find(x => low.includes(x.name.toLowerCase()));
+    const tt = !c && !tp ? topTerms(text.replace(/\b(quiz|test|drill)\s+me\b|\bon\b/gi, " "), 1)[0] : null;
+    return quizMsg(c ? c.id : tp ? tp.id : tt && tt.s >= 100 ? tt.t.topic : "all");
+  }
+  // compare X and Y
+  const m = text.match(/(?:difference|differences|diff)\s+between\s+(.+?)\s+(?:and|&|vs\.?|versus)\s+(.+?)[?.!]*$/i) || text.match(/^(?:compare\s+)?(.+?)\s+(?:vs\.?|versus)\s+(.+?)[?.!]*$/i) || text.match(/^compare\s+(.+?)\s+(?:and|with|to)\s+(.+?)[?.!]*$/i);
+  if (m) {
+    const a = topTerms(m[1], 1)[0], b = topTerms(m[2], 1)[0];
+    if (a && b && a.t !== b.t) {
+      const pair = D.pairs.find(([k]) => { const kl = k.toLowerCase(); return [a.t, b.t].every(t => toks(t.t.replace(/\(.*?\)/g, "")).some(w => kl.includes(w))); });
+      return { html: `<p>Here's the difference:</p>${termCard(a.t)}${termCard(b.t)}${pair ? `<p><b>Short version:</b> ${esc(pair[0])}: ${esc(pair[1])}</p>` : ""}` + acts([actQuiz(a.t.topic), actListen()]),
+        text: `${a.t.t}: ${a.t.d}\n${b.t.t}: ${b.t.d}` };
+    }
+  }
+  // a pasted practice question
+  const q = topQuestion(text);
+  if (q) return explainQuestionLocal(q, null);
+  // what is / explain X
+  const top = topTerms(text, 4), sec = topSection(text);
+  if (top.length && top[0].s >= 100) {
+    const t = top[0].t, mod = moduleOfTopic(t.topic), related = top.slice(1).filter(x => x.s >= 20).map(x => x.t);
+    return { html: termCard(t) + (related.length ? `<p class="note">Related: ${related.map(r => `<button class="tag" data-act="ask" data-q="What is ${esc(r.t)}?">${esc(r.t)}</button>`).join(" ")}</p>` : "") + (mod ? `<p class="note">Read more: ${modLink(mod)}</p>` : "") + acts([actQuiz(t.topic), actListen()]), text: `${t.t}: ${t.d}` };
+  }
+  if (top.length || sec) {
+    return { html: `<p>Here's what the course notes say:</p>` + top.slice(0, 3).map(x => termCard(x.t)).join("") + (sec ? `<p><b>${esc(sec.mod.title)} → ${esc(sec.title)}</b></p><p>${esc(snippet(sec.text, 320))}</p><p class="note">${modLink(sec.mod)}</p>` : "") + acts([actListen()]),
+      text: top.slice(0, 3).map(x => `${x.t.t}: ${x.t.d}`).join("\n") + (sec ? `\n${sec.title}: ${snippet(sec.text, 320)}` : "") };
+  }
+  return { html: `<p>I couldn't find that in the D426 notes. Try a term like <b>candidate key</b>, a comparison like <b>WHERE vs HAVING</b>, or paste a practice question.</p>${AI.key ? "" : `<p class="note">For open-ended questions, turn on Claude in Settings.</p>`}`, text: "Not found in the notes." };
+}
+function explainQuestionLocal(q, picked) {
+  buildIndex();
+  const blob = q.q + " " + q.o.join(" "), found = topTerms(blob, 6).filter(x => x.s >= 100).map(x => x.t).slice(0, 3), mod = moduleOfTopic(q.topic), c = compOf(q.topic);
+  const wrong = picked != null && picked !== q.a ? q.o[picked] : null;
+  const wrongTerm = wrong ? (topTerms(wrong, 1)[0] || {}).t : null;
+  return {
+    html: `<p class="note">C${c.n} · ${esc(topicName[q.topic])}</p><p><b>${esc(q.q)}</b></p><p>Answer: <b>${LETTERS[q.a]}. ${esc(q.o[q.a])}</b></p><p>${esc(q.e)}</p>` +
+      (wrong ? `<p>You picked <b>${esc(wrong)}</b>.${wrongTerm && wrongTerm.t !== found[0]?.t ? ` That's a different idea: ${esc(wrongTerm.t)} means "${esc(wrongTerm.d)}"` : ""}</p>` : "") +
+      (found.length ? `<p><b>Key terms</b></p>${found.map(termCard).join("")}` : "") + (mod ? `<p class="note">Review: ${modLink(mod)}</p>` : "") + acts([actQuiz(q.topic), actListen()]),
+    text: `${q.q}\nAnswer: ${q.o[q.a]}. ${q.e}`
+  };
+}
+function quizMsg(scope) {
+  const pool = D.questions.filter(q => scope === "all" || q.topic === scope || compOfTopic[q.topic] === scope);
+  const q = pick(pool.length ? pool : D.questions), id = "qz" + Date.now();
+  return { html: `<p class="note">Quiz · C${compOf(q.topic).n} · ${esc(topicName[q.topic])}</p><p><b>${esc(q.q)}</b></p><div class="opts" id="${id}">${q.o.map((o, i) => `<button class="opt" data-act="answer" data-qid="${D.questions.indexOf(q)}" data-pick="${i}" data-box="${id}"><span class="k">${LETTERS[i]}</span><span>${esc(o)}</span></button>`).join("")}</div>`, text: `Quiz: ${q.q}`, scope };
+}
+
+/* --- Claude mode (optional, the student's own key; streams the answer) --- */
+const SYSTEM = () => `You are Study Buddy, a friendly tutor for WGU D426 Data Management – Foundations. The student has ADHD and an exam soon.
+How to answer: lead with a one-sentence answer, then at most 4 short bullets. Add a tiny example when it helps (SQL in a code block). End with one quick check question. Plain words, no walls of text.
+Follow the course's own terms and definitions from the notes below; if general knowledge disagrees with the notes, go with the notes and say so briefly. Stay on D426 and databases; steer off-topic requests back kindly. Never claim to know real exam questions.
+Exam blueprint: ${comps.map(c => `${c.red} (${c.redLessons})`).join(" ")}`;
+function contextFor(raw, extra) {
+  const top = topTerms(raw, 6), sec = topSection(raw), q = topQuestion(raw);
+  return [extra || "",
+    top.length ? "Relevant terms from the notes:\n" + top.map(x => `- ${x.t.t} (${topicName[x.t.topic]}, C${compOf(x.t.topic).n}): ${x.t.d}`).join("\n") : "",
+    sec ? `From guide module "${sec.mod.title}", section "${sec.title}":\n${snippet(sec.text, 1400)}` : "",
+    q && !extra ? `Matching practice question: ${q.q} Options: ${q.o.map((o, i) => `${LETTERS[i]}. ${o}`).join("; ")}. Correct: ${LETTERS[q.a]}. Why: ${q.e}` : ""
+  ].filter(Boolean).join("\n\n");
+}
+async function claudeStream(system, messages, onText) {
+  const res = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: { "content-type": "application/json", "x-api-key": AI.key, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
+    body: JSON.stringify({ model: AI.model, max_tokens: 700, system, messages, stream: true })
+  });
+  if (!res.ok) { let msg = ""; try { msg = (await res.json()).error.message; } catch (e) {} const err = new Error(msg || `HTTP ${res.status}`); err.status = res.status; throw err; }
+  const reader = res.body.getReader(), dec = new TextDecoder(); let buf = "", full = "";
+  for (;;) {
+    const { value, done } = await reader.read(); if (done) break;
+    buf += dec.decode(value, { stream: true });
+    let i;
+    while ((i = buf.indexOf("\n\n")) >= 0) {
+      const evt = buf.slice(0, i); buf = buf.slice(i + 2);
+      const data = evt.split("\n").filter(l => l.startsWith("data:")).map(l => l.slice(5).trim()).join("");
+      if (!data) continue;
+      let j; try { j = JSON.parse(data); } catch (e) { continue; }
+      if (j.type === "content_block_delta" && j.delta && j.delta.type === "text_delta") { full += j.delta.text; onText(full); }
+      else if (j.type === "error") throw new Error((j.error && j.error.message) || "Stream error");
+    }
+  }
+  return full;
+}
+/* tiny, safe markdown: escape first, then bold / code / lists */
+function md(s) {
+  const inline = x => x.replace(/`([^`]+)`/g, "<code>$1</code>").replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>").replace(/(^|[\s(])\*([^*\s][^*]*?)\*(?=[\s).,!?:;]|$)/g, "$1<i>$2</i>");
+  let html = "", list = null, code = null;
+  const close = () => { if (list) { html += `</${list}>`; list = null; } };
+  esc(s).split("\n").forEach(ln => {
+    if (/^\s*```/.test(ln)) { if (code) { html += `<pre><code>${code.join("\n")}</code></pre>`; code = null; } else { close(); code = []; } return; }
+    if (code) { code.push(ln); return; }
+    const li = ln.match(/^\s*([-*•]|\d+\.)\s+(.*)/);
+    if (li) { const tag = /\d/.test(li[1]) ? "ol" : "ul"; if (list !== tag) { close(); html += `<${tag}>`; list = tag; } html += `<li>${inline(li[2])}</li>`; return; }
+    close();
+    if (/^#{1,4}\s/.test(ln)) html += `<p><b>${inline(ln.replace(/^#+\s*/, ""))}</b></p>`;
+    else if (ln.trim()) html += `<p>${inline(ln)}</p>`;
+  });
+  close(); if (code) html += `<pre><code>${code.join("\n")}</code></pre>`;
+  return html;
+}
+
+/* --- chat UI --- */
+function drawAsk() {
+  document.getElementById("askMode").textContent = AI.key ? "Claude" : "Course notes";
+  document.getElementById("askMode").className = "badge " + (AI.key ? "m" : "l");
+  askMsgs.innerHTML = ASK.msgs.length ? ASK.msgs.map((m, i) => `<div class="msg ${m.role === "user" ? "me" : "bot"}" data-i="${i}">${m.role === "user" ? esc(m.text) : m.html}</div>`).join("")
+    : `<div class="msg bot"><p><b>Hi, I'm Study Buddy.</b> Ask me about any D426 topic, compare two terms, or paste a practice question.</p>
+       <div class="sugg">${["What's a weak entity?", "WHERE vs HAVING", "Explain 3NF simply", "Quiz me on C3", "Difference between candidate key and primary key"].map(s => `<button class="tag" data-act="ask" data-q="${esc(s)}">${esc(s)}</button>`).join("")}</div>
+       <p class="note">${AI.key ? "Claude mode is on." : "Answers come from the course notes on this site. Turn on Claude in Settings for open-ended questions."}</p></div>`;
+  askMsgs.scrollTop = askMsgs.scrollHeight;
+}
+function openAsk(prefill, payload) {
+  ASK.open = true; askPanel.hidden = false; document.getElementById("askFab").setAttribute("aria-expanded", "true");
+  drawAsk();
+  if (payload) sendAsk(payload);
+  else if (prefill) { askInput.value = prefill; }
+  setTimeout(() => askInput.focus(), 50);
+}
+function closeAsk() { ASK.open = false; askPanel.hidden = true; document.getElementById("askFab").setAttribute("aria-expanded", "false"); document.getElementById("askFab").focus(); }
+document.getElementById("askFab").onclick = () => ASK.open ? closeAsk() : openAsk();
+document.getElementById("askClose").onclick = closeAsk;
+document.getElementById("askForm").onsubmit = e => { e.preventDefault(); const v = askInput.value.trim(); if (v && !ASK.busy) { askInput.value = ""; sendAsk({ text: v }); } };
+askInput.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); document.getElementById("askForm").requestSubmit(); } });
+function askExplainTerm(t) { openAsk(null, { text: `Explain: ${t.t}`, term: t }); }
+function askExplainQuestion(q, picked) { openAsk(null, { text: `Explain this question: ${q.q}`, question: q, picked }); }
+async function sendAsk(p) {
+  ASK.msgs.push({ role: "user", text: p.text }); ASK.hist.push({ role: "user", content: p.text });
+  let local;
+  if (p.question) local = explainQuestionLocal(p.question, p.picked);
+  else if (p.term) { const mod = moduleOfTopic(p.term.topic); local = { html: termCard(p.term) + (mod ? `<p class="note">Read more: ${modLink(mod)}</p>` : "") + acts([actQuiz(p.term.topic), actListen()]), text: `${p.term.t}: ${p.term.d}` }; }
+  else local = localAnswer(p.text);
+  const isQuiz = !!local.scope;
+  if (!AI.key || isQuiz) {
+    ASK.msgs.push({ role: "bot", html: local.html, text: local.text }); ASK.hist.push({ role: "assistant", content: local.text }); drawAsk(); return;
+  }
+  // Claude mode: stream an answer grounded in the notes
+  let extra = "";
+  if (p.question) { const q = p.question; extra = `The student wants this practice question explained.\nQuestion: ${q.q}\nOptions: ${q.o.map((o, i) => `${LETTERS[i]}. ${o}`).join("; ")}\nCorrect: ${LETTERS[q.a]}. ${q.o[q.a]}\nCourse explanation: ${q.e}` + (p.picked != null && p.picked !== q.a ? `\nThe student picked ${LETTERS[p.picked]}. ${q.o[p.picked]}. Explain briefly why that's wrong.` : ""); }
+  if (p.term) extra = `The student wants this term explained simply, with an example and how it could show up on the exam.\nTerm: ${p.term.t}\nCourse definition: ${p.term.d}`;
+  const ctx = contextFor(p.question ? p.question.q : p.term ? p.term.t : p.text, extra);
+  const msg = { role: "bot", html: `<p class="dots">Thinking</p>`, text: "" };
+  ASK.msgs.push(msg); ASK.busy = true; drawAsk();
+  const el = () => askMsgs.querySelector(`.msg[data-i="${ASK.msgs.indexOf(msg)}"]`);
+  const history = ASK.hist.slice(-9, -1).concat([{ role: "user", content: `${p.text}\n\n<notes>\n${ctx}\n</notes>` }]);
+  try {
+    const out = await claudeStream(SYSTEM(), history, full => { msg.html = md(full); const e = el(); if (e) { e.innerHTML = msg.html; askMsgs.scrollTop = askMsgs.scrollHeight; } });
+    msg.text = out; msg.html = md(out) + acts([p.question || p.term ? actQuiz((p.question || p.term).topic) : "", actListen()]);
+    ASK.hist.push({ role: "assistant", content: out });
+  } catch (err) {
+    const why = err.status === 401 ? "That API key didn't work. Check it in Settings." : err.status === 429 || err.status === 529 ? "Claude is busy right now." : err.status === 404 ? `The model "${esc(AI.model)}" wasn't found. Pick another in Settings.` : `Couldn't reach Claude (${esc(err.message)}).`;
+    msg.html = `<p class="note">${why} Here's the answer from the course notes instead:</p>` + local.html; msg.text = local.text;
+    ASK.hist.push({ role: "assistant", content: local.text });
+  }
+  ASK.busy = false; drawAsk();
+}
+askMsgs.addEventListener("click", e => {
+  const b = e.target.closest("[data-act]"); if (!b) return;
+  const act = b.dataset.act;
+  if (act === "ask") sendAsk({ text: b.dataset.q });
+  else if (act === "quiz") { const m = quizMsg(b.dataset.scope || "all"); ASK.msgs.push({ role: "bot", html: m.html, text: m.text }); drawAsk(); }
+  else if (act === "answer") {
+    const q = D.questions[+b.dataset.qid], i = +b.dataset.pick, box = askMsgs.querySelector("#" + b.dataset.box); if (!box || box.dataset.done) return;
+    box.dataset.done = "1";
+    box.querySelectorAll(".opt").forEach((o, k) => { o.disabled = true; if (k === q.a) o.classList.add("right"); else if (k === i) o.classList.add("wrong"); });
+    const ok = i === q.a; bump(ok);
+    const note = `<div class="fb ${ok ? "good" : "bad"}" style="margin-top:8px"><strong>${ok ? pick(PRAISE) : `It's ${LETTERS[q.a]}.`}</strong><div class="why">${esc(q.e)}</div></div>` + acts([`<button class="btn small" data-act="quiz" data-scope="${q.topic}">Another one</button>`, ok ? "" : `<button class="btn ghost small" data-act="explainq" data-qid="${D.questions.indexOf(q)}" data-pick="${i}">Explain</button>`]);
+    box.insertAdjacentHTML("afterend", note);
+    const holder = box.closest(".msg"), idx = +holder.dataset.i; ASK.msgs[idx].html = holder.innerHTML;
+  } else if (act === "explainq") sendAsk({ text: `Explain this question: ${D.questions[+b.dataset.qid].q}`, question: D.questions[+b.dataset.qid], picked: +b.dataset.pick });
+  else if (act === "listen") {
+    const holder = b.closest(".msg"), m = ASK.msgs[+holder.dataset.i];
+    if (!hasSpeech) return;
+    if (speechSynthesis.speaking) { speechSynthesis.cancel(); return; }
+    if (P.playing) podPause();
+    const u = new SpeechSynthesisUtterance(speakable(m.text)), v = voiceFor("A"); if (v) u.voice = v; u.rate = P.rate; speechSynthesis.speak(u);
+  }
+});
+document.getElementById("askSettings").onclick = () => {
+  modal(`<h2>Study Buddy settings</h2>
+    <p style="margin-top:0">Without setup, answers come from this site's course notes. For open-ended questions, connect Claude with your own Anthropic API key.</p>
+    <div class="settings">
+      <label style="display:block">Anthropic API key<input type="password" id="aiKey" placeholder="sk-ant-..." autocomplete="off" value="${esc(AI.key)}" style="margin-top:6px"></label>
+      <label>Model <select id="aiModel">${[["claude-haiku-5-5", "Claude Haiku 5.5 (fast)"], ["claude-sonnet-5-5", "Claude Sonnet 5.5 (deeper)"]].map(([v, l]) => `<option value="${v}" ${v === AI.model ? "selected" : ""}>${l}</option>`).join("")}</select></label>
+      <label>Remember on this device <input type="checkbox" id="aiRemember" ${AI.remember ? "checked" : ""}></label>
+      <p class="hint" style="margin:0">Your key is sent only to api.anthropic.com and billed to your account. Without "Remember", it's forgotten when you close the tab. Get a key at console.anthropic.com and set a low spend limit.</p>
+    </div>
+    <div class="row actions"><button class="btn" id="aiSave">Save</button>${AI.key ? `<button class="btn ghost" id="aiRemove">Remove key</button>` : ""}<button class="btn ghost" id="aiCancel">Cancel</button></div>`,
+    box => {
+      const $b = id => box.querySelector("#" + id);
+      const persist = () => {
+        store.set("aiModel", AI.model);
+        if (AI.remember && AI.key) store.set("aiKey", AI.key); else { try { localStorage.removeItem("d426:aiKey"); } catch (e) {} }
+        try { if (AI.key) sessionStorage.setItem("d426:aiKey", AI.key); else sessionStorage.removeItem("d426:aiKey"); } catch (e) {}
+      };
+      $b("aiSave").onclick = () => { AI.key = $b("aiKey").value.trim(); AI.model = $b("aiModel").value; AI.remember = $b("aiRemember").checked; persist(); closeModal(); drawAsk(); };
+      if ($b("aiRemove")) $b("aiRemove").onclick = () => { AI.key = ""; AI.remember = false; persist(); closeModal(); drawAsk(); };
+      $b("aiCancel").onclick = closeModal;
+    });
+};
+
+/* shared buttons that can appear on any page: data-ask, data-listen */
+function wireShared() {
+  main.querySelectorAll("[data-ask]").forEach(b => b.onclick = () => openAsk(null, { text: b.dataset.ask }));
+  main.querySelectorAll("[data-listen]").forEach(b => b.onclick = () => pickEpisode(b.dataset.listen, null, false));
+}
+
 /* ---------- render ---------- */
 function render() {
   document.querySelectorAll("nav.tabs button").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === S.tab));
-  ({ home: renderHome, guide: renderGuide, learn: renderLearn, flash: renderFlash, test: renderTest, cram: renderCram }[S.tab] || renderHome)();
+  ({ home: renderHome, competencies: renderComps, guide: renderGuide, learn: renderLearn, flash: renderFlash, test: renderTest, podcast: renderPodcast, cram: renderCram }[S.tab] || renderHome)();
+  wireShared();
+  podUI();
 }
 
 /* ---------- keyboard ---------- */
 document.addEventListener("keydown", e => {
-  if (e.key === "Escape") { closeModal(); return; }
-  if (modalEl || e.metaKey || e.ctrlKey || e.altKey) return;
-  const inInput = e.target.tagName === "INPUT" || e.target.tagName === "SELECT";
+  if (e.key === "Escape") { if (modalEl) closeModal(); else if (ASK.open) closeAsk(); return; }
+  if (modalEl || ASK.open || e.metaKey || e.ctrlKey || e.altKey) return;
+  const inInput = e.target.tagName === "INPUT" || e.target.tagName === "SELECT" || e.target.tagName === "TEXTAREA";
   const num = /^[1-4]$/.test(e.key) ? +e.key - 1 : -1;
   if (S.tab === "learn") {
     if (!L) { if (e.key === "Enter" && !inInput && e.target.tagName !== "BUTTON" && e.target.tagName !== "SUMMARY") { e.preventDefault(); startRound(); } return; }

@@ -149,3 +149,5 @@ Function index,"An index on the result of a function applied to a column, like U
 Tablespace,A database object that maps one or more tables to a single file.,D426::C3::Physical_design
 Partition (table),"A subset of a table's data: a horizontal partition splits rows, a vertical partition splits columns.",D426::C3::Physical_design
 Storage engine,Translates query processor instructions into low-level storage commands. MySQL's default is InnoDB.,D426::C3::Physical_design
+Hash index,An index whose entries are assigned to buckets by a hash function.,D426::C3::Physical_design
+Multi-level index,An index on an index; each level narrows the search.,D426::C3::Physical_design

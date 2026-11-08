@@ -4,11 +4,11 @@ Everything I used to study for **WGU D426: Data Management – Foundations**, bu
 
 ### [Open the website →](https://unkwncokonut.github.io/wgu-d426-study-guide/)
 
-An interactive study site: a "what do you have time for?" start page, the full guide with reveal-the-answer checks, Quizlet-style Learn mode, flashcards, a practice test, and a cram sheet. Works on your phone. Progress saves automatically.
+An interactive study site: a "what do you have time for?" start page, the competencies page, the full guide, Quizlet-style Learn mode, flashcards, a practice test with an exam simulation, a podcast, and Study Buddy for questions. Works on your phone. Progress saves automatically.
 
 ## Exam blueprint
 
-The objective assessment is split into three competencies. Everything here follows the same split.
+The objective assessment is split into three competencies. Everything here follows the same split. Full breakdown: **[COMPETENCIES.md](COMPETENCIES.md)** (or the [Competencies tab](https://unkwncokonut.github.io/wgu-d426-study-guide/#competencies) on the website).
 
 | Competency | Share of exam | zyBook | Guide | Study it |
 | --- | --- | --- | --- | --- |
@@ -36,9 +36,10 @@ The objective assessment is split into three competencies. Everything here follo
 
 | | What | Where |
 | --- | --- | --- |
-| **Website** | Start · Guide · Learn · Flashcards · Practice test + exam simulation · Cram sheet | [`index.html`](index.html) ([live](https://unkwncokonut.github.io/wgu-d426-study-guide/)) |
+| **Website** | Start · Competencies · Guide · Learn · Flashcards · Practice test + exam simulation · Podcast · Cram sheet, plus the **Ask** button | [`index.html`](index.html) ([live](https://unkwncokonut.github.io/wgu-d426-study-guide/)) |
 | **Guide** | 10 short modules grouped by competency, 3 to 7 minutes each | [`guide/`](guide/README.md) |
-| **Cards** | 151 terms + 83 practice questions | [`data/cards.json`](data/cards.json) |
+| **Cards** | 153 terms + 83 practice questions | [`data/cards.json`](data/cards.json) |
+| **Podcast** | 8 ready-made MP3 episodes, about an hour total | [`audio/`](audio/) |
 | **Exports** | Quizlet, Anki, and spreadsheet versions | [`flashcards/`](flashcards/) |
 
 ## How Learn mode works
@@ -52,6 +53,22 @@ It works like Quizlet's Learn:
 5. Typos are forgiven, and if the grader is wrong you can press **I was right**.
 
 The green bar fills as you master cards. Pick one competency chip (C1, C2, C3), then a topic inside it to keep the bar small and winnable.
+
+## Study Buddy (the Ask button)
+
+Tap **Ask** on any page. It explains terms, compares two ideas ("WHERE vs HAVING"), explains a practice question you paste in, and quizzes you ("quiz me on C3").
+
+- **Explain** buttons in Learn, Flashcards, and the practice test send that exact card or question to Study Buddy.
+- **Works with no setup:** answers come from this site's course notes (153 terms, 83 questions, 10 guide modules).
+- **Optional Claude mode** for open-ended questions: in Study Buddy's Settings, paste your own [Anthropic API key](https://console.anthropic.com). It's sent only to `api.anthropic.com`, billed to your account, and forgotten when you close the tab unless you tick "Remember". Answers stay grounded in the course notes.
+
+## Podcast
+
+The **Podcast** tab turns the course into audio with two hosts: **Alex** explains, **Sam** asks the questions and pauses so you can answer in your head.
+
+- **Ready-made MP3s** (keep playing with the screen off, downloadable): the exam blueprint, one episode per competency, the cram sheet, and a quiz show per competency. Each has a tap-to-jump transcript.
+- **Make your own**, spoken with your device's voice: any single guide module, a 10-question quiz show, the terms you haven't mastered, your missed questions from the last practice test, or any text you paste in.
+- Every guide module and competency has a **Listen** button.
 
 ## Built for ADHD brains
 
@@ -95,7 +112,8 @@ Download the repo and double-click `index.html`. No install, no server.
 
 1. Edit [`data/cards.json`](data/cards.json) or any file in [`guide/`](guide/).
 2. Once: `pip install markdown`. Then run `python3 tools/build.py`.
-3. That regenerates `data/cards.js` and `data/guide.js` (used by the website) and everything in `flashcards/`.
+3. That regenerates `data/cards.js` and `data/guide.js` (used by the website), `COMPETENCIES.md`, and everything in `flashcards/`.
+4. To re-record the podcast: `pip install piper-tts playwright`, then `python3 tools/podcast.py` (needs ffmpeg). Voices download once from the [Piper](https://github.com/rhasspy/piper) releases.
 
 ---
 

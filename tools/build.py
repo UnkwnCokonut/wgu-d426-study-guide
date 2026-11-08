@@ -121,11 +121,58 @@ for path in sorted((ROOT / "guide").glob("[0-9][0-9]-*.md")):
     encoding="utf-8",
 )
 
-# 6. Cache-bust: stamp a content hash on the data scripts so browsers never mix old data with a new page
+# 6. COMPETENCIES.md + docs/competencies.svg: the red-text exam blueprint for GitHub readers
+import textwrap
+
+SITE = "https://unkwncokonut.github.io/wgu-d426-study-guide/"
+x_esc = lambda s: s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+W, PAD, y, rows = 640, 28, 28, []
+for c in data["competencies"]:
+    for line in textwrap.wrap(c["red"], 44):
+        y += 34
+        rows.append(f'<text x="{PAD}" y="{y}" fill="#F04438" font-size="24" font-weight="700">{x_esc(line)}</text>')
+    y += 40
+    rows.append(f'<text x="{PAD}" y="{y}" fill="#F2F2F2" font-size="22">•<tspan x="{PAD + 48}">{x_esc(c["redLessons"])}</tspan></text>')
+    y += 22
+H = y + 12
+(ROOT / "docs").mkdir(exist_ok=True)
+(ROOT / "docs" / "competencies.svg").write_text(
+    f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif">'
+    f'<title>D426 competencies</title><rect width="{W}" height="{H}" rx="14" fill="#141414"/>' + "".join(rows) + "</svg>\n", encoding="utf-8")
+
+mods_by_topic = {m["topic"]: m for m in guide}
+md = ["# D426 competencies", "",
+      "The objective assessment is split into three competencies. Here's the course's breakdown, exactly as given:", "",
+      '<p align="center"><img src="docs/competencies.svg" width="560" alt="' + " ".join(f'{c["red"]} {c["redLessons"]}.' for c in data["competencies"]).replace('"', "") + '"></p>', "",
+      f"**On the website:** the [Competencies tab]({SITE}#competencies) shows this with your progress on each competency.", "",
+      "| Competency | Share of exam | zyBook | Guide modules | Study it |", "| --- | --- | --- | --- | --- |"]
+for c in data["competencies"]:
+    mods = [m for m in guide if comp_of[m["topic"]]["id"] == c["id"]]
+    md.append(f'| **{c["n"]}. {c["name"]}** | {"**" + str(c["weight"]) + "%**" if c["weight"] == max(x["weight"] for x in data["competencies"]) else str(c["weight"]) + "%"} | {c["redLessons"].replace("zyBook ", "")} '
+              f'| {mods[0]["n"]}–{mods[-1]["n"]} | [Learn]({SITE}#learn/{c["id"]}) · [Listen]({SITE}#podcast/{c["id"]}) |')
+md += ["", "Study the biggest chunk first: " + " → ".join(f'Competency {c["n"]}' for c in sorted(data["competencies"], key=lambda c: -c["weight"])) + ".", ""]
+for c in data["competencies"]:
+    mods = [m for m in guide if comp_of[m["topic"]]["id"] == c["id"]]
+    md += [f'## Competency {c["n"]}: {c["name"]} ({c["weight"]}%)', "", c["redLessons"], ""]
+    if c["weight"] == max(x["weight"] for x in data["competencies"]):
+        md += ["> [!IMPORTANT]", "> The biggest chunk of the exam. It covers zyBook lessons 4 & 5: ER modeling, normalization, and physical design. "
+               "Primary keys run through all of it, including how each kind of table gets its key.", ""]
+    md += ["| Topic | Key terms |", "| --- | --- |"]
+    for t in c["topics"]:
+        names = [x["t"] for x in data["terms"] if x["topic"] == t]
+        md.append(f'| **{topic_names[t]}** | {", ".join(names[:10])}{" …" if len(names) > 10 else ""} |')
+    md += ["", "**Guide:** " + " · ".join(f'[{m["n"]}. {m["title"]}](guide/{m["id"]}.md)' for m in mods), "",
+           f'**Study it:** [Learn]({SITE}#learn/{c["id"]}) · [Flashcards]({SITE}#flash/{c["id"]}) · [Practice questions]({SITE}#test/{c["id"]}) · [Podcast episode]({SITE}#podcast/{c["id"]}) · [Quiz show]({SITE}#podcast/quiz-{c["id"]})', ""]
+alloc = sorted(data["competencies"], key=lambda c: c["n"])
+md += ["## Check yourself", "", f"The [exam simulation]({SITE}#test/sim) is 30 questions split by these same weights, scored per competency, so you can see which one needs work.", ""]
+(ROOT / "COMPETENCIES.md").write_text("\n".join(md), encoding="utf-8")
+
+# 7. Cache-bust: stamp a content hash on the data scripts so browsers never mix old data with a new page
 import hashlib
 
-ver = hashlib.sha1(b"".join((ROOT / "data" / f).read_bytes() for f in ("cards.js", "guide.js"))).hexdigest()[:8]
+stamped = [f for f in ("cards.js", "guide.js", "podcast.js") if (ROOT / "data" / f).exists()]
+ver = hashlib.sha1(b"".join((ROOT / "data" / f).read_bytes() for f in stamped)).hexdigest()[:8]
 page = ROOT / "index.html"
-page.write_text(re.sub(r'src="data/(cards|guide)\.js(\?v=\w+)?"', rf'src="data/\1.js?v={ver}"', page.read_text(encoding="utf-8")), encoding="utf-8")
+page.write_text(re.sub(r'src="data/(cards|guide|podcast)\.js(\?v=\w+)?"', rf'src="data/\1.js?v={ver}"', page.read_text(encoding="utf-8")), encoding="utf-8")
 
 print(f'{len(data["terms"])} terms, {len(data["questions"])} questions, {len(guide)} guide modules -> built (v={ver})')

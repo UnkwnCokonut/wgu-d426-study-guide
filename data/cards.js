@@ -13,7 +13,9 @@ window.D426 = {
     "sql",
     "statements",
     "keys"
-   ]
+   ],
+   "red": "Competency 1: Explains Database Attributes and SQL Commands - 28% of assessment.",
+   "redLessons": "zyBook Lessons 1 & 2"
   },
   {
    "id": "c2",
@@ -24,7 +26,9 @@ window.D426 = {
    "topics": [
     "queries",
     "joins"
-   ]
+   ],
+   "red": "Competency 2: Determines SQL Queries - 30% of assessment.",
+   "redLessons": "zyBook Lessons 3"
   },
   {
    "id": "c3",
@@ -36,7 +40,9 @@ window.D426 = {
     "design",
     "logical",
     "physical"
-   ]
+   ],
+   "red": "Competency 3: Defines Primary Keys - 42% of assessment.",
+   "redLessons": "zyBook Lessons 4 & 5"
   }
  ],
  "topics": [
@@ -745,7 +751,6 @@ window.D426 = {
    "topic": "design",
    "t": "IsA relationship",
    "alts": [
-    "is a",
     "isa"
    ],
    "d": "The identifying relationship between a subtype entity and its supertype."
@@ -1045,6 +1050,19 @@ window.D426 = {
    "topic": "physical",
    "t": "Storage engine",
    "d": "Translates query processor instructions into low-level storage commands. MySQL's default is InnoDB."
+  },
+  {
+   "topic": "physical",
+   "t": "Hash index",
+   "d": "An index whose entries are assigned to buckets by a hash function."
+  },
+  {
+   "topic": "physical",
+   "t": "Multi-level index",
+   "alts": [
+    "multilevel index"
+   ],
+   "d": "An index on an index; each level narrows the search."
   }
  ],
  "questions": [

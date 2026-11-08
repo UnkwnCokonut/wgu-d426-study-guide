@@ -149,3 +149,5 @@ Function index	An index on the result of a function applied to a column, like UP
 Tablespace	A database object that maps one or more tables to a single file.
 Partition (table)	A subset of a table's data: a horizontal partition splits rows, a vertical partition splits columns.
 Storage engine	Translates query processor instructions into low-level storage commands. MySQL's default is InnoDB.
+Hash index	An index whose entries are assigned to buckets by a hash function.
+Multi-level index	An index on an index; each level narrows the search.
