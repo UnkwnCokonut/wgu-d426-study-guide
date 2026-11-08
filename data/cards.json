@@ -1,4 +1,43 @@
 {
+  "competencies": [
+    {
+      "id": "c1",
+      "n": 1,
+      "name": "Explains Database Attributes and SQL Commands",
+      "weight": 28,
+      "lessons": "zyBook Lessons 1 & 2",
+      "topics": [
+        "basics",
+        "relational",
+        "sql",
+        "statements",
+        "keys"
+      ]
+    },
+    {
+      "id": "c2",
+      "n": 2,
+      "name": "Determines SQL Queries",
+      "weight": 30,
+      "lessons": "zyBook Lesson 3",
+      "topics": [
+        "queries",
+        "joins"
+      ]
+    },
+    {
+      "id": "c3",
+      "n": 3,
+      "name": "Defines Primary Keys",
+      "weight": 42,
+      "lessons": "zyBook Lessons 4 & 5",
+      "topics": [
+        "design",
+        "logical",
+        "physical"
+      ]
+    }
+  ],
   "topics": [
     {
       "id": "basics",
@@ -34,7 +73,7 @@
     },
     {
       "id": "logical",
-      "name": "Normalization"
+      "name": "Keys & normal forms"
     },
     {
       "id": "physical",
@@ -892,6 +931,21 @@
       ]
     },
     {
+      "topic": "logical",
+      "t": "Weak table",
+      "d": "Table built from a weak entity. Its primary key is composite: a foreign key to the identifying table plus another column."
+    },
+    {
+      "topic": "logical",
+      "t": "Subtype table",
+      "d": "Table built from a subtype entity. Its primary key matches the supertype table's primary key and is also a foreign key to it."
+    },
+    {
+      "topic": "logical",
+      "t": "Primary key guidelines",
+      "d": "Stable (values don't change), simple (easy to type and store), and meaningless (no descriptive information)."
+    },
+    {
       "topic": "physical",
       "t": "Heap table",
       "alts": [
@@ -1282,6 +1336,102 @@
       "e": "Start at position 1, take 4 characters."
     },
     {
+      "topic": "queries",
+      "q": "Which returns the number of rows in a table, even when some columns are NULL?",
+      "o": [
+        "COUNT(*)",
+        "SUM(*)",
+        "COUNT(NULL)",
+        "MAX(*)"
+      ],
+      "a": 0,
+      "e": "COUNT(*) counts rows. The other aggregates skip NULL values."
+    },
+    {
+      "topic": "queries",
+      "q": "How do you sort results from highest to lowest salary?",
+      "o": [
+        "ORDER BY Salary",
+        "ORDER BY Salary DESC",
+        "GROUP BY Salary DESC",
+        "SORT BY Salary DOWN"
+      ],
+      "a": 1,
+      "e": "ORDER BY is ascending unless you add DESC."
+    },
+    {
+      "topic": "queries",
+      "q": "State IN ('PA', 'NJ') is the same as:",
+      "o": [
+        "State = 'PA' AND State = 'NJ'",
+        "State = 'PA' OR State = 'NJ'",
+        "State BETWEEN 'PA' AND 'NJ'",
+        "State LIKE 'PA%NJ'"
+      ],
+      "a": 1,
+      "e": "IN matches any value in the list."
+    },
+    {
+      "topic": "queries",
+      "q": "Which condition finds rows where Phone has no value?",
+      "o": [
+        "Phone = NULL",
+        "Phone IS NULL",
+        "Phone = ''",
+        "Phone LIKE NULL"
+      ],
+      "a": 1,
+      "e": "= NULL never matches. Use IS NULL."
+    },
+    {
+      "topic": "queries",
+      "q": "Aggregate functions in a SELECT process which rows?",
+      "o": [
+        "Every row in the table, always",
+        "Only rows that satisfy the WHERE clause",
+        "Only rows in the first group",
+        "Only rows with no NULLs"
+      ],
+      "a": 1,
+      "e": "No WHERE clause means every row."
+    },
+    {
+      "topic": "queries",
+      "q": "Which keyword gives a column a temporary name in the result?",
+      "o": [
+        "AS",
+        "RENAME",
+        "ALIAS",
+        "NAME"
+      ],
+      "a": 0,
+      "e": "Salary AS Pay. AS is optional but common."
+    },
+    {
+      "topic": "queries",
+      "q": "What does CONCAT('Data', 'base') return?",
+      "o": [
+        "'Data base'",
+        "'Database'",
+        "'Data'",
+        "An error"
+      ],
+      "a": 1,
+      "e": "CONCAT joins strings end to end, no space added."
+    },
+    {
+      "topic": "queries",
+      "q": "Which ending completes 'SELECT DeptCode FROM Employee …' to list departments with more than 5 employees?",
+      "o": [
+        "WHERE COUNT(*) > 5",
+        "GROUP BY DeptCode HAVING COUNT(*) > 5",
+        "ORDER BY COUNT(*) > 5",
+        "HAVING COUNT(*) > 5 GROUP BY DeptCode"
+      ],
+      "a": 1,
+      "e": "Filter on an aggregate with HAVING, and HAVING comes after GROUP BY."
+    },
+    {
       "topic": "joins",
       "q": "A LEFT JOIN returns:",
       "o": [
@@ -1364,6 +1514,102 @@
       ],
       "a": 1,
       "e": "The database returns an error explaining the violation."
+    },
+    {
+      "topic": "joins",
+      "q": "A subquery is also called a:",
+      "o": [
+        "Nested query",
+        "View",
+        "Cross-join",
+        "Union"
+      ],
+      "a": 0,
+      "e": "Also called an inner query."
+    },
+    {
+      "topic": "joins",
+      "q": "Which keyword stacks the results of two SELECT statements into one result?",
+      "o": [
+        "JOIN",
+        "UNION",
+        "MERGE",
+        "GROUP BY"
+      ],
+      "a": 1,
+      "e": "UNION combines two results into one table."
+    },
+    {
+      "topic": "joins",
+      "q": "The tables a view's SELECT reads from are called:",
+      "o": [
+        "Base tables",
+        "Temp tables",
+        "Materialized tables",
+        "Child tables"
+      ],
+      "a": 0,
+      "e": "A view is defined by a query over its base tables."
+    },
+    {
+      "topic": "joins",
+      "q": "Which join compares columns with an operator like < or >?",
+      "o": [
+        "Equijoin",
+        "Non-equijoin",
+        "Self-join",
+        "Natural join"
+      ],
+      "a": 1,
+      "e": "Equijoins use =. Anything else is a non-equijoin."
+    },
+    {
+      "topic": "joins",
+      "q": "Which joins are outer joins?",
+      "o": [
+        "INNER only",
+        "LEFT, RIGHT, and FULL",
+        "CROSS and INNER",
+        "Self-joins only"
+      ],
+      "a": 1,
+      "e": "Outer joins keep unmatched rows."
+    },
+    {
+      "topic": "joins",
+      "q": "In a self-join, what must you give each copy of the table?",
+      "o": [
+        "A primary key",
+        "An alias",
+        "An index",
+        "A view"
+      ],
+      "a": 1,
+      "e": "Aliases tell the two copies apart."
+    },
+    {
+      "topic": "joins",
+      "q": "An INNER JOIN returns:",
+      "o": [
+        "All rows from both tables",
+        "Only rows that match in both tables",
+        "All left table rows",
+        "Every combination of rows"
+      ],
+      "a": 1,
+      "e": "Unmatched rows are dropped."
+    },
+    {
+      "topic": "joins",
+      "q": "Employee has 10 rows and Department has 4. How many rows does a CROSS JOIN return?",
+      "o": [
+        "14",
+        "10",
+        "40",
+        "4"
+      ],
+      "a": 2,
+      "e": "Every combination: 10 × 4 = 40."
     },
     {
       "topic": "design",
@@ -1510,6 +1756,18 @@
       "e": "It sits by the identifying entity, whose cardinality is always 1(1)."
     },
     {
+      "topic": "design",
+      "q": "In logical design, an entity type becomes a:",
+      "o": [
+        "Column",
+        "Table",
+        "Foreign key",
+        "Index"
+      ],
+      "a": 1,
+      "e": "Entity → table, relationship → foreign key, attribute → column."
+    },
+    {
       "topic": "logical",
       "q": "Good primary keys should be:",
       "o": [
@@ -1594,6 +1852,102 @@
       "e": "It holds the identifiers of both sides and becomes the junction table."
     },
     {
+      "topic": "logical",
+      "q": "A weak entity becomes a weak table. Its primary key is:",
+      "o": [
+        "A new auto-increment column only",
+        "Composite: a foreign key to the identifying table plus another column",
+        "Exactly the identifying table's primary key",
+        "It has no primary key"
+      ],
+      "a": 1,
+      "e": "The weak table borrows the identifying table's key and adds a column to make it unique."
+    },
+    {
+      "topic": "logical",
+      "q": "A subtype entity becomes a subtype table. Its primary key is:",
+      "o": [
+        "A new artificial key",
+        "The supertype's primary key, which is also a foreign key to it",
+        "A composite of all its attributes",
+        "Any unique column"
+      ],
+      "a": 1,
+      "e": "Subtype rows line up one-to-one with supertype rows."
+    },
+    {
+      "topic": "logical",
+      "q": "Which is the best primary key for an Employee table?",
+      "o": [
+        "Full name",
+        "Email address",
+        "An auto-generated EmployeeID",
+        "Home phone number"
+      ],
+      "a": 2,
+      "e": "Names, emails, and phones can change or repeat. An artificial key is stable, simple, and meaningless."
+    },
+    {
+      "topic": "logical",
+      "q": "Why should a primary key be stable?",
+      "o": [
+        "Stable keys use less storage",
+        "A changed primary key must also change in every matching foreign key",
+        "Stable keys sort faster",
+        "Unstable keys can't be indexed"
+      ],
+      "a": 1,
+      "e": "Changing a key ripples through every table that references it."
+    },
+    {
+      "topic": "logical",
+      "q": "A non-key column depends on only part of a composite primary key. Which normal form does this break?",
+      "o": [
+        "1NF",
+        "2NF",
+        "Only 3NF",
+        "Only BCNF"
+      ],
+      "a": 1,
+      "e": "2NF requires every non-key column to depend on the whole primary key."
+    },
+    {
+      "topic": "logical",
+      "q": "A table can have several candidate keys. The one the designer chooses is the:",
+      "o": [
+        "Foreign key",
+        "Primary key",
+        "Artificial key",
+        "Composite key"
+      ],
+      "a": 1,
+      "e": "Candidate keys are the options; the primary key is the pick."
+    },
+    {
+      "topic": "logical",
+      "q": "In Employee(ID, Name, DeptCode, DeptName), DeptName depends on DeptCode. What's the fix?",
+      "o": [
+        "Add an index on DeptName",
+        "Move DeptCode and DeptName into a Department table",
+        "Make DeptName the primary key",
+        "Denormalize the table"
+      ],
+      "a": 1,
+      "e": "Decompose into a higher normal form. Employee keeps DeptCode as a foreign key."
+    },
+    {
+      "topic": "logical",
+      "q": "Every cell holds one value, and the table has a primary key. That's the minimum for:",
+      "o": [
+        "1NF",
+        "2NF",
+        "3NF",
+        "BCNF"
+      ],
+      "a": 0,
+      "e": "1NF: single values, a primary key, non-key columns depend on it."
+    },
+    {
       "topic": "physical",
       "q": "Which table structure is fastest for bulk loading many rows?",
       "o": [
@@ -1652,6 +2006,42 @@
       ],
       "a": 0,
       "e": "Created with CREATE TABLESPACE."
+    },
+    {
+      "topic": "physical",
+      "q": "Which index type has an entry for every table row?",
+      "o": [
+        "Sparse",
+        "Dense",
+        "Bitmap",
+        "Logical"
+      ],
+      "a": 1,
+      "e": "Dense = per row. Sparse = per block."
+    },
+    {
+      "topic": "physical",
+      "q": "Which index type suits a column with few distinct values, like Yes/No?",
+      "o": [
+        "Bitmap index",
+        "Dense index",
+        "Hash index",
+        "Function index"
+      ],
+      "a": 0,
+      "e": "A bitmap index is a grid of 1s and 0s per value."
+    },
+    {
+      "topic": "physical",
+      "q": "A hash table uses a modulo function with 10 buckets. Which bucket does key 47 go to?",
+      "o": [
+        "4",
+        "7",
+        "47",
+        "0"
+      ],
+      "a": 1,
+      "e": "47 ÷ 10 leaves remainder 7."
     }
   ],
   "top10": [
@@ -1752,6 +2142,10 @@
     [
       "Cardinality vs modality",
       "Maximum (one or many) · minimum (zero or one)"
+    ],
+    [
+      "Weak table vs subtype table key",
+      "FK to identifying table + another column · same key as the supertype (also an FK)"
     ]
   ]
 }

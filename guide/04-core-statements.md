@@ -2,6 +2,8 @@
 
 **Time:** 4 minutes
 
+**Exam weight:** Competency 1, Explains Database Attributes and SQL Commands (28% of the exam)
+
 > [!TIP]
 > **TL;DR**
 > - **DELETE** = chosen rows · **TRUNCATE** = all rows · **DROP** = the whole table.

@@ -15,6 +15,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 data = json.loads((ROOT / "data" / "cards.json").read_text(encoding="utf-8"))
 topic_names = {t["id"]: t["name"] for t in data["topics"]}
+comp_of = {t: c for c in data["competencies"] for t in c["topics"]}
+assert all(t["id"] in comp_of for t in data["topics"]), "every topic needs a competency"
 
 # 1. JS bundle for the web app
 (ROOT / "data" / "cards.js").write_text(
@@ -31,16 +33,17 @@ lines = [f'{c["t"]}\t{c["d"]}' for c in data["terms"]]
 with open(ROOT / "flashcards" / "anki-import.csv", "w", newline="", encoding="utf-8") as f:
     w = csv.writer(f)
     for c in data["terms"]:
-        tag = "D426::" + topic_names[c["topic"]].replace(" & ", "_").replace(" ", "_")
+        tag = f'D426::C{comp_of[c["topic"]]["n"]}::' + topic_names[c["topic"]].replace(" & ", "_").replace(" ", "_")
         w.writerow([c["t"], c["d"], tag])
 
 # 4. Practice questions as a spreadsheet
 with open(ROOT / "flashcards" / "practice-questions.csv", "w", newline="", encoding="utf-8") as f:
     w = csv.writer(f)
-    w.writerow(["Topic", "Question", "A", "B", "C", "D", "Answer", "Why"])
+    w.writerow(["Competency", "Weight", "Topic", "Question", "A", "B", "C", "D", "Answer", "Why"])
     for q in data["questions"]:
         opts = (q["o"] + ["", "", "", ""])[:4]
-        w.writerow([topic_names[q["topic"]], q["q"], *opts, "ABCD"[q["a"]], q["e"]])
+        c = comp_of[q["topic"]]
+        w.writerow([f'C{c["n"]}', f'{c["weight"]}%', topic_names[q["topic"]], q["q"], *opts, "ABCD"[q["a"]], q["e"]])
 
 # 5. Guide modules -> pre-rendered HTML for the website's Guide tab (needs: pip install markdown)
 import html as _html
@@ -63,6 +66,8 @@ def render_module(text):
             title = re.sub(r"^#\s*\d+\.\s*", "", ln).strip()
         elif ln.startswith("**Time:**"):
             time = ln.replace("**Time:**", "").strip()
+        elif ln.startswith("**Exam weight:**"):
+            pass  # the site shows the competency from cards.json
         elif ln.startswith("[← "):
             pass  # the site has its own prev/next buttons
         elif ln.startswith("> [!"):  # GitHub alert -> callout

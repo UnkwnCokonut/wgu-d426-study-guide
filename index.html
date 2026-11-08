@@ -162,6 +162,19 @@ details.check .ans > :first-child { margin-top: 0; } details.check .ans > :last-
 .mermaid .label { text-transform: none; letter-spacing: normal; font-size: inherit; font-weight: 400; color: inherit; }
 .brand a { color: inherit; text-decoration: none; }
 
+/* competencies */
+.chip.comp { font-weight: 700; }
+.topics.sub { margin-top: 2px; }
+.bp { display: grid; grid-template-columns: 70px 1fr; gap: 12px; align-items: center; width: 100%; text-align: left; border: 1px solid var(--line); background: var(--bg); border-radius: 14px; padding: 14px 16px; margin-top: 10px; }
+.bp:hover { border-color: var(--accent); }
+.bp.top { box-shadow: inset 0 0 0 2px var(--accent); border-color: var(--accent); }
+.bpw { font-size: 28px; font-weight: 700; line-height: 1; }
+.bpb { display: grid; gap: 4px; }
+.prog.sm { height: 8px; margin-top: 4px; }
+.grp { margin: 28px 0 2px; }
+.cres { padding: 10px 0; border-top: 1px solid var(--line); }
+.cres:first-of-type { border-top: 0; }
+
 /* dialogs */
 .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: grid; place-items: center; padding: 16px; z-index: 20; }
 .overlay .card { max-width: 460px; width: 100%; margin: 0; }
@@ -195,8 +208,8 @@ footer a { color: inherit; }
 </header>
 <main class="wrap" id="main"></main>
 <div class="sr" aria-live="assertive" id="say"></div>
-<script src="data/cards.js?v=9afe9232"></script>
-<script src="data/guide.js?v=9afe9232"></script>
+<script src="data/cards.js?v=295413a7"></script>
+<script src="data/guide.js?v=295413a7"></script>
 <script>
 (function () {
 "use strict";
@@ -218,6 +231,12 @@ const say = t => { const el = document.getElementById("say"); el.textContent = "
 const topicName = Object.fromEntries(D.topics.map(t => [t.id, t.name]));
 const terms = D.terms.map(c => Object.assign({ id: c.t }, c));
 const byId = Object.fromEntries(terms.map(c => [c.id, c]));
+const comps = D.competencies;
+const compById = Object.fromEntries(comps.map(c => [c.id, c]));
+const compOfTopic = {}; comps.forEach(c => c.topics.forEach(t => { compOfTopic[t] = c.id; }));
+const compOf = topic => compById[compOfTopic[topic]];
+const byWeight = comps.slice().sort((a, b) => b.weight - a.weight);
+const sameSet = (a, b) => a.length === b.length && a.every(x => b.includes(x));
 const PRAISE = ["Nice.", "Got it.", "Yes!", "Locked in.", "Clean.", "That's it.", "Easy.", "Right on."];
 
 /* ---------- state ---------- */
@@ -307,30 +326,63 @@ function route() {
   if (TABS.includes(tab)) {
     S.tab = tab;
     if (tab === "guide") S.mod = G.some(m => m.id === sub) ? sub : null;
+    else if (tab === "test" && sub === "sim") {
+      history.replaceState(null, "", "#test"); save(); startSim(); window.scrollTo(0, 0); return;
+    } else if (sub && (compById[sub] || topicName[sub])) {  // #learn/c3, #flash/joins
+      S.topics = compById[sub] ? compById[sub].topics.slice() : [sub]; L = F = T = null;
+      history.replaceState(null, "", "#" + tab);
+    }
   }
   save(); render(); window.scrollTo(0, 0);
 }
 window.addEventListener("hashchange", route);
-function chips() {
-  const all = !S.topics.length;
-  return `<div class="topics" role="group" aria-label="Topics">
-    <button class="chip" aria-pressed="${all}" data-topic="">All topics</button>
-    ${D.topics.map(t => `<button class="chip" aria-pressed="${S.topics.includes(t.id)}" data-topic="${t.id}">${esc(t.name)}</button>`).join("")}
-  </div><div class="hint">Tip: pick one topic at a time. Small chunks stick better.</div>`;
+/* competency chips: All · C1 · C2 · C3, then that competency's topics to narrow down */
+function focusComp() {
+  if (!S.topics.length) return null;
+  const c = compOfTopic[S.topics[0]];
+  return S.topics.every(t => compOfTopic[t] === c) ? compById[c] : null;
 }
-function focusLine() {
-  const names = S.topics.length ? S.topics.map(t => topicName[t]).join(", ") : "All topics";
-  return `<div class="row spread focusline"><span class="hint">Studying: <b style="color:var(--ink)">${esc(names)}</b></span><button class="btn ghost small" id="endsess">End session</button></div>`;
+function chips() {
+  const fc = focusComp(), whole = fc && sameSet(S.topics, fc.topics);
+  return `<div class="topics" role="group" aria-label="Competencies">
+    <button class="chip" aria-pressed="${!S.topics.length}" data-topic="">All</button>
+    ${comps.map(c => `<button class="chip comp" aria-pressed="${sameSet(S.topics, c.topics)}" data-comp="${c.id}">C${c.n} · ${c.weight}%</button>`).join("")}
+  </div>` + (fc ? `<div class="topics sub" role="group" aria-label="Topics in competency ${fc.n}">
+    ${fc.topics.map(t => `<button class="chip" aria-pressed="${!whole && S.topics.includes(t)}" data-topic="${t}">${esc(topicName[t])}</button>`).join("")}
+  </div><div class="hint"><b style="color:var(--ink)">Competency ${fc.n}:</b> ${esc(fc.name)} · ${esc(fc.lessons)}${whole ? " · tap a topic to narrow" : ""}</div>`
+    : `<div class="hint">Pick a competency. C${byWeight[0].n} is ${byWeight[0].weight}% of the exam, so it's the best place to start.</div>`);
+}
+function selLabel() {
+  if (!S.topics.length) return "All competencies";
+  const c = comps.find(x => sameSet(S.topics, x.topics));
+  return c ? `Competency ${c.n} · ${c.weight}%` : S.topics.map(t => topicName[t]).join(", ");
+}
+function focusLine(label) {
+  return `<div class="row spread focusline"><span class="hint">Studying: <b style="color:var(--ink)">${esc(label || selLabel())}</b></span><button class="btn ghost small" id="endsess">End session</button></div>`;
 }
 function wireEnd(reset) { const b = main.querySelector("#endsess"); if (b) b.onclick = () => { reset(); render(); }; }
 function wireChips() {
+  main.querySelectorAll("[data-comp]").forEach(b => b.onclick = () => {
+    S.topics = compById[b.dataset.comp].topics.slice(); L = F = T = null; save(); render();
+  });
   main.querySelectorAll("[data-topic]").forEach(b => b.onclick = () => {
     const id = b.dataset.topic;
     if (!id) S.topics = [];
-    else S.topics = S.topics.includes(id) ? S.topics.filter(x => x !== id) : S.topics.concat(id);
+    else {
+      const c = compOf(id);
+      if (sameSet(S.topics, c.topics)) S.topics = [id];  // whole competency selected: first tap narrows to that topic
+      else {
+        S.topics = S.topics.includes(id) ? S.topics.filter(x => x !== id) : S.topics.concat(id);
+        if (!S.topics.length) S.topics = c.topics.slice();
+      }
+    }
     L = F = T = null; save(); render();
   });
 }
+const compPool = c => terms.filter(t => compOfTopic[t.topic] === c.id);
+const compMastery = c => { const p = compPool(c); return p.length ? p.filter(t => lvl(t.id) >= 2).length / p.length : 0; };
+/* the competency with the most exam points still unmastered */
+const mostAtStake = () => comps.slice().sort((a, b) => b.weight * (1 - compMastery(b)) - a.weight * (1 - compMastery(a)) || b.weight - a.weight)[0];
 
 /* ---------- mastery bar ---------- */
 function masteryBar(pool) {
@@ -541,30 +593,61 @@ function renderFlash() {
 /* =========================================================
    PRACTICE TEST  (multiple choice, instant feedback)
    ========================================================= */
-function startTest(n, qs) {
+function startTest(n, qs, sim) {
   const pool = qs || shuffle(scoped(D.questions));
   const list = pool.slice(0, n || pool.length).map(q => {
     const order = shuffle([0, 1, 2, 3]);
-    return { q, order, a: order.indexOf(q.a) };
+    return { q, order, a: order.indexOf(q.a), ok: null };
   });
-  T = { list, i: 0, picked: null, right: 0, missed: [] };
+  T = { list, i: 0, picked: null, right: 0, missed: [], sim: !!sim };
   render();
 }
+/* exam simulation: split questions by competency weight (largest-remainder rounding) */
+const SIM_N = 30;
+function simAlloc(n) {
+  const a = comps.map(c => ({ c, exact: n * c.weight / 100 }));
+  a.forEach(x => { x.k = Math.floor(x.exact); });
+  let left = n - a.reduce((s, x) => s + x.k, 0);
+  a.slice().sort((x, y) => (y.exact - y.k) - (x.exact - x.k)).forEach(x => { if (left > 0) { x.k++; left--; } });
+  return a;
+}
+function startSim() {
+  const qs = simAlloc(SIM_N).flatMap(x => shuffle(D.questions.filter(q => compOfTopic[q.topic] === x.c.id)).slice(0, x.k));
+  startTest(0, shuffle(qs), true);
+}
+function compResults() {
+  const rows = comps.map(c => {
+    const items = T.list.filter(it => compOfTopic[it.q.topic] === c.id);
+    return { c, n: items.length, right: items.filter(it => it.ok).length };
+  }).filter(r => r.n);
+  const weakest = rows.length > 1 ? rows.slice().sort((a, b) => a.right / a.n - b.right / b.n || b.c.weight - a.c.weight)[0] : null;
+  return `<h3 style="margin-top:18px">By competency</h3>` + rows.map(r => {
+    const p = Math.round(r.right / r.n * 100);
+    return `<div class="cres"><div class="row spread"><b>C${r.c.n} · ${r.c.weight}% of exam</b><span>${r.right}/${r.n} (${p}%)</span></div>
+      <div class="hint">${esc(r.c.name)}</div><div class="prog sm"><span class="m" style="width:${p}%"></span></div></div>`;
+  }).join("") + (weakest ? `<div class="fb bad" style="margin-top:14px"><strong>Focus next: Competency ${weakest.c.n}</strong><div class="row" style="margin-top:8px"><button class="btn small" id="learnweak" data-c="${weakest.c.id}">Learn C${weakest.c.n} now</button></div></div>` : "");
+}
 function renderTest() {
-  let h = !T ? chips() : focusLine();
+  let h = !T ? "" : focusLine(T.sim ? "Exam simulation" : null);
   const pool = scoped(D.questions);
   if (!T) {
-    h += `<div class="card"><h1>Practice test</h1><p>Exam-style multiple choice with the answer explained right away. ${pool.length} questions in this selection.</p>
+    const alloc = simAlloc(SIM_N);
+    h += `<div class="card"><h1>Practice test</h1>
+      <h3 style="margin-top:14px">Exam simulation</h3>
+      <p style="margin-top:0">${SIM_N} questions split like the real exam: ${alloc.map(x => `${x.k} from C${x.c.n}`).join(", ")}. Scored by competency, so you see where to focus.</p>
+      <div class="row"><button class="btn" id="sim">Start exam simulation</button><span class="hint">about 15 min</span></div></div>
+      <div class="card"><h3>Or practice one area</h3>${chips()}
       <div class="row actions">${[10, 20].filter(n => n < pool.length).map(n => `<button class="btn ${n === 10 ? "" : "ghost"}" data-n="${n}">${n} questions</button>`).join("")}<button class="btn ${pool.length <= 10 ? "" : "ghost"}" data-n="0">All ${pool.length}</button></div></div>`;
   } else if (T.i >= T.list.length) {
     const pct = Math.round(T.right / T.list.length * 100);
-    h += `<div class="card pop"><div class="label">Results</div><h1>${T.right} / ${T.list.length} (${pct}%)</h1>
-      <p>${pct >= 85 ? "Strong. You're ready for these topics." : pct >= 65 ? "Solid base. Review the misses below, then retry them." : "Good data. Go back to Learn on the topics you missed, then retry."}</p>
-      ${T.missed.length ? `<h3 style="margin-top:16px">Review these</h3><ul class="slist">${T.missed.map(m => `<li style="display:block"><div>${esc(m.q.q)}</div><div class="hint">Answer: <b style="color:var(--ink)">${esc(m.q.o[m.q.a])}</b> · ${esc(m.q.e)}</div></li>`).join("")}</ul>` : ""}
+    h += `<div class="card pop"><div class="label">${T.sim ? "Exam simulation results" : "Results"}</div><h1>${T.right} / ${T.list.length} (${pct}%)</h1>
+      <p>${pct >= 85 ? "Strong. You're ready for these topics." : pct >= 65 ? "Solid base. Review the misses below, then retry them." : "Good data. Go back to Learn on the weakest competency, then retry."}</p>
+      ${compResults()}
+      ${T.missed.length ? `<h3 style="margin-top:18px">Review these</h3><ul class="slist">${T.missed.map(m => `<li style="display:block"><div>${esc(m.q.q)}</div><div class="hint">C${compOf(m.q.topic).n} · Answer: <b style="color:var(--ink)">${esc(m.q.o[m.q.a])}</b> · ${esc(m.q.e)}</div></li>`).join("")}</ul>` : ""}
       <div class="row actions">${T.missed.length ? `<button class="btn" id="retry">Retry the ${T.missed.length} I missed</button>` : ""}<button class="btn ${T.missed.length ? "ghost" : ""}" id="newtest">New test</button></div></div>`;
   } else {
     const it = T.list[T.i], q = it.q, done = T.picked !== null;
-    h += `<div class="card"><div class="row spread"><span class="label">${esc(topicName[q.topic])}</span><span class="hint">${T.i + 1} / ${T.list.length} · ${T.right} right</span></div>
+    h += `<div class="card"><div class="row spread"><span class="label">C${compOf(q.topic).n} · ${esc(topicName[q.topic])}</span><span class="hint">${T.i + 1} / ${T.list.length} · ${T.right} right</span></div>
       <div class="prog" style="height:6px;margin:10px 0 14px"><span class="m" style="width:${T.i / T.list.length * 100}%;background:var(--accent)"></span></div>
       <div class="prompt">${esc(q.q)}</div><div class="opts">` +
       it.order.map((oi, i) => {
@@ -585,11 +668,13 @@ function renderTest() {
   if ($("tnext")) { $("tnext").onclick = () => { T.i++; T.picked = null; render(); }; $("tnext").focus(); }
   if ($("retry")) $("retry").onclick = () => startTest(0, shuffle(T.missed.map(m => m.q)));
   if ($("newtest")) $("newtest").onclick = () => { T = null; render(); };
+  if ($("sim")) $("sim").onclick = startSim;
+  if ($("learnweak")) $("learnweak").onclick = e => { S.topics = compById[e.currentTarget.dataset.c].topics.slice(); L = F = T = null; save(); go("learn"); };
 }
 function testPick(i) {
   if (!T || T.picked !== null) return;
   const it = T.list[T.i]; T.picked = i;
-  const ok = i === it.a;
+  const ok = i === it.a; it.ok = ok;
   if (ok) T.right++; else T.missed.push(it);
   bump(ok); render(); say(ok ? "Correct" : "Incorrect");
 }
@@ -597,37 +682,50 @@ function testPick(i) {
 /* =========================================================
    CRAM SHEET & HELP
    ========================================================= */
+function blueprintRows() {
+  return comps.map(c => `<div class="pair"><b>C${c.n} · ${c.weight}%</b><span>${esc(c.name)} <span class="hint">· ${esc(c.lessons)}</span></span></div>`).join("");
+}
 function renderCram() {
-  main.innerHTML = `<div class="card"><h1>Cram sheet</h1><p class="hint">Read this once right before the exam. Ten facts, then the pairs people mix up.</p>
+  main.innerHTML = `<div class="card"><h2>Exam blueprint</h2>${blueprintRows()}</div>
+    <div class="card"><h1>Cram sheet</h1><p class="hint">Read this once right before the exam. Ten facts, then the pairs people mix up.</p>
     <ol class="top" style="margin-top:14px">${D.top10.map(([k, v]) => `<li><div><b>${esc(k)}</b><div>${esc(v)}</div></div></li>`).join("")}</ol></div>
     <div class="card"><h2>Don't mix these up</h2>${D.pairs.map(([k, v]) => `<div class="pair"><b>${esc(k)}</b><span>${esc(v)}</span></div>`).join("")}</div>`;
 }
 /* =========================================================
    START PAGE  (pick by time available)
    ========================================================= */
-const PLAN = [
-  { min: 15, what: "Learn: Writing queries + Joins & views", topics: ["queries", "joins"], to: "learn" },
-  { min: 5, what: "Break: stand up, water" },
-  { min: 15, what: "Learn: Keys & constraints + Normalization", topics: ["keys", "logical"], to: "learn" },
-  { min: 5, what: "Break" },
-  { min: 15, what: "Learn: ER modeling + Physical design", topics: ["design", "physical"], to: "learn" },
-  { min: 5, what: "Break" },
-  { min: 20, what: "Practice test, every question. Retry the misses", topics: [], to: "test" },
-  { min: 10, what: "Cram sheet. Then sleep.", to: "cram" }
-];
-const nextModule = () => G.find(m => !S.done[m.id]) || G[0];
+/* 90-minute plan: Learn time split by exam weight, biggest competency first (25 / 18 / 17 min) */
+const PLAN_MIN = [25, 18, 17];
+const PLAN = byWeight.flatMap((c, i) => [
+  { min: PLAN_MIN[i], what: `Learn Competency ${c.n} (${c.weight}%): ${c.topics.map(t => topicName[t]).join(", ")}`, topics: c.topics, to: "learn" },
+  { min: 5, what: "Break: stand up, water" }
+]).concat([{ min: 15, what: `Exam simulation: ${SIM_N} questions split like the real exam`, to: "test", sim: true }]);
+/* guide order by exam weight: C3 modules first */
+const modWeight = m => compOf(m.topic).weight;
+const nextModule = () => G.slice().sort((a, b) => modWeight(b) - modWeight(a) || a.n - b.n).find(m => !S.done[m.id]) || G[0];
 function renderHome() {
   const m = terms.filter(c => lvl(c.id) >= 2).length;
   const doneCount = G.filter(x => S.done[x.id]).length;
-  const nm = nextModule();
+  const nm = nextModule(), top = mostAtStake();
   main.innerHTML = `<div class="card"><h1>What do you have time for?</h1><p class="hint" style="margin:0">Pick one. You're allowed to stop after it.</p>
     <div class="tiles">
       <button class="tile" data-go="3"><b>3 min</b><span>Read the cram sheet</span></button>
-      <button class="tile" data-go="15"><b>15 min</b><span>Focus sprint + Learn one topic</span></button>
-      <button class="tile" data-go="30"><b>30 min</b><span>Next guide module${nm ? `: ${esc(nm.title)}` : ""}, then practice it</span></button>
-      <button class="tile" data-go="90"><b>90 min</b><span>The night-before plan</span></button>
+      <button class="tile" data-go="15"><b>15 min</b><span>Focus sprint on C${top.n} (${top.weight}%): the most exam points left to win</span></button>
+      <button class="tile" data-go="30"><b>30 min</b><span>Next guide module${nm ? `: ${esc(nm.title)} (C${compOf(nm.topic).n})` : ""}, then practice it</span></button>
+      <button class="tile" data-go="90"><b>90 min</b><span>The full plan, weighted like the exam</span></button>
     </div>
-    ${S.showPlan ? `<table class="plan">${PLAN.map((p, i) => `<tr><td>${p.min} min</td><td>${esc(p.what)}</td><td style="text-align:right">${p.to ? `<button class="btn small" data-plan="${i}">Go</button>` : ""}</td></tr>`).join("")}</table>` : ""}
+    ${S.showPlan ? `<table class="plan">${PLAN.map((p, i) => `<tr><td>${p.min} min</td><td>${esc(p.what)}</td><td style="text-align:right">${p.to ? `<button class="btn small" data-plan="${i}">Go</button>` : ""}</td></tr>`).join("")}</table>
+      <p class="hint" style="margin:10px 0 0">Right before the exam: the 3-minute cram sheet.</p>` : ""}
+    </div>
+    <div class="card"><h2>Exam blueprint</h2><p class="hint" style="margin:0">Three competencies. Tap one to study it.</p>
+      ${comps.map(c => {
+        const pool = compPool(c), mm = pool.filter(t => lvl(t.id) >= 2).length;
+        return `<button class="bp ${c === byWeight[0] ? "top" : ""}" data-bp="${c.id}"><span class="bpw">${c.weight}%</span><span class="bpb">
+          <b>Competency ${c.n}: ${esc(c.name)}</b>${c === byWeight[0] ? ` <span class="badge l" style="justify-self:start">Biggest chunk</span>` : ""}
+          <span class="hint">${esc(c.lessons)} · ${c.topics.map(t => esc(topicName[t])).join(", ")}</span>
+          <span class="prog sm" role="img" aria-label="${mm} of ${pool.length} mastered"><span class="m" style="width:${mm / (pool.length || 1) * 100}%"></span></span>
+          <span class="hint">${mm}/${pool.length} terms mastered</span></span></button>`;
+      }).join("")}
     </div>
     <div class="card"><h2>Your progress</h2>${masteryBar(terms)}
       <div class="stats"><div><b>${m}/${terms.length}</b><span>terms mastered</span></div><div><b>${doneCount}/${G.length}</b><span>guide modules</span></div><div><b>${S.best}</b><span>best streak</span></div></div>
@@ -643,15 +741,16 @@ function renderHome() {
   main.querySelectorAll("[data-go]").forEach(b => b.onclick = () => {
     const t = b.dataset.go;
     if (t === "3") go("cram");
-    else if (t === "15") { startSprint(15); L = null; go("learn"); }
+    else if (t === "15") { startSprint(15); S.topics = top.topics.slice(); L = F = T = null; save(); go("learn"); }
     else if (t === "30") go("guide", nextModule().id);
     else { S.showPlan = !S.showPlan; render(); }
   });
+  main.querySelectorAll("[data-bp]").forEach(b => b.onclick = () => { S.topics = compById[b.dataset.bp].topics.slice(); L = F = T = null; save(); go("learn"); });
   main.querySelectorAll("[data-plan]").forEach(b => b.onclick = () => {
     const p = PLAN[+b.dataset.plan];
-    if (p.topics) { S.topics = p.topics; L = F = T = null; save(); }
-    if (p.to !== "cram") startSprint(p.min);
-    go(p.to);
+    if (p.topics) { S.topics = p.topics.slice(); L = F = T = null; save(); }
+    startSprint(p.min);
+    if (p.sim) go("test", "sim"); else go(p.to);
   });
 }
 
@@ -680,17 +779,18 @@ function renderGuide() {
     const doneCount = G.filter(x => S.done[x.id]).length, nm = nextModule();
     main.innerHTML = `<div class="card"><h1>Study guide</h1><p style="margin:0">Ten short modules. Same shape every time: <b>TL;DR → details → exam traps → quick check</b>.</p>
       <div class="prog" style="margin-top:14px"><span class="m" style="width:${doneCount / G.length * 100}%"></span></div>
-      <p class="hint" style="margin:8px 0 0">${doneCount} of ${G.length} done</p></div>
-      <div class="mods">${G.map(x => {
-        const pool = terms.filter(c => c.topic === x.topic), mm = pool.filter(c => lvl(c.id) >= 2).length;
+      <p class="hint" style="margin:8px 0 0">${doneCount} of ${G.length} done · short on time? Start with Competency ${byWeight[0].n}.</p></div>
+      ${comps.map(c => `<h2 class="grp">Competency ${c.n} · ${c.weight}%</h2><p class="hint" style="margin:0">${esc(c.name)} · ${esc(c.lessons)}</p>
+      <div class="mods">${G.filter(x => compOfTopic[x.topic] === c.id).map(x => {
+        const pool = terms.filter(t => t.topic === x.topic), mm = pool.filter(t => lvl(t.id) >= 2).length;
         const tag = S.done[x.id] ? `<span class="badge m">Done</span>` : x === nm ? `<span class="badge l">Next up</span>` : "";
         return `<a class="mod ${S.done[x.id] ? "done" : ""}" href="#guide/${x.id}"><span class="num">${S.done[x.id] ? "✓" : x.n}</span><span><b>${esc(x.title)}</b><span class="hint">${short(x.time)} · ${mm}/${pool.length} terms mastered</span></span>${tag}</a>`;
-      }).join("")}</div>`;
+      }).join("")}</div>`).join("")}`;
     return;
   }
-  const i = G.findIndex(x => x.id === S.mod), x = G[i], prev = G[i - 1], next = G[i + 1];
+  const i = G.findIndex(x => x.id === S.mod), x = G[i], prev = G[i - 1], next = G[i + 1], xc = compOf(x.topic);
   main.innerHTML = `<div class="row spread" style="margin-top:16px"><a class="btn ghost small" href="#guide" style="text-decoration:none">← All modules</a><span class="hint">Module ${x.n} of ${G.length} · ${short(x.time)}</span></div>
-    <article class="card doc"><h1>${esc(x.title)}</h1>${x.html}</article>
+    <article class="card doc"><div class="label">Competency ${xc.n} · ${xc.weight}% of the exam</div><h1>${esc(x.title)}</h1>${x.html}</article>
     <div class="card"><div class="row">
       <button class="btn ${S.done[x.id] ? "ghost" : ""}" id="mdone">${S.done[x.id] ? "✓ Done (undo)" : "Mark done"}</button>
       <button class="btn ${S.done[x.id] ? "" : "ghost"}" id="mpractice">Practice ${esc(topicName[x.topic])} in Learn →</button>

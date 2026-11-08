@@ -1,11 +1,13 @@
-# 9. Logical design and normalization
+# 9. Primary keys and normalization
 
-**Time:** 6 minutes
+**Time:** 7 minutes
+
+**Exam weight:** Competency 3, Defines Primary Keys (42% of the exam)
 
 > [!TIP]
 > **TL;DR**
 > - Good primary keys are **stable, simple, meaningless**.
-> - Many-to-many → a **new table** with two foreign keys.
+> - Every kind of table gets its key a specific way: weak = composite, subtype = copies the supertype's, many-to-many = both foreign keys.
 > - **BCNF** = whenever any column depends on B, B is unique. The gold standard.
 
 ## Turning the ER model into tables
@@ -20,12 +22,23 @@
 | Required attribute | NOT NULL |
 | Unique attribute | UNIQUE |
 
-## Keys
+## Choosing a primary key
 
 - **Stable** (doesn't change), **simple** (small, easy to type), **meaningless** (no descriptive info).
 - **Artificial key:** designer-made, usually an auto-generated integer. Ticks all three boxes.
 - **Candidate key:** unique **and minimal**. The designer picks one as the primary key.
 - **Non-key column:** not part of any candidate key.
+
+Example: for Employee, an auto-generated `EmployeeID` beats name, email, or phone. Those can change or repeat.
+
+## Where each table's primary key comes from
+
+| You're building | Its primary key |
+| --- | --- |
+| **Strong entity** → table | Its own identifying attribute, or an artificial key |
+| **Weak entity** → weak table | **Composite:** a foreign key to the identifying table + another column |
+| **Subtype entity** → subtype table | **Same as the supertype's** primary key, and it's also a foreign key to the supertype |
+| **Many-to-many** → associative table | **Composite** of the two foreign keys |
 
 ## Dependence
 
@@ -52,6 +65,8 @@
 > **Exam traps**
 > - In 3NF/BCNF, B must be **unique**, not necessarily minimal, so B isn't always a candidate key.
 > - A candidate key must be **minimal**; "unique" alone isn't enough.
+> - A subtype table does **not** get a new key. It reuses the supertype's key, which doubles as a foreign key.
+> - A non-key column that depends on **part** of a composite key breaks **2NF**.
 
 ## Quick check
 
@@ -68,6 +83,11 @@
 <details><summary>3. Which form drops the word "non-key" from 3NF?</summary>
 
 **BCNF.**
+</details>
+
+<details><summary>4. What's the primary key of a weak table? Of a subtype table?</summary>
+
+**Weak:** composite, a foreign key to the identifying table plus another column. **Subtype:** the supertype's primary key, which is also a foreign key.
 </details>
 
 [← Back](08-design-and-er-modeling.md) · [Next: Physical design →](10-physical-design.md)

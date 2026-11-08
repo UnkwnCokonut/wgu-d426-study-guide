@@ -2,6 +2,8 @@
 
 **Time:** 3 minutes
 
+**Exam weight:** Competency 1, Explains Database Attributes and SQL Commands (28% of the exam)
+
 > [!TIP]
 > **TL;DR**
 > - A table = a name + a fixed sequence of columns + a varying **set** of rows.

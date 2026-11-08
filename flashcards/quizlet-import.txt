@@ -129,6 +129,9 @@ Boyce-Codd normal form (BCNF)	Whenever any column A depends on column B, B is un
 Normalization	Eliminating redundancy by decomposing a table into two or more tables in a higher normal form.
 Denormalization	Intentionally introducing redundancy by merging tables.
 Associative entity	An entity built from the identifiers of the two entities in a many-to-many relationship; it becomes the junction table.
+Weak table	Table built from a weak entity. Its primary key is composite: a foreign key to the identifying table plus another column.
+Subtype table	Table built from a subtype entity. Its primary key matches the supertype table's primary key and is also a foreign key to it.
+Primary key guidelines	Stable (values don't change), simple (easy to type and store), and meaningless (no descriptive information).
 Heap table	Table structure with no row order imposed; fastest for inserts and bulk loads.
 Sorted table	Table structure where a sort column determines the physical row order.
 Hash table	Table structure where a hash function assigns rows to buckets.

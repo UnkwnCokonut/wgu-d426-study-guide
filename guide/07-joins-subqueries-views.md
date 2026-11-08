@@ -2,6 +2,8 @@
 
 **Time:** 5 minutes
 
+**Exam weight:** Competency 2, Determines SQL Queries (30% of the exam)
+
 > [!TIP]
 > **TL;DR**
 > - The join type decides what happens to **unmatched** rows.

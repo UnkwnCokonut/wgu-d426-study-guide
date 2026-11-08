@@ -2,6 +2,8 @@
 
 **Time:** 5 minutes
 
+**Exam weight:** Competency 3, Defines Primary Keys (42% of the exam)
+
 > [!TIP]
 > **TL;DR**
 > - **Heap** = fast inserts · **sorted** = fast ranges · **hash** = fast exact matches · **cluster** = fast joins.

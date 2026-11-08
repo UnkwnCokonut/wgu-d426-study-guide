@@ -2,6 +2,8 @@
 
 **Time:** 6 minutes
 
+**Exam weight:** Competency 3, Defines Primary Keys (42% of the exam)
+
 > [!TIP]
 > **TL;DR**
 > - Three phases: **Analysis → Logical design → Physical design**.

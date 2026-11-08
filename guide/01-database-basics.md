@@ -2,6 +2,8 @@
 
 **Time:** 3 minutes
 
+**Exam weight:** Competency 1, Explains Database Attributes and SQL Commands (28% of the exam)
+
 > [!TIP]
 > **TL;DR**
 > - **Query processor** plans the query. **Storage manager** reads and writes files. **Transaction manager** keeps things consistent.

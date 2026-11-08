@@ -2,6 +2,14 @@
 
 **Time:** 3 minutes. Read this right before the exam.
 
+## Exam blueprint
+
+| Competency | Share | zyBook |
+| --- | --- | --- |
+| **1. Explains Database Attributes and SQL Commands** | 28% | Lessons 1 & 2 |
+| **2. Determines SQL Queries** | 30% | Lesson 3 |
+| **3. Defines Primary Keys** | **42%** | Lessons 4 & 5 |
+
 ## The 10 facts
 
 1. **Clause order:** SELECT → FROM → WHERE → GROUP BY → HAVING → ORDER BY. *Sweaty Feet Will Give Horrible Odors.*
@@ -34,6 +42,7 @@
 | Unary vs binary vs ternary | One entity type · two · three |
 | Cardinality vs modality | Maximum (one or many) · minimum (zero or one) |
 | Select vs project (algebra) | Picks rows · picks columns |
+| Weak table vs subtype table key | FK to identifying table + another column · same key as the supertype (also an FK) |
 
 ## Before you walk in
 

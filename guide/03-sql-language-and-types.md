@@ -2,6 +2,8 @@
 
 **Time:** 5 minutes
 
+**Exam weight:** Competency 1, Explains Database Attributes and SQL Commands (28% of the exam)
+
 > [!TIP]
 > **TL;DR**
 > - Five sublanguages: **DDL** (structure), **DQL** (SELECT), **DML** (change data), **DCL** (access), **DTL** (transactions).
